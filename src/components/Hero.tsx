@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/minecraft-hero.jpg";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -36,11 +38,17 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-scale-in">
-            <Button className="btn-gaming btn-3d text-lg px-8 py-4 animate-glow-pulse">
+            <Button 
+              className="btn-gaming btn-3d text-lg px-8 py-4 animate-glow-pulse"
+              onClick={() => navigate('/worlds')}
+            >
               Explore Worlds
             </Button>
-            <Button className="btn-gaming-outline btn-3d text-lg px-8 py-4">
-              Discover Addons
+            <Button 
+              className="btn-gaming-outline btn-3d text-lg px-8 py-4"
+              onClick={() => navigate('/modpacks')}
+            >
+              Discover Modpacks
             </Button>
           </div>
         </div>
