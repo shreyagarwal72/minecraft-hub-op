@@ -22,10 +22,13 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          hover: "hsl(var(--secondary-hover))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -46,6 +49,13 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+        },
+        minecraft: {
+          stone: "hsl(var(--minecraft-stone))",
+          dirt: "hsl(var(--minecraft-dirt))",
+          cobblestone: "hsl(var(--minecraft-cobblestone))",
+          gold: "hsl(var(--minecraft-gold))",
+          diamond: "hsl(var(--minecraft-diamond))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -84,6 +94,19 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "minecraft-bounce": "minecraft-bounce 2s infinite",
+        "glow-pulse": "glow-pulse 2s ease-in-out infinite",
+        "block-appear": "block-appear 0.6s ease-out forwards",
+      },
+      backgroundImage: {
+        "gradient-primary": "var(--gradient-primary)",
+        "gradient-minecraft": "var(--gradient-minecraft)",
+        "gradient-hero": "var(--gradient-hero)",
+      },
+      boxShadow: {
+        "minecraft": "var(--shadow-minecraft)",
+        "glow": "var(--shadow-glow)",
+        "block": "var(--shadow-block)",
       },
     },
   },
