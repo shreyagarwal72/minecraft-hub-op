@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Patch from "./pages/Patch";
 import Shaders from "./pages/Shaders";
+import Worlds from "./pages/Worlds";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/patch" element={<Patch />} />
           <Route path="/shaders" element={<Shaders />} />
+          <Route path="/worlds" element={<Worlds />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
