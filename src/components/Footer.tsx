@@ -10,31 +10,27 @@ const Footer = () => {
       { name: "Shaders", href: "/shaders" },
       { name: "Downloads", href: "/downloads" },
     ],
-    community: [
-      { name: "Discord Server", href: "#" },
-      { name: "Forums", href: "#" },
-      { name: "Tutorials", href: "#" },
-      { name: "Submit Content", href: "#" },
-    ],
-    support: [
-      { name: "Help Center", href: "#" },
-      { name: "Installation Guide", href: "#" },
-      { name: "Bug Reports", href: "#" },
-      { name: "Contact Us", href: "#" },
-    ],
   };
 
-  const socialLinks = [
-    { name: "Discord", icon: MessageCircle, href: "#" },
-    { name: "Twitter", icon: Twitter, href: "#" },
-    { name: "YouTube", icon: Youtube, href: "#" },
-    { name: "GitHub", icon: Github, href: "#" },
+  const contactLinks = [
+    { 
+      name: "Email", 
+      icon: Mail, 
+      href: "mailto:sanjayvansu1973@gmail.com",
+      label: "sanjayvansu1973@gmail.com"
+    },
+    { 
+      name: "GitHub", 
+      icon: Github, 
+      href: "https://github.com/shreyagarwal72",
+      label: "shreyagarwal72"
+    },
   ];
 
   return (
     <footer className="bg-secondary border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
@@ -48,24 +44,6 @@ const Footer = () => {
               The ultimate destination for Minecraft Java Edition content. 
               Download worlds, addons, shaders, and join our thriving community.
             </p>
-            <div className="flex space-x-3">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <Button
-                    key={social.name}
-                    variant="outline"
-                    size="icon"
-                    className="border-border hover:border-primary hover:text-primary"
-                    asChild
-                  >
-                    <a href={social.href} aria-label={social.name}>
-                      <Icon className="h-4 w-4" />
-                    </a>
-                  </Button>
-                );
-              })}
-            </div>
           </div>
 
           {/* Content */}
@@ -85,38 +63,28 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Community */}
+          {/* Contact */}
           <div>
-            <h3 className="text-foreground font-semibold mb-4">Community</h3>
-            <ul className="space-y-2">
-              {footerLinks.community.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="text-foreground font-semibold mb-4">Support</h3>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <h3 className="text-foreground font-semibold mb-4">Contact</h3>
+            <div className="space-y-3">
+              {contactLinks.map((contact) => {
+                const Icon = contact.icon;
+                return (
+                  <div key={contact.name} className="flex flex-col space-y-1">
+                    <Button
+                      variant="outline"
+                      className="justify-start border-border hover:border-primary hover:text-primary"
+                      asChild
+                    >
+                      <a href={contact.href} className="flex items-center space-x-2">
+                        <Icon className="h-4 w-4" />
+                        <span className="text-sm">{contact.label}</span>
+                      </a>
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
