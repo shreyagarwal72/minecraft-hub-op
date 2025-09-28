@@ -1,8 +1,10 @@
-# Welcome to your Lovable project
+# Minecraft Java Hub - Professional Gaming Platform
 
-## Project info
+## Project Overview
 
 **URL**: https://lovable.dev/projects/30b4e328-6b06-4810-a219-fb0bb310feb3
+
+A professional Minecraft Java Edition content platform featuring worlds, addons, shaders, and downloads. Built with modern web technologies and stunning 3D visual effects.
 
 ## How can I edit this code?
 
