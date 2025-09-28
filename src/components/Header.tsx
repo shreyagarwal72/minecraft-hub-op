@@ -8,7 +8,7 @@ const Header = () => {
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Worlds", href: "/worlds" },
-    { name: "Addons", href: "/addons" },
+    { name: "Modpacks", href: "/modpacks" },
     { name: "Shaders", href: "/shaders" },
     { name: "Patch Downloads", href: "/patch" },
     { name: "Downloads", href: "/downloads" },

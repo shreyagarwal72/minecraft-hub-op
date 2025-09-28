@@ -9,7 +9,7 @@ const Navigation = () => {
   const navItems = [
     { name: "Home", href: "/", icon: Home },
     { name: "Worlds", href: "/worlds", icon: Map },
-    { name: "Addons", href: "/addons", icon: Wrench },
+    { name: "Modpacks", href: "/modpacks", icon: Wrench },
     { name: "Shaders", href: "/shaders", icon: Image },
     { name: "Downloads", href: "/downloads", icon: Download },
     { name: "Community", href: "/community", icon: Users },
