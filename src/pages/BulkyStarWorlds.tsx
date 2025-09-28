@@ -1,4 +1,4 @@
-import { Download, Star, Calendar, HardDrive, ArrowLeft } from "lucide-react";
+import { Download, Calendar, HardDrive, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,8 +20,6 @@ const BulkyStarWorlds = () => {
       creator: "Bulky Star",
       size: "2.1 GB",
       version: "1.20+",
-      downloads: "47.2K",
-      rating: 4.9,
       features: [
         "15,000+ Days of Building",
         "Massive Cities",
@@ -37,8 +35,6 @@ const BulkyStarWorlds = () => {
       creator: "Bulky Star",
       size: "850 MB",
       version: "1.19+",
-      downloads: "23.8K",
-      rating: 4.8,
       features: [
         "Japanese Architecture",
         "Mystical Design",
@@ -116,8 +112,7 @@ const BulkyStarWorlds = () => {
                       </CardDescription>
                     </div>
                     <div className="flex items-center space-x-1 text-gaming-accent">
-                      <Star className="h-4 w-4 fill-current" />
-                      <span className="text-sm font-medium">{world.rating}</span>
+                      <span className="text-sm font-medium">Java Edition</span>
                     </div>
                   </div>
                   <p className="text-gaming-text/80 text-sm leading-relaxed">
@@ -133,10 +128,6 @@ const BulkyStarWorlds = () => {
                     <div className="flex items-center space-x-2 text-sm text-gaming-text/70">
                       <Calendar className="h-4 w-4" />
                       <span>{world.version}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-sm text-gaming-text/70">
-                      <Download className="h-4 w-4" />
-                      <span>{world.downloads}</span>
                     </div>
                   </div>
 
