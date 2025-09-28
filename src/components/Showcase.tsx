@@ -1,37 +1,44 @@
 import { Button } from "@/components/ui/button";
-import { Download, Star, Users, Gamepad2, Map, Wrench, Image as ImageIcon } from "lucide-react";
+import { Download, Star, Users, Gamepad2, Palette, Map, Package } from "lucide-react";
+import { Link } from "react-router-dom";
+import shadersPreview from "@/assets/shaders-preview.jpg";
+import worldsPreview from "@/assets/worlds-preview.jpg";
+import modpacksPreview from "@/assets/modpacks-preview.jpg";
 
 const Showcase = () => {
-  const showcaseItems = [
+  const pageItems = [
     {
       id: 1,
-      title: "Epic Survival Worlds",
-      description: "Immersive survival experiences with custom terrain, structures, and challenging gameplay mechanics.",
-      icon: Map,
-      downloads: "45.2K",
+      title: "Shaders",
+      description: "High-quality shaders that enhance lighting, shadows, and visual effects for stunning gameplay experiences.",
+      icon: Palette,
+      path: "/shaders",
+      downloads: "89.5K",
       rating: "4.9",
-      category: "World",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=225&fit=crop"
+      category: "Visual",
+      image: shadersPreview
     },
     {
       id: 2,
-      title: "Advanced Redstone Addons",
-      description: "Professional redstone contraptions and automation systems for Java Edition enthusiasts.",
-      icon: Wrench,
-      downloads: "32.1K",
-      rating: "4.8",
-      category: "Addon",
-      image: "https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=400&h=225&fit=crop"
+      title: "Worlds",
+      description: "Immersive survival experiences with custom terrain, structures, and challenging gameplay mechanics.",
+      icon: Map,
+      path: "/worlds",
+      downloads: "45.2K",
+      rating: "4.9",
+      category: "Adventure",
+      image: worldsPreview
     },
     {
       id: 3,
-      title: "Realistic Shaders",
-      description: "High-quality shaders that enhance lighting, shadows, and visual effects for stunning gameplay.",
-      icon: ImageIcon,
-      downloads: "89.5K",
-      rating: "4.9",
-      category: "Shader",
-      image: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=400&h=225&fit=crop"
+      title: "Modpacks",
+      description: "Professional modpack collections with optimizations and enhancements for Java Edition enthusiasts.",
+      icon: Package,
+      path: "/modpacks",
+      downloads: "32.1K",
+      rating: "4.8",
+      category: "Enhancement",
+      image: modpacksPreview
     }
   ];
 
@@ -39,7 +46,7 @@ const Showcase = () => {
     { label: "Active Players", value: "50K+", icon: Users },
     { label: "Total Downloads", value: "1M+", icon: Download },
     { label: "Community Rating", value: "4.9", icon: Star },
-    { label: "Game Modes", value: "25+", icon: Gamepad2 }
+    { label: "Content Types", value: "3+", icon: Gamepad2 }
   ];
 
   return (
@@ -63,23 +70,24 @@ const Showcase = () => {
           })}
         </div>
 
-        {/* Featured Content */}
+        {/* Pages Section */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gaming-text mb-4">
-            Featured Content
+            Explore Our Content
           </h2>
           <p className="text-xl text-gaming-text-muted max-w-2xl mx-auto">
-            Discover our most popular worlds, addons, and shaders crafted by the community
+            Discover our collection of shaders, worlds, and modpacks crafted for the ultimate Minecraft experience
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {showcaseItems.map((item, index) => {
+          {pageItems.map((item, index) => {
             const Icon = item.icon;
             return (
-              <div 
+              <Link 
+                to={item.path}
                 key={item.id} 
-                className="card-gaming card-3d overflow-hidden group"
+                className="card-gaming card-3d overflow-hidden group block"
                 style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <div className="relative">
@@ -119,20 +127,14 @@ const Showcase = () => {
                     </div>
                   </div>
 
-                  <Button className="btn-gaming btn-3d w-full">
-                    <Download className="mr-2 h-4 w-4" />
-                    Download Now
+                  <Button className="btn-gaming btn-3d w-full group-hover:animate-pulse">
+                    <Icon className="mr-2 h-4 w-4" />
+                    Explore {item.title}
                   </Button>
                 </div>
-              </div>
+              </Link>
             );
           })}
-        </div>
-
-        <div className="text-center mt-16">
-          <Button className="btn-gaming-outline btn-3d text-lg px-8 py-4">
-            View All Content
-          </Button>
         </div>
       </div>
     </section>
