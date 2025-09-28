@@ -1,49 +1,85 @@
-import { FolderOpen, Download, Users } from "lucide-react";
+import { Download, Star, Calendar, HardDrive, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
-import bulkyStarPreview from "@/assets/bulky-star-preview.jpg";
+import bulkyStarImage from "@/assets/bulky-star-15k.jpg";
+import infinityCastleImage from "@/assets/infinity-castle.jpg";
 
-const Worlds = () => {
+const BulkyStarWorlds = () => {
   const navigate = useNavigate();
 
-  const worldFolders = [
+  const worlds = [
     {
-      name: "Bulky Star Minecraft World",
-      description: "Incredible Minecraft worlds created by Bulky Star featuring massive builds, advanced redstone, and breathtaking landscapes built over thousands of in-game days.",
-      image: bulkyStarPreview,
+      name: "Bulky Star 15k Days World",
+      description: "An incredible world built over 15,000 in-game days featuring massive cities, complex redstone contraptions, and breathtaking landscapes.",
+      image: bulkyStarImage,
+      downloadLink: "https://drive.google.com/file/d/1nzGHCk5729sRiLHCUzOn63cn484Z-959/view?usp=sharing",
       creator: "Bulky Star",
-      worldCount: 2,
-      totalDownloads: "71K",
-      route: "/worlds/bulky-star",
+      size: "2.1 GB",
+      version: "1.20+",
+      downloads: "47.2K",
+      rating: 4.9,
       features: [
         "15,000+ Days of Building",
-        "Epic Constructions", 
-        "Custom Terrain",
-        "Advanced Redstone"
+        "Massive Cities",
+        "Advanced Redstone",
+        "Custom Terrain"
+      ]
+    },
+    {
+      name: "Minecraft Infinity Castle",
+      description: "A mystical Japanese-inspired castle with infinite possibilities, featuring traditional architecture and magical elements.",
+      image: infinityCastleImage,
+      downloadLink: "https://cdn.discordapp.com/attachments/1320008925864525894/1416832281322065940/INFINITY_CASTLE.rar?ex=68c84763&is=68c6f5e3&hm=3e698108eb87be14d1c6587bcb418496cd6d0f1254d57e587312c83ef0faf288&",
+      creator: "Bulky Star",
+      size: "850 MB",
+      version: "1.19+",
+      downloads: "23.8K",
+      rating: 4.8,
+      features: [
+        "Japanese Architecture",
+        "Mystical Design",
+        "Multi-level Castle",
+        "Cherry Blossom Gardens"
       ]
     }
   ];
 
-  const handleFolderClick = (route: string) => {
-    navigate(route);
+  const handleDownload = (downloadLink: string, worldName: string) => {
+    window.open(downloadLink, '_blank');
+  };
+
+  const handleBackToWorlds = () => {
+    navigate('/worlds');
   };
 
   return (
     <div className="min-h-screen bg-gaming-bg">
       <Header />
       <main className="py-16">
+        {/* Header with Back Button */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <Button
+            onClick={handleBackToWorlds}
+            variant="outline"
+            className="mb-6 border-gaming-accent/30 text-gaming-accent hover:bg-gaming-accent/10"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to World Collections
+          </Button>
+        </section>
+
         {/* Hero Section */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-gaming-text mb-6">
-              Minecraft Worlds
+              Bulky Star Minecraft Worlds
             </h1>
             <p className="text-xl text-gaming-text/80 mb-8 max-w-3xl mx-auto">
-              Discover incredible Minecraft worlds from talented creators. Browse through collections of amazing builds, custom terrain, and epic adventures.
+              Discover incredible Minecraft worlds created by Bulky Star. From massive cities built over thousands of days to mystical castles.
             </p>
             <div className="flex flex-wrap justify-center gap-2 mb-8">
               <Badge variant="secondary" className="bg-gaming-accent/20 text-gaming-accent border-gaming-accent/30">
@@ -59,51 +95,55 @@ const Worlds = () => {
           </div>
         </section>
 
-        {/* World Folders Grid */}
+        {/* Worlds Grid */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-          <h2 className="text-2xl font-bold text-gaming-text mb-8">World Collections</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {worldFolders.map((folder, index) => (
-              <Card key={index} className="bg-card border-border hover:border-gaming-accent/50 transition-colors group cursor-pointer">
-                <div className="aspect-video overflow-hidden rounded-t-lg relative">
+          <div className="grid md:grid-cols-2 gap-8">
+            {worlds.map((world, index) => (
+              <Card key={index} className="bg-card border-border hover:border-gaming-accent/50 transition-colors group">
+                <div className="aspect-video overflow-hidden rounded-t-lg">
                   <img
-                    src={folder.image}
-                    alt={folder.name}
+                    src={world.image}
+                    alt={world.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                    <FolderOpen className="h-16 w-16 text-white/80" />
-                  </div>
                 </div>
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div>
-                      <CardTitle className="text-xl text-gaming-text mb-2">{folder.name}</CardTitle>
+                      <CardTitle className="text-xl text-gaming-text mb-2">{world.name}</CardTitle>
                       <CardDescription className="text-gaming-text/70 mb-3">
-                        by {folder.creator}
+                        by {world.creator}
                       </CardDescription>
                     </div>
                     <div className="flex items-center space-x-1 text-gaming-accent">
-                      <Users className="h-4 w-4" />
-                      <span className="text-sm font-medium">{folder.worldCount} worlds</span>
+                      <Star className="h-4 w-4 fill-current" />
+                      <span className="text-sm font-medium">{world.rating}</span>
                     </div>
                   </div>
                   <p className="text-gaming-text/80 text-sm leading-relaxed">
-                    {folder.description}
+                    {world.description}
                   </p>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center space-x-4 mb-6 text-sm text-gaming-text/70">
-                    <div className="flex items-center space-x-2">
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="flex items-center space-x-2 text-sm text-gaming-text/70">
+                      <HardDrive className="h-4 w-4" />
+                      <span>{world.size}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm text-gaming-text/70">
+                      <Calendar className="h-4 w-4" />
+                      <span>{world.version}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm text-gaming-text/70">
                       <Download className="h-4 w-4" />
-                      <span>{folder.totalDownloads} downloads</span>
+                      <span>{world.downloads}</span>
                     </div>
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="text-sm font-medium text-gaming-text mb-3">Collection Features:</h4>
+                    <h4 className="text-sm font-medium text-gaming-text mb-3">Features:</h4>
                     <div className="flex flex-wrap gap-2">
-                      {folder.features.map((feature, featureIndex) => (
+                      {world.features.map((feature, featureIndex) => (
                         <Badge
                           key={featureIndex}
                           variant="outline"
@@ -116,11 +156,11 @@ const Worlds = () => {
                   </div>
 
                   <Button
-                    onClick={() => handleFolderClick(folder.route)}
+                    onClick={() => handleDownload(world.downloadLink, world.name)}
                     className="w-full bg-gaming-accent hover:bg-gaming-accent/90 text-gaming-bg font-medium"
                   >
-                    <FolderOpen className="h-4 w-4 mr-2" />
-                    Browse Worlds
+                    <Download className="h-4 w-4 mr-2" />
+                    Download World
                   </Button>
                 </CardContent>
               </Card>
@@ -128,13 +168,13 @@ const Worlds = () => {
           </div>
         </section>
 
-        {/* Info Section */}
+        {/* Installation Guide */}
         <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Card className="bg-card border-border">
             <CardHeader>
-              <CardTitle className="text-2xl text-gaming-text">How to Use</CardTitle>
+              <CardTitle className="text-2xl text-gaming-text">Installation Guide</CardTitle>
               <CardDescription className="text-gaming-text/70">
-                Explore world collections and download amazing Minecraft creations
+                Follow these steps to install and play these amazing worlds
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -146,9 +186,9 @@ const Worlds = () => {
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-medium text-gaming-text mb-1">Browse Collections</h3>
+                    <h3 className="font-medium text-gaming-text mb-1">Download the World</h3>
                     <p className="text-gaming-text/70 text-sm">
-                      Click on any world collection to see all available worlds from that creator.
+                      Click the download button and save the world file to your computer.
                     </p>
                   </div>
                 </div>
@@ -159,9 +199,9 @@ const Worlds = () => {
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-medium text-gaming-text mb-1">Choose Your World</h3>
+                    <h3 className="font-medium text-gaming-text mb-1">Extract Files</h3>
                     <p className="text-gaming-text/70 text-sm">
-                      Browse through individual worlds and find the perfect one for your Minecraft experience.
+                      Extract the downloaded file if it's compressed (ZIP/RAR format).
                     </p>
                   </div>
                 </div>
@@ -172,9 +212,9 @@ const Worlds = () => {
                     </div>
                   </div>
                   <div>
-                    <h3 className="font-medium text-gaming-text mb-1">Download & Play</h3>
+                    <h3 className="font-medium text-gaming-text mb-1">Install in Minecraft</h3>
                     <p className="text-gaming-text/70 text-sm">
-                      Download the world file and follow the installation guide to start playing.
+                      Copy the world folder to your Minecraft saves directory and launch the game to play.
                     </p>
                   </div>
                 </div>
@@ -188,4 +228,4 @@ const Worlds = () => {
   );
 };
 
-export default Worlds;
+export default BulkyStarWorlds;

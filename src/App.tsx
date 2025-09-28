@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Patch from "./pages/Patch";
 import Shaders from "./pages/Shaders";
 import Worlds from "./pages/Worlds";
+import BulkyStarWorlds from "./pages/BulkyStarWorlds";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/patch" element={<Patch />} />
           <Route path="/shaders" element={<Shaders />} />
           <Route path="/worlds" element={<Worlds />} />
+          <Route path="/worlds/bulky-star" element={<BulkyStarWorlds />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
