@@ -109,16 +109,16 @@ const Downloads = () => {
         
         <main className="pt-20">
           {/* Hero Section */}
-          <header className="bg-gradient-to-b from-gaming-surface to-gaming-bg py-20">
+          <header className="bg-gradient-to-b from-gaming-surface to-gaming-bg py-12 md:py-20">
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="text-center max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
+                <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 animate-fade-in">
                   <span className="text-primary">Best</span> Minecraft Launcher
                 </h1>
-                <p className="text-xl text-gaming-text mb-8 animate-fade-in">
+                <p className="text-base sm:text-lg md:text-xl text-gaming-text mb-6 md:mb-8 animate-fade-in px-2">
                   Download the ultimate Minecraft launcher with seamless mod management and beautiful interface
                 </p>
-                <div className="flex flex-wrap justify-center gap-4 text-sm text-gaming-text">
+                <div className="flex flex-wrap justify-center gap-2 md:gap-4 text-xs sm:text-sm text-gaming-text px-2">
                   <Badge variant="outline" className="border-primary text-primary">
                     Free Download
                   </Badge>
@@ -134,9 +134,9 @@ const Downloads = () => {
           </header>
 
           {/* Launchers Grid */}
-          <section className="py-20">
+          <section className="py-12 md:py-20">
             <div className="container mx-auto px-4 max-w-7xl">
-              <div className="grid gap-8 max-w-6xl mx-auto">
+              <div className="grid gap-6 md:gap-8 max-w-6xl mx-auto">
                 {launchers.map((launcher, index) => (
                   <Card key={index} className="gaming-card hover-scale group overflow-hidden animate-fade-in">
                     <div className="grid md:grid-cols-2 gap-0">
@@ -145,38 +145,38 @@ const Downloads = () => {
                         <img
                           src={launcher.image}
                           alt={`${launcher.name} - ${launcher.title} interface preview`}
-                          className="w-full h-full object-cover min-h-[300px] transition-transform duration-500 group-hover:scale-105"
+                          className="w-full h-full object-cover min-h-[200px] sm:min-h-[250px] md:min-h-[300px] transition-transform duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                        <Badge className="absolute top-4 right-4 bg-primary/90 text-white">
+                        <Badge className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-primary/90 text-white text-xs">
                           {launcher.version}
                         </Badge>
-                        <Badge className="absolute top-4 left-4 bg-secondary/90 text-white">
+                        <Badge className="absolute top-2 sm:top-4 left-2 sm:left-4 bg-secondary/90 text-white text-xs">
                           {launcher.platform}
                         </Badge>
                       </div>
                       
                       {/* Content Section */}
-                      <div className="p-8">
-                        <CardHeader className="p-0 mb-6">
-                          <CardTitle className="text-3xl text-white mb-2 group-hover:text-primary transition-colors">
+                      <div className="p-4 sm:p-6 md:p-8">
+                        <CardHeader className="p-0 mb-4 md:mb-6">
+                          <CardTitle className="text-xl sm:text-2xl md:text-3xl text-white mb-2 group-hover:text-primary transition-colors">
                             {launcher.name}
                           </CardTitle>
-                          <h2 className="text-xl text-primary font-semibold mb-3">
+                          <h2 className="text-base sm:text-lg md:text-xl text-primary font-semibold mb-2 md:mb-3">
                             {launcher.title}
                           </h2>
-                          <CardDescription className="text-gaming-text text-base leading-relaxed">
+                          <CardDescription className="text-gaming-text text-sm sm:text-base leading-relaxed">
                             {launcher.description}
                           </CardDescription>
                         </CardHeader>
                         
-                        <CardContent className="p-0 space-y-6">
+                        <CardContent className="p-0 space-y-4 md:space-y-6">
                           {/* Features */}
                           <div>
-                            <h3 className="text-lg font-semibold text-white mb-3">Key Features:</h3>
-                            <div className="grid grid-cols-2 gap-2">
+                            <h3 className="text-base sm:text-lg font-semibold text-white mb-2 md:mb-3">Key Features:</h3>
+                            <div className="grid grid-cols-2 gap-1.5 sm:gap-2">
                               {launcher.features.map((feature) => (
-                                <Badge key={feature} variant="secondary" className="text-xs justify-start">
+                                <Badge key={feature} variant="secondary" className="text-[10px] sm:text-xs justify-start py-1">
                                   {feature}
                                 </Badge>
                               ))}
@@ -185,14 +185,14 @@ const Downloads = () => {
 
                           {/* Highlights */}
                           <div>
-                            <h3 className="text-lg font-semibold text-white mb-3">Why Choose {launcher.name}:</h3>
-                            <div className="space-y-2">
+                            <h3 className="text-base sm:text-lg font-semibold text-white mb-2 md:mb-3">Why Choose {launcher.name}:</h3>
+                            <div className="space-y-1.5 sm:space-y-2">
                               {launcher.highlights.map((highlight, idx) => {
                                 const Icon = highlight.icon;
                                 return (
-                                  <div key={idx} className="flex items-center gap-3 text-gaming-text">
-                                    <Icon className="h-4 w-4 text-primary" />
-                                    <span className="text-sm">{highlight.text}</span>
+                                  <div key={idx} className="flex items-center gap-2 sm:gap-3 text-gaming-text">
+                                    <Icon className="h-3 w-3 sm:h-4 sm:w-4 text-primary flex-shrink-0" />
+                                    <span className="text-xs sm:text-sm">{highlight.text}</span>
                                   </div>
                                 );
                               })}
@@ -201,11 +201,11 @@ const Downloads = () => {
                           
                           {/* Download Button */}
                           <Button
-                            className="w-full btn-gaming text-lg py-3 group-hover:animate-pulse"
+                            className="w-full btn-gaming text-sm sm:text-base md:text-lg py-2.5 sm:py-3 group-hover:animate-pulse"
                             onClick={() => handleDownload(launcher.downloadLink)}
                           >
-                            <Download className="w-5 h-5 mr-2" />
-                            Download {launcher.name} ({launcher.version})
+                            <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                            <span className="truncate">Download {launcher.name}</span>
                           </Button>
                         </CardContent>
                       </div>
@@ -217,31 +217,31 @@ const Downloads = () => {
           </section>
 
           {/* Installation Guide */}
-          <section className="py-20 bg-gaming-surface">
+          <section className="py-12 md:py-20 bg-gaming-surface">
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl font-bold text-white mb-8">How to Install Your Launcher</h2>
-                <div className="grid md:grid-cols-3 gap-8">
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
-                      <span className="text-white font-bold">1</span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 md:mb-8 px-2">How to Install Your Launcher</h2>
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                  <div className="space-y-3 md:space-y-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
+                      <span className="text-white font-bold text-sm sm:text-base">1</span>
                     </div>
-                    <h3 className="text-xl font-semibold text-white">Download</h3>
-                    <p className="text-gaming-text">Click the download button to get your preferred launcher for Windows.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white">Download</h3>
+                    <p className="text-sm sm:text-base text-gaming-text px-2">Click the download button to get your preferred launcher for Windows.</p>
                   </div>
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
-                      <span className="text-white font-bold">2</span>
+                  <div className="space-y-3 md:space-y-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
+                      <span className="text-white font-bold text-sm sm:text-base">2</span>
                     </div>
-                    <h3 className="text-xl font-semibold text-white">Install</h3>
-                    <p className="text-gaming-text">Run the installer and follow the simple setup wizard to install on your system.</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white">Install</h3>
+                    <p className="text-sm sm:text-base text-gaming-text px-2">Run the installer and follow the simple setup wizard to install on your system.</p>
                   </div>
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
-                      <span className="text-white font-bold">3</span>
+                  <div className="space-y-3 md:space-y-4 sm:col-span-2 md:col-span-1">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
+                      <span className="text-white font-bold text-sm sm:text-base">3</span>
                     </div>
-                    <h3 className="text-xl font-semibold text-white">Launch & Play</h3>
-                    <p className="text-gaming-text">Open your launcher and start your enhanced Minecraft experience!</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white">Launch & Play</h3>
+                    <p className="text-sm sm:text-base text-gaming-text px-2">Open your launcher and start your enhanced Minecraft experience!</p>
                   </div>
                 </div>
               </div>
