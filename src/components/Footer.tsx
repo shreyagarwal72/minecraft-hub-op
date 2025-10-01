@@ -88,31 +88,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter */}
-        <div className="border-t border-border mt-12 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-            <div>
-              <h3 className="text-foreground font-semibold mb-2">Stay Updated</h3>
-              <p className="text-muted-foreground">Get notified about new content and updates</p>
-            </div>
-            <div className="flex space-x-2 w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 md:w-64 px-3 py-2 bg-background border border-border rounded-md text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <Button className="bg-primary hover:bg-primary-hover text-primary-foreground">
-                <Mail className="h-4 w-4 mr-2" />
-                Subscribe
-              </Button>
-            </div>
-          </div>
-        </div>
-
         {/* Bottom */}
         <div className="border-t border-border mt-8 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground">
           <div>
-            © 2024 Minecraft Java Hub. Not affiliated with Mojang Studios or Microsoft.
+            © 2025 Nextup Studio
           </div>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
