@@ -6,49 +6,91 @@ import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import modrinthImage from "@/assets/modrinth-launcher.webp";
+import legacyLauncherImage from "@/assets/legacy-launcher.jpg";
+import tlauncherImage from "@/assets/tlauncher.png";
 
 const Downloads = () => {
-  const launcher = {
-    name: "Modrinth App",
-    title: "Best Minecraft Launcher",
-    description: "The ultimate Minecraft launcher with seamless mod management, easy installation, and a beautiful interface. Modrinth App revolutionizes how you play Minecraft with automatic updates, secure downloads, and an intuitive design that makes modding accessible to everyone.",
-    image: modrinthImage,
-    downloadLink: "https://launcher-files.modrinth.com/versions/0.10.7/windows/Modrinth%20App_0.10.7_x64-setup.exe",
-    version: "v0.10.7",
-    platform: "Windows",
-    features: [
-      "Easy Mod Management",
-      "One-Click Installation", 
-      "Automatic Updates",
-      "Beautiful Interface",
-      "Secure Downloads",
-      "Multiple Minecraft Versions"
-    ],
-    highlights: [
-      { icon: Shield, text: "100% Safe & Secure" },
-      { icon: Zap, text: "Lightning Fast Downloads" },
-      { icon: Globe, text: "Global CDN Network" },
-      { icon: Star, text: "Community Favorite" }
-    ]
-  };
+  const launchers = [
+    {
+      name: "Modrinth App",
+      title: "Best Minecraft Launcher",
+      description: "The ultimate Minecraft launcher with seamless mod management, easy installation, and a beautiful interface. Modrinth App revolutionizes how you play Minecraft with automatic updates, secure downloads, and an intuitive design that makes modding accessible to everyone.",
+      image: modrinthImage,
+      downloadLink: "https://launcher-files.modrinth.com/versions/0.10.7/windows/Modrinth%20App_0.10.7_x64-setup.exe",
+      version: "v0.10.7",
+      platform: "Windows",
+      features: [
+        "Easy Mod Management",
+        "One-Click Installation", 
+        "Automatic Updates",
+        "Beautiful Interface",
+        "Secure Downloads",
+        "Multiple Minecraft Versions"
+      ],
+      highlights: [
+        { icon: Shield, text: "100% Safe & Secure" },
+        { icon: Zap, text: "Lightning Fast Downloads" },
+        { icon: Globe, text: "Global CDN Network" },
+        { icon: Star, text: "Community Favorite" }
+      ]
+    },
+    {
+      name: "Legacy Launcher",
+      title: "Classic Minecraft Launcher",
+      description: "A reliable and feature-rich launcher for Minecraft Java Edition. Legacy Launcher offers excellent performance, customizable settings, and support for various Minecraft versions, making it a popular choice among players.",
+      image: legacyLauncherImage,
+      downloadLink: "https://github.com/LauncherMeta/Mirror/releases/download/1.6.4.0/LegacyLauncher.exe",
+      version: "v1.6.4.0",
+      platform: "Windows",
+      features: [
+        "Multiple Versions Support",
+        "Custom Skins", 
+        "Mod Compatibility",
+        "Fast Performance",
+        "Easy Setup",
+        "Lightweight"
+      ],
+      highlights: [
+        { icon: Shield, text: "Trusted by Community" },
+        { icon: Zap, text: "Fast & Lightweight" },
+        { icon: Globe, text: "Multi-Version Support" },
+        { icon: Star, text: "Popular Choice" }
+      ]
+    },
+    {
+      name: "TLauncher",
+      title: "Feature-Rich Minecraft Launcher",
+      description: "TLauncher is a comprehensive Minecraft launcher with extensive features including skin management, mod support, and multiple account handling. Perfect for players who want advanced customization options.",
+      image: tlauncherImage,
+      downloadLink: "https://www.mediafire.com/file/jh6r08qofdy1390/TLauncher-Installer-1.8.9.exe/file",
+      version: "v1.8.9",
+      platform: "Windows",
+      features: [
+        "Skin Manager",
+        "Mod Support", 
+        "Multiple Accounts",
+        "Version Switcher",
+        "Easy Installation",
+        "Resource Packs"
+      ],
+      highlights: [
+        { icon: Shield, text: "Secure Downloads" },
+        { icon: Zap, text: "Feature Rich" },
+        { icon: Globe, text: "Wide Compatibility" },
+        { icon: Star, text: "Active Community" }
+      ]
+    }
+  ];
 
-  const handleDownload = () => {
-    window.open(launcher.downloadLink, '_blank');
+  const handleDownload = (downloadLink: string) => {
+    window.open(downloadLink, '_blank');
   };
 
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": launcher.name,
-    "description": launcher.description,
-    "applicationCategory": "Game Launcher",
-    "operatingSystem": "Windows",
-    "downloadUrl": launcher.downloadLink,
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
+    "@type": "CollectionPage",
+    "name": "Minecraft Launchers",
+    "description": "Download the best Minecraft launchers including Modrinth App, Legacy Launcher, and TLauncher"
   };
 
   return (
@@ -91,83 +133,85 @@ const Downloads = () => {
             </div>
           </header>
 
-          {/* Main Launcher Card */}
+          {/* Launchers Grid */}
           <section className="py-20">
             <div className="container mx-auto px-4 max-w-7xl">
-              <div className="max-w-4xl mx-auto">
-                <Card className="gaming-card hover-scale group overflow-hidden animate-fade-in">
-                  <div className="grid md:grid-cols-2 gap-0">
-                    {/* Image Section */}
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={launcher.image}
-                        alt={`${launcher.name} - ${launcher.title} interface preview`}
-                        className="w-full h-full object-cover min-h-[300px] transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      <Badge className="absolute top-4 right-4 bg-primary/90 text-white">
-                        {launcher.version}
-                      </Badge>
-                      <Badge className="absolute top-4 left-4 bg-secondary/90 text-white">
-                        {launcher.platform}
-                      </Badge>
-                    </div>
-                    
-                    {/* Content Section */}
-                    <div className="p-8">
-                      <CardHeader className="p-0 mb-6">
-                        <CardTitle className="text-3xl text-white mb-2 group-hover:text-primary transition-colors">
-                          {launcher.name}
-                        </CardTitle>
-                        <h2 className="text-xl text-primary font-semibold mb-3">
-                          {launcher.title}
-                        </h2>
-                        <CardDescription className="text-gaming-text text-base leading-relaxed">
-                          {launcher.description}
-                        </CardDescription>
-                      </CardHeader>
+              <div className="grid gap-8 max-w-6xl mx-auto">
+                {launchers.map((launcher, index) => (
+                  <Card key={index} className="gaming-card hover-scale group overflow-hidden animate-fade-in">
+                    <div className="grid md:grid-cols-2 gap-0">
+                      {/* Image Section */}
+                      <div className="relative overflow-hidden">
+                        <img
+                          src={launcher.image}
+                          alt={`${launcher.name} - ${launcher.title} interface preview`}
+                          className="w-full h-full object-cover min-h-[300px] transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <Badge className="absolute top-4 right-4 bg-primary/90 text-white">
+                          {launcher.version}
+                        </Badge>
+                        <Badge className="absolute top-4 left-4 bg-secondary/90 text-white">
+                          {launcher.platform}
+                        </Badge>
+                      </div>
                       
-                      <CardContent className="p-0 space-y-6">
-                        {/* Features */}
-                        <div>
-                          <h3 className="text-lg font-semibold text-white mb-3">Key Features:</h3>
-                          <div className="grid grid-cols-2 gap-2">
-                            {launcher.features.map((feature) => (
-                              <Badge key={feature} variant="secondary" className="text-xs justify-start">
-                                {feature}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Highlights */}
-                        <div>
-                          <h3 className="text-lg font-semibold text-white mb-3">Why Choose Modrinth:</h3>
-                          <div className="space-y-2">
-                            {launcher.highlights.map((highlight, index) => {
-                              const Icon = highlight.icon;
-                              return (
-                                <div key={index} className="flex items-center gap-3 text-gaming-text">
-                                  <Icon className="h-4 w-4 text-primary" />
-                                  <span className="text-sm">{highlight.text}</span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
+                      {/* Content Section */}
+                      <div className="p-8">
+                        <CardHeader className="p-0 mb-6">
+                          <CardTitle className="text-3xl text-white mb-2 group-hover:text-primary transition-colors">
+                            {launcher.name}
+                          </CardTitle>
+                          <h2 className="text-xl text-primary font-semibold mb-3">
+                            {launcher.title}
+                          </h2>
+                          <CardDescription className="text-gaming-text text-base leading-relaxed">
+                            {launcher.description}
+                          </CardDescription>
+                        </CardHeader>
                         
-                        {/* Download Button */}
-                        <Button
-                          className="w-full btn-gaming text-lg py-3 group-hover:animate-pulse"
-                          onClick={handleDownload}
-                        >
-                          <Download className="w-5 h-5 mr-2" />
-                          Download {launcher.name} ({launcher.version})
-                        </Button>
-                      </CardContent>
+                        <CardContent className="p-0 space-y-6">
+                          {/* Features */}
+                          <div>
+                            <h3 className="text-lg font-semibold text-white mb-3">Key Features:</h3>
+                            <div className="grid grid-cols-2 gap-2">
+                              {launcher.features.map((feature) => (
+                                <Badge key={feature} variant="secondary" className="text-xs justify-start">
+                                  {feature}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Highlights */}
+                          <div>
+                            <h3 className="text-lg font-semibold text-white mb-3">Why Choose {launcher.name}:</h3>
+                            <div className="space-y-2">
+                              {launcher.highlights.map((highlight, idx) => {
+                                const Icon = highlight.icon;
+                                return (
+                                  <div key={idx} className="flex items-center gap-3 text-gaming-text">
+                                    <Icon className="h-4 w-4 text-primary" />
+                                    <span className="text-sm">{highlight.text}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                          
+                          {/* Download Button */}
+                          <Button
+                            className="w-full btn-gaming text-lg py-3 group-hover:animate-pulse"
+                            onClick={() => handleDownload(launcher.downloadLink)}
+                          >
+                            <Download className="w-5 h-5 mr-2" />
+                            Download {launcher.name} ({launcher.version})
+                          </Button>
+                        </CardContent>
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                ))}
               </div>
             </div>
           </section>
@@ -176,28 +220,28 @@ const Downloads = () => {
           <section className="py-20 bg-gaming-surface">
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl font-bold text-white mb-8">How to Install Modrinth App</h2>
+                <h2 className="text-3xl font-bold text-white mb-8">How to Install Your Launcher</h2>
                 <div className="grid md:grid-cols-3 gap-8">
                   <div className="space-y-4">
                     <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
                       <span className="text-white font-bold">1</span>
                     </div>
                     <h3 className="text-xl font-semibold text-white">Download</h3>
-                    <p className="text-gaming-text">Click the download button above to get the latest version of Modrinth App for Windows.</p>
+                    <p className="text-gaming-text">Click the download button to get your preferred launcher for Windows.</p>
                   </div>
                   <div className="space-y-4">
                     <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
                       <span className="text-white font-bold">2</span>
                     </div>
                     <h3 className="text-xl font-semibold text-white">Install</h3>
-                    <p className="text-gaming-text">Run the installer and follow the simple setup wizard to install Modrinth App on your system.</p>
+                    <p className="text-gaming-text">Run the installer and follow the simple setup wizard to install on your system.</p>
                   </div>
                   <div className="space-y-4">
                     <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
                       <span className="text-white font-bold">3</span>
                     </div>
                     <h3 className="text-xl font-semibold text-white">Launch & Play</h3>
-                    <p className="text-gaming-text">Open Modrinth App, browse mods and modpacks, and start your enhanced Minecraft experience!</p>
+                    <p className="text-gaming-text">Open your launcher and start your enhanced Minecraft experience!</p>
                   </div>
                 </div>
               </div>

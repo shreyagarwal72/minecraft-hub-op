@@ -9,6 +9,15 @@ const Showcase = () => {
   const pageItems = [
     {
       id: 1,
+      title: "Best Minecraft Launcher",
+      description: "Download the ultimate Minecraft launcher with seamless mod management and beautiful interface.",
+      icon: Download,
+      path: "/downloads",
+      category: "Tools",
+      image: modpacksPreview
+    },
+    {
+      id: 2,
       title: "Shaders",
       description: "High-quality shaders that enhance lighting, shadows, and visual effects for stunning gameplay experiences.",
       icon: Palette,
@@ -17,7 +26,7 @@ const Showcase = () => {
       image: shadersPreview
     },
     {
-      id: 2,
+      id: 3,
       title: "Worlds",
       description: "Immersive survival experiences with custom terrain, structures, and challenging gameplay mechanics.",
       icon: Map,
@@ -26,7 +35,7 @@ const Showcase = () => {
       image: worldsPreview
     },
     {
-      id: 3,
+      id: 4,
       title: "Modpacks",
       description: "Professional modpack collections with optimizations and enhancements for Java Edition enthusiasts.",
       icon: Package,
@@ -38,7 +47,7 @@ const Showcase = () => {
 
   const stats = [
     { label: "Active Players", value: "50K+", icon: Users },
-    { label: "Content Types", value: "3+", icon: Gamepad2 }
+    { label: "Content Types", value: "4+", icon: Gamepad2 }
   ];
 
   return (
@@ -72,7 +81,7 @@ const Showcase = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {pageItems.map((item, index) => {
             const Icon = item.icon;
             return (
