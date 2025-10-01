@@ -2,6 +2,7 @@ import { Download, Star, Shield, Zap, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import modrinthImage from "@/assets/modrinth-launcher.webp";
@@ -52,7 +53,7 @@ const Downloads = () => {
 
   return (
     <>
-      <head>
+      <Helmet>
         <title>Downloads - Best Minecraft Launcher | Minecraft Java Hub</title>
         <meta name="description" content="Download the best Minecraft launcher - Modrinth App. Easy mod management, secure downloads, and beautiful interface for the ultimate Minecraft experience." />
         <meta name="keywords" content="minecraft launcher, modrinth app, minecraft mods, launcher download, minecraft java launcher" />
@@ -60,7 +61,7 @@ const Downloads = () => {
         <script type="application/ld+json">
           {JSON.stringify(structuredData)}
         </script>
-      </head>
+      </Helmet>
       <div className="min-h-screen bg-gaming-bg">
         <Header />
         

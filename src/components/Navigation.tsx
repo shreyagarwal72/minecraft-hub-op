@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Download, Map, Wrench, Image, Users, Home } from "lucide-react";
+import { Link } from "react-router-dom";
 import minecraftLogo from "@/assets/minecraft-logo.png";
 
 const Navigation = () => {
@@ -39,10 +40,10 @@ const Navigation = () => {
                   className="text-foreground hover:text-primary hover:bg-secondary/50 transition-all duration-200"
                   asChild
                 >
-                  <a href={item.href} className="flex items-center space-x-2">
+                  <Link to={item.href} className="flex items-center space-x-2">
                     <Icon className="h-4 w-4" />
                     <span>{item.name}</span>
-                  </a>
+                  </Link>
                 </Button>
               );
             })}
@@ -53,8 +54,9 @@ const Navigation = () => {
             <Button 
               variant="default" 
               className="bg-primary hover:bg-primary-hover text-primary-foreground shadow-minecraft"
+              asChild
             >
-              Join Server
+              <Link to="/downloads">Get Started</Link>
             </Button>
           </div>
 
@@ -83,10 +85,10 @@ const Navigation = () => {
                   className="w-full justify-start text-foreground hover:text-primary hover:bg-secondary/50"
                   asChild
                 >
-                  <a href={item.href} className="flex items-center space-x-3">
+                  <Link to={item.href} className="flex items-center space-x-3">
                     <Icon className="h-4 w-4" />
                     <span>{item.name}</span>
-                  </a>
+                  </Link>
                 </Button>
               );
             })}
@@ -94,8 +96,9 @@ const Navigation = () => {
               <Button 
                 variant="default" 
                 className="w-full bg-primary hover:bg-primary-hover text-primary-foreground"
+                asChild
               >
-                Join Server
+                <Link to="/downloads">Get Started</Link>
               </Button>
             </div>
           </div>
