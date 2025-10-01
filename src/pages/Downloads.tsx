@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import modrinthImage from "@/assets/modrinth-launcher.jpg";
+import modrinthImage from "@/assets/modrinth-launcher.webp";
 
 const Downloads = () => {
   const launcher = {
