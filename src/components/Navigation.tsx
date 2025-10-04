@@ -57,7 +57,7 @@ const Navigation = () => {
               className="bg-primary hover:bg-primary-hover text-primary-foreground shadow-minecraft"
               asChild
             >
-              <Link to="/downloads">Get Started</Link>
+              <Link to="/faq">Get Started</Link>
             </Button>
           </div>
 
@@ -99,7 +99,7 @@ const Navigation = () => {
                 className="w-full bg-primary hover:bg-primary-hover text-primary-foreground"
                 asChild
               >
-                <Link to="/downloads">Get Started</Link>
+                <Link to="/faq">Get Started</Link>
               </Button>
             </div>
           </div>
