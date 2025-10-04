@@ -14,6 +14,7 @@ const Header = () => {
     { name: "Shaders", href: "/shaders" },
     { name: "Mrpacktozip Convert", href: "/patch" },
     { name: "Downloads", href: "/downloads" },
+    { name: "FAQ", href: "/faq" },
   ];
 
   return (
@@ -46,7 +47,7 @@ const Header = () => {
           <div className="hidden md:block">
             <Button 
               className="btn-gaming btn-3d"
-              onClick={() => navigate('/downloads')}
+              onClick={() => navigate('/faq')}
             >
               Get Started
             </Button>
@@ -87,7 +88,7 @@ const Header = () => {
                 <Button 
                   className="btn-gaming w-full"
                   onClick={() => {
-                    navigate('/downloads');
+                    navigate('/faq');
                     setIsMenuOpen(false);
                   }}
                 >
