@@ -4,7 +4,29 @@
 
 **URL**: https://lovable.dev/projects/30b4e328-6b06-4810-a219-fb0bb310feb3
 
-A professional Minecraft Java Edition content platform featuring worlds, addons, shaders, and downloads. Built with modern web technologies and stunning 3D visual effects.
+A professional Minecraft Java Edition content platform featuring worlds, addons, shaders, and downloads. Built with modern web technologies, stunning 3D visual effects, and AI-powered FAQ support.
+
+## Features
+
+- **Custom Worlds**: High-quality Minecraft worlds including Bulky Star (15K blocks), Infinity Castle, and more
+- **Shaders**: Visual enhancement packs (BSL Shaders, Photon Shader, Complementary Shaders)
+- **Modpacks**: Curated modpacks for enhanced gameplay
+- **Downloads**: Best Minecraft launchers (Modrinth, Legacy Launcher, TLauncher)
+- **AI FAQ**: Intelligent chatbot powered by Lovable AI for instant help
+- **Community**: Connect with fellow Minecraft enthusiasts
+
+## Sitemap
+
+```
+/                  - Home page with featured content
+/worlds            - Browse custom Minecraft worlds
+/worlds/bulky-star - Detailed view of Bulky Star world
+/modpacks          - Discover modpacks
+/shaders           - Visual enhancement shaders
+/downloads         - Minecraft launcher downloads
+/faq               - AI-powered FAQ and help center
+/community         - Community page
+```
 
 ## How can I edit this code?
 

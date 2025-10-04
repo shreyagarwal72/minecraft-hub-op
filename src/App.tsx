@@ -12,6 +12,7 @@ import Worlds from "./pages/Worlds";
 import BulkyStarWorlds from "./pages/BulkyStarWorlds";
 import Modpacks from "./pages/Modpacks";
 import Downloads from "./pages/Downloads";
+import FAQ from "./pages/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/worlds/bulky-star" element={<BulkyStarWorlds />} />
           <Route path="/modpacks" element={<Modpacks />} />
           <Route path="/downloads" element={<Downloads />} />
+          <Route path="/faq" element={<FAQ />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
