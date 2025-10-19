@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Download, Map, Wrench, Image, Users, Home, HelpCircle } from "lucide-react";
+import { Menu, X, Download, Map, Wrench, Image, Home, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import minecraftLogo from "@/assets/minecraft-logo.png";
 
@@ -14,7 +14,6 @@ const Navigation = () => {
     { name: "Shaders", href: "/shaders", icon: Image },
     { name: "Downloads", href: "/downloads", icon: Download },
     { name: "FAQ", href: "/faq", icon: HelpCircle },
-    { name: "Community", href: "/community", icon: Users },
   ];
 
   return (
