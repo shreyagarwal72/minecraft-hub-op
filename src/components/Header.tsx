@@ -8,13 +8,13 @@ const Header = () => {
   const navigate = useNavigate();
 
   const navigation = [
-    { name: "Home", href: "/" },
-    { name: "Worlds", href: "/worlds" },
-    { name: "Modpacks", href: "/modpacks" },
-    { name: "Shaders", href: "/shaders" },
-    { name: "Mrpacktozip Convert", href: "/patch" },
-    { name: "Downloads", href: "/downloads" },
-    { name: "FAQ", href: "/faq" },
+    { name: "Home", href: "/", emoji: "🏠" },
+    { name: "Worlds", href: "/worlds", emoji: "🗺️" },
+    { name: "Modpacks", href: "/modpacks", emoji: "📦" },
+    { name: "Shaders", href: "/shaders", emoji: "✨" },
+    { name: "Mrpacktozip Convert", href: "/patch", emoji: "🔧" },
+    { name: "Downloads", href: "/downloads", emoji: "⬇️" },
+    { name: "FAQ", href: "/faq", emoji: "❓" },
   ];
 
   return (
@@ -78,10 +78,11 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-gaming-text hover:text-primary block px-3 py-2 text-base font-medium transition-colors duration-300"
+                  className="text-gaming-text hover:text-primary block px-3 py-2 text-base font-medium transition-colors duration-300 flex items-center gap-3"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {item.name}
+                  <span className="text-xl">{item.emoji}</span>
+                  <span>{item.name}</span>
                 </Link>
               ))}
               <div className="px-3 py-2">
