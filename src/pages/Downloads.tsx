@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import modrinthImage from "@/assets/modrinth-launcher.webp";
 import legacyLauncherImage from "@/assets/legacy-launcher.jpg";
 import tlauncherImage from "@/assets/tlauncher.png";
@@ -248,8 +247,6 @@ const Downloads = () => {
             </div>
           </section>
         </main>
-        
-        <Footer />
       </div>
     </>
   );

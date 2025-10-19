@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
 import bulkyStarImage from "@/assets/bulky-star-15k.jpg";
 import infinityCastleImage from "@/assets/infinity-castle.jpg";
@@ -214,7 +213,6 @@ const BulkyStarWorlds = () => {
           </Card>
         </section>
       </main>
-      <Footer />
     </div>
   );
 };

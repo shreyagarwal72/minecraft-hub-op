@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Showcase from "@/components/Showcase";
-import Footer from "@/components/Footer";
 
 const Index = () => {
   const structuredData = {
@@ -34,7 +33,6 @@ const Index = () => {
           <Hero />
           <Showcase />
         </main>
-        <Footer />
       </div>
     </>
   );

@@ -6,7 +6,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Bot, User, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 
 type Message = {
@@ -289,8 +288,6 @@ const FAQ = () => {
             </div>
           )}
         </main>
-
-        <Footer />
       </div>
     </>
   );

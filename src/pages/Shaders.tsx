@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import bslShaderImage from "@/assets/bsl-shader.jpg";
 import complementaryShaderImage from "@/assets/complementary-shader.jpg";
 import photonShaderImage from "@/assets/photon-shader.jpg";
@@ -182,8 +181,6 @@ const Shaders = () => {
             </div>
           </section>
         </main>
-        
-        <Footer />
       </div>
     </>
   );

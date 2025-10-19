@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
 import bulkyStarPreview from "@/assets/bulky-star-preview.jpg";
 
@@ -191,7 +190,6 @@ const Worlds = () => {
             </Card>
           </section>
         </main>
-        <Footer />
       </div>
     </>
   );
