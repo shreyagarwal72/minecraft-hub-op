@@ -8,14 +8,83 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Light Theme */
+    --background: 0 0% 98%;
+    --foreground: 210 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 20% 15%;
+
+    /* Gaming Primary - Red Theme */
+    --primary: 0 84% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 0 75% 55%;
+
+    /* Gaming Secondary */
+    --secondary: 210 15% 92%;
+    --secondary-foreground: 210 20% 25%;
+
+    --muted: 210 15% 95%;
+    --muted-foreground: 210 10% 45%;
+
+    --accent: 0 50% 95%;
+    --accent-foreground: 0 70% 35%;
+
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 210 15% 85%;
+    --input: 210 15% 90%;
+    --ring: 0 84% 45%;
+
+    --radius: 0.75rem;
+
+    /* Gaming Specific Colors - Light */
+    --gaming-bg: 0 0% 98%;
+    --gaming-surface: 0 0% 100%;
+    --gaming-surface-elevated: 210 15% 97%;
+    --gaming-red: 0 84% 45%;
+    --gaming-red-bright: 0 75% 55%;
+    --gaming-text: 210 20% 15%;
+    --gaming-text-muted: 210 10% 45%;
+
+    /* Gaming Gradients - Light */
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 98%) 0%, hsl(210 15% 95%) 50%, hsl(0 84% 45% / 0.05) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(210 15% 98%) 100%);
+    --gradient-button: linear-gradient(135deg, hsl(0 84% 45%) 0%, hsl(0 75% 55%) 100%);
+    --gradient-glow: radial-gradient(circle at center, hsl(0 84% 45% / 0.15) 0%, transparent 70%);
+
+    /* Gaming Shadows - Light */
+    --shadow-gaming: 0 4px 20px hsl(0 84% 45% / 0.1);
+    --shadow-card: 0 8px 32px hsl(210 15% 50% / 0.1);
+    --shadow-glow: 0 0 40px hsl(0 84% 45% / 0.2);
+
+    /* Gaming Animations */
+    --transition-gaming: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-glow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
     /* Gaming Dark Theme */
-    --background: 210 15% 8%;
+    --background: 210 15% 6%;
     --foreground: 200 15% 85%;
 
-    --card: 210 20% 12%;
+    --card: 210 20% 10%;
     --card-foreground: 200 15% 85%;
 
-    --popover: 210 20% 12%;
+    --popover: 210 20% 10%;
     --popover-foreground: 200 15% 85%;
 
     /* Gaming Primary - Red Theme */
@@ -40,49 +109,34 @@ All colors MUST be HSL.
     --input: 210 25% 20%;
     --ring: 0 84% 55%;
 
-    --radius: 0.75rem;
-
-    /* Gaming Specific Colors */
-    --gaming-bg: 210 15% 8%;
-    --gaming-surface: 210 20% 12%;
-    --gaming-surface-elevated: 210 25% 18%;
+    /* Gaming Specific Colors - Dark */
+    --gaming-bg: 210 15% 6%;
+    --gaming-surface: 210 20% 10%;
+    --gaming-surface-elevated: 210 25% 16%;
     --gaming-red: 0 84% 55%;
     --gaming-red-bright: 0 75% 65%;
     --gaming-text: 200 15% 85%;
     --gaming-text-muted: 200 10% 60%;
 
-    /* Gaming Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(210 15% 8%) 0%, hsl(210 20% 12%) 50%, hsl(0 84% 55% / 0.1) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(210 20% 12%) 0%, hsl(210 25% 18%) 100%);
+    /* Gaming Gradients - Dark */
+    --gradient-hero: linear-gradient(135deg, hsl(210 15% 6%) 0%, hsl(210 20% 10%) 50%, hsl(0 84% 55% / 0.1) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(210 20% 10%) 0%, hsl(210 25% 16%) 100%);
     --gradient-button: linear-gradient(135deg, hsl(0 84% 55%) 0%, hsl(0 75% 65%) 100%);
     --gradient-glow: radial-gradient(circle at center, hsl(0 84% 55% / 0.3) 0%, transparent 70%);
 
-    /* Gaming Shadows */
+    /* Gaming Shadows - Dark */
     --shadow-gaming: 0 4px 20px hsl(0 84% 55% / 0.15);
-    --shadow-card: 0 8px 32px hsl(210 15% 8% / 0.4);
+    --shadow-card: 0 8px 32px hsl(210 15% 6% / 0.4);
     --shadow-glow: 0 0 40px hsl(0 84% 55% / 0.3);
 
-    /* Gaming Animations */
-    --transition-gaming: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-glow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    /* Dark mode inherits from root gaming theme */
-    --background: 210 15% 6%;
-    --card: 210 20% 10%;
-    --gaming-bg: 210 15% 6%;
-    --gaming-surface: 210 20% 10%;
-    --gaming-surface-elevated: 210 25% 16%;
+    --sidebar-background: 210 20% 10%;
+    --sidebar-foreground: 200 15% 85%;
+    --sidebar-primary: 0 84% 55%;
+    --sidebar-primary-foreground: 200 15% 85%;
+    --sidebar-accent: 210 25% 16%;
+    --sidebar-accent-foreground: 200 15% 85%;
+    --sidebar-border: 210 25% 20%;
+    --sidebar-ring: 0 84% 55%;
   }
 }
 
