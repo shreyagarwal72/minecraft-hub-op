@@ -87,7 +87,8 @@ const Header = () => {
                   <span>{item.name}</span>
                 </Link>
               ))}
-              <div className="px-3 py-2">
+              <div className="px-3 py-2 flex flex-col items-center gap-4">
+                <TorchThemeToggle />
                 <Button 
                   className="btn-gaming w-full"
                   onClick={() => {
