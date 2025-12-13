@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { ThemeProvider } from "next-themes";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -22,10 +23,11 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
-      <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
         <Suspense fallback={<div className="min-h-screen bg-gaming-bg flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -40,8 +42,9 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
-      </BrowserRouter>
-      </TooltipProvider>
+        </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
     </HelmetProvider>
   </QueryClientProvider>
 );
