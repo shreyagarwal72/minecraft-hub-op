@@ -6,6 +6,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { ThemeProvider } from "next-themes";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -28,7 +29,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-        <Suspense fallback={<div className="min-h-screen bg-gaming-bg flex items-center justify-center"><div className="text-white">Loading...</div></div>}>
+        <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><LoadingSpinner /></div>}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/patch" element={<Patch />} />
