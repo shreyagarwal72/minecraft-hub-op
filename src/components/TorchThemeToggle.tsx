@@ -15,7 +15,14 @@ const TorchThemeToggle = () => {
   const isDark = theme === "dark";
 
   const toggleTheme = () => {
+    // Add transitioning class for smooth theme animation
+    document.documentElement.classList.add('transitioning');
     setTheme(isDark ? "light" : "dark");
+    
+    // Remove transitioning class after animation completes
+    setTimeout(() => {
+      document.documentElement.classList.remove('transitioning');
+    }, 500);
   };
 
   return (

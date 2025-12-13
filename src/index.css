@@ -161,6 +161,20 @@ All colors MUST be HSL.
     max-width: 100vw;
     overflow-x: hidden;
   }
+
+  /* Theme transition animation */
+  html.transitioning,
+  html.transitioning *,
+  html.transitioning *::before,
+  html.transitioning *::after {
+    transition: 
+      background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      fill 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
 }
 
 @layer components {

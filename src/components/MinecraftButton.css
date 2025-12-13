@@ -1,0 +1,89 @@
+.minecraft-button-wrapper {
+  display: inline-block;
+}
+
+.boton-minecraft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  background-color: hsl(var(--primary));
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    transform 0.1s,
+    color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.boton-minecraft:hover {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  transform: scale(1.05);
+}
+
+.boton-minecraft svg {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.3s;
+}
+
+.boton-minecraft:hover svg {
+  transform: scale(1.1);
+}
+
+.texto-boton {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.texto-boton span {
+  position: absolute;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.texto-boton span:first-child {
+  opacity: 1;
+}
+
+.texto-boton span:nth-child(2),
+.texto-boton span:nth-child(3) {
+  opacity: 0;
+}
+
+.boton-minecraft:hover .texto-boton span:first-child {
+  opacity: 0;
+}
+
+.boton-minecraft:hover .texto-boton span:nth-child(2) {
+  opacity: 1;
+}
+
+#minecraft-toggle {
+  display: none;
+}
+
+#minecraft-toggle:checked + .boton-minecraft {
+  background-color: hsl(var(--card));
+  color: hsl(var(--foreground));
+}
+
+#minecraft-toggle:checked + .boton-minecraft .texto-boton span:first-child,
+#minecraft-toggle:checked + .boton-minecraft .texto-boton span:nth-child(2) {
+  opacity: 0;
+}
+
+#minecraft-toggle:checked + .boton-minecraft .texto-boton span:nth-child(3) {
+  opacity: 1;
+}
