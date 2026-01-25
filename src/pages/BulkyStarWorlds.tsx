@@ -2,7 +2,7 @@ import { Download, Calendar, HardDrive, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import Header from "@/components/Header";
+import LiquidGlassHeader from "@/components/LiquidGlassHeader";
 import { useNavigate } from "react-router-dom";
 import bulkyStarImage from "@/assets/bulky-star-15k.jpg";
 import infinityCastleImage from "@/assets/infinity-castle.jpg";
@@ -53,7 +53,7 @@ const BulkyStarWorlds = () => {
 
   return (
     <div className="min-h-screen bg-gaming-bg">
-      <Header />
+      <LiquidGlassHeader />
       <main className="py-16">
         {/* Header with Back Button */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">

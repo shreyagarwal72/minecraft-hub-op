@@ -2,7 +2,7 @@ import { FolderOpen, Download, Users } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import Header from "@/components/Header";
+import LiquidGlassHeader from "@/components/LiquidGlassHeader";
 import { useNavigate } from "react-router-dom";
 import bulkyStarPreview from "@/assets/bulky-star-preview.jpg";
 
@@ -48,7 +48,7 @@ const Worlds = () => {
         </script>
       </head>
       <div className="min-h-screen bg-gaming-bg">
-        <Header />
+        <LiquidGlassHeader />
         <main className="py-16">
           {/* Hero Section */}
           <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
