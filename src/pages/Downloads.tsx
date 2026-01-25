@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
-import Header from "@/components/Header";
+import LiquidGlassHeader from "@/components/LiquidGlassHeader";
 import modrinthImage from "@/assets/modrinth-launcher.webp";
 import legacyLauncherImage from "@/assets/legacy-launcher.jpg";
 import tlauncherImage from "@/assets/tlauncher.png";
@@ -104,7 +104,7 @@ const Downloads = () => {
         </script>
       </Helmet>
       <div className="min-h-screen bg-gaming-bg">
-        <Header />
+        <LiquidGlassHeader />
         
         <main className="pt-20">
           {/* Hero Section */}

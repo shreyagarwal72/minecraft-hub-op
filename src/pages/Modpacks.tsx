@@ -2,7 +2,7 @@ import { Download, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Header from "@/components/Header";
+import LiquidGlassHeader from "@/components/LiquidGlassHeader";
 import spunkyBoostImage from "@/assets/spunky-boost.jpg";
 import spunkyOptimisedImage from "@/assets/spunky-optimised.jpg";
 
@@ -63,7 +63,7 @@ const Modpacks = () => {
         </script>
       </head>
       <div className="min-h-screen bg-gaming-bg">
-        <Header />
+        <LiquidGlassHeader />
         
         <main className="pt-20">
           {/* Hero Section */}

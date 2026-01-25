@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import LiquidGlassHeader from "@/components/LiquidGlassHeader";
 import Hero from "@/components/Hero";
 import Showcase from "@/components/Showcase";
 
@@ -28,7 +28,7 @@ const Index = () => {
         </script>
       </head>
       <div className="min-h-screen bg-gaming-bg">
-        <Header />
+        <LiquidGlassHeader />
         <main>
           <Hero />
           <Showcase />

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Bot, User, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import Navigation from "@/components/Navigation";
+import LiquidGlassHeader from "@/components/LiquidGlassHeader";
 import SEOHead from "@/components/SEOHead";
 
 type Message = {
@@ -144,7 +144,7 @@ const FAQ = () => {
         keywords="minecraft faq, minecraft help, ai chatbot, minecraft support, launcher help, shader help"
       />
       <div className="min-h-screen bg-background flex flex-col">
-        <Navigation />
+        <LiquidGlassHeader />
         
         <main className="flex-1 container mx-auto px-4 py-8 max-w-5xl">
           {/* Header */}
