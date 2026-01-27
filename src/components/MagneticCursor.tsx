@@ -154,6 +154,35 @@ const MagneticCursor = () => {
 
   return (
     <>
+      {/* Glow effect layer for dark mode */}
+      <div
+        className={`fixed pointer-events-none z-[9998] transition-opacity duration-300 dark:opacity-100 opacity-0 ${
+          isVisible ? "" : "!opacity-0"
+        }`}
+        style={{
+          width: 60,
+          height: 60,
+          transform: "translate(-50%, -50%)",
+          left: cursorRef.current?.style.transform ? undefined : 0,
+          top: cursorRef.current?.style.transform ? undefined : 0,
+          background: `radial-gradient(circle, hsl(0 84% 55% / 0.4) 0%, hsl(0 84% 55% / 0.15) 40%, transparent 70%)`,
+          filter: "blur(8px)",
+          pointerEvents: "none",
+        }}
+        ref={(el) => {
+          if (el && cursorRef.current) {
+            const updateGlow = () => {
+              const cursor = cursorRef.current;
+              if (cursor) {
+                el.style.left = cursor.style.left || `${cursor.getBoundingClientRect().left + 15}px`;
+                el.style.top = cursor.style.top || `${cursor.getBoundingClientRect().top + 15}px`;
+              }
+              requestAnimationFrame(updateGlow);
+            };
+            updateGlow();
+          }
+        }}
+      />
       <div
         ref={cursorRef}
         id="magnetic-cursor"
@@ -175,7 +204,8 @@ const MagneticCursor = () => {
             linear-gradient(to top, hsl(0 84% 55%) 0%, hsl(0 84% 55%) 8px, transparent 8px) bottom right
           `,
           backgroundSize: "8px 2px, 8px 2px, 2px 8px, 2px 8px, 8px 2px, 8px 2px, 2px 8px, 2px 8px",
-          backgroundRepeat: "no-repeat"
+          backgroundRepeat: "no-repeat",
+          filter: "drop-shadow(0 0 6px hsl(0 84% 55% / 0.6))",
         }}
       />
       <div
@@ -187,7 +217,7 @@ const MagneticCursor = () => {
         style={{
           transform: "translate(-50%, -50%)",
           background: "hsl(0 84% 70%)",
-          boxShadow: "0 0 10px hsl(0 84% 50% / 0.5)"
+          boxShadow: "0 0 12px hsl(0 84% 55% / 0.7), 0 0 24px hsl(0 84% 50% / 0.4)"
         }}
       />
     </>
