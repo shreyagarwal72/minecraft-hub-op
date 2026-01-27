@@ -531,35 +531,148 @@ All colors MUST be HSL.
   /* Floating glass orbs (decorative) */
   @keyframes float-orb {
     0%, 100% {
-      transform: translateY(0) translateX(0) rotate(0deg);
+      transform: translateY(0) translateX(0) scale(1);
       opacity: 0.3;
     }
     25% {
-      transform: translateY(-20px) translateX(10px) rotate(90deg);
+      transform: translateY(-30px) translateX(15px) scale(1.05);
       opacity: 0.5;
     }
     50% {
-      transform: translateY(-10px) translateX(-10px) rotate(180deg);
+      transform: translateY(-15px) translateX(-20px) scale(0.95);
       opacity: 0.4;
     }
     75% {
-      transform: translateY(-25px) translateX(5px) rotate(270deg);
+      transform: translateY(-40px) translateX(10px) scale(1.02);
       opacity: 0.6;
     }
   }
 
+  @keyframes pulse-slow {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.2;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.3;
+    }
+  }
+
+  .animate-float-orb {
+    animation: float-orb 8s ease-in-out infinite;
+  }
+
   .glass-orb {
-    position: fixed;
+    position: absolute;
     border-radius: 50%;
-    background: radial-gradient(
-      circle at 30% 30%,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 70%
-    );
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     pointer-events: none;
-    animation: float-orb 8s ease-in-out infinite;
+  }
+
+  /* Custom cursor styles */
+  body.cursor-none,
+  body.cursor-none * {
+    cursor: none !important;
+  }
+
+  /* Light theme liquid glass adjustments */
+  html.liquid-glass:not(.dark) body {
+    background: linear-gradient(
+      135deg,
+      hsl(0 0% 96%) 0%,
+      hsl(0 20% 95%) 25%,
+      hsl(210 15% 94%) 50%,
+      hsl(0 15% 96%) 75%,
+      hsl(0 0% 96%) 100%
+    );
+    background-size: 400% 400%;
+    animation: liquid-bg-shift 15s ease infinite;
+  }
+
+  html.liquid-glass:not(.dark) .liquid-glass-surface {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.7) 100%
+    );
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  html.liquid-glass:not(.dark) .liquid-glass-text {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--primary-glow)) 50%,
+      hsl(var(--primary)) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+  }
+
+  html.liquid-glass:not(.dark) .liquid-glass-button {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0.6) 100%
+    );
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: hsl(var(--foreground));
+    box-shadow: 
+      0 4px 16px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+
+  html.liquid-glass:not(.dark) .liquid-glass-button:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.8) 100%
+    );
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 1);
+  }
+
+  html.liquid-glass:not(.dark) .liquid-glass-card {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.75) 100%
+    );
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 
+      0 16px 48px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  html.liquid-glass:not(.dark) .liquid-glass-badge {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: hsl(var(--foreground));
+  }
+
+  /* Enhanced dark mode liquid glass with red tint */
+  html.liquid-glass.dark body {
+    background: linear-gradient(
+      135deg,
+      hsl(210 25% 6%) 0%,
+      hsl(0 20% 10%) 25%,
+      hsl(210 30% 8%) 50%,
+      hsl(0 25% 12%) 75%,
+      hsl(210 25% 6%) 100%
+    );
+    background-size: 400% 400%;
+    animation: liquid-bg-shift 15s ease infinite;
   }
 }
