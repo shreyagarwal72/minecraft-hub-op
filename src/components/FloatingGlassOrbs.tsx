@@ -1,5 +1,5 @@
 import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 type AnimationType = 'float' | 'pulse' | 'drift' | 'orbit' | 'breathe';
 
@@ -13,11 +13,26 @@ interface Orb {
   animationType: AnimationType;
   blur: number;
   opacity: number;
+  parallaxSpeed: number; // Multiplier for scroll effect
+  parallaxDirection: 'up' | 'down'; // Direction of parallax movement
 }
 
 const FloatingGlassOrbs = () => {
   const { isLiquidGlass } = useLiquidGlass();
   const [orbs, setOrbs] = useState<Orb[]>([]);
+  const [scrollY, setScrollY] = useState(0);
+
+  // Throttled scroll handler for performance
+  const handleScroll = useCallback(() => {
+    requestAnimationFrame(() => {
+      setScrollY(window.scrollY);
+    });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
 
   useEffect(() => {
     const animationTypes: AnimationType[] = ['float', 'pulse', 'drift', 'orbit', 'breathe'];
@@ -25,7 +40,7 @@ const FloatingGlassOrbs = () => {
     const generateOrbs = () => {
       const newOrbs: Orb[] = [];
       
-      // Small orbs (20-60px) - 6 of them
+      // Small orbs (20-60px) - 6 of them - fastest parallax
       for (let i = 0; i < 6; i++) {
         newOrbs.push({
           id: i,
@@ -37,10 +52,12 @@ const FloatingGlassOrbs = () => {
           animationType: animationTypes[Math.floor(Math.random() * animationTypes.length)],
           blur: Math.random() * 20 + 20,
           opacity: Math.random() * 0.3 + 0.2,
+          parallaxSpeed: Math.random() * 0.3 + 0.2, // 0.2-0.5
+          parallaxDirection: Math.random() > 0.5 ? 'up' : 'down',
         });
       }
       
-      // Medium orbs (60-120px) - 5 of them
+      // Medium orbs (60-120px) - 5 of them - medium parallax
       for (let i = 6; i < 11; i++) {
         newOrbs.push({
           id: i,
@@ -52,10 +69,12 @@ const FloatingGlassOrbs = () => {
           animationType: animationTypes[Math.floor(Math.random() * animationTypes.length)],
           blur: Math.random() * 30 + 30,
           opacity: Math.random() * 0.25 + 0.15,
+          parallaxSpeed: Math.random() * 0.15 + 0.1, // 0.1-0.25
+          parallaxDirection: Math.random() > 0.5 ? 'up' : 'down',
         });
       }
       
-      // Large orbs (120-200px) - 4 of them
+      // Large orbs (120-200px) - 4 of them - slow parallax
       for (let i = 11; i < 15; i++) {
         newOrbs.push({
           id: i,
@@ -67,10 +86,12 @@ const FloatingGlassOrbs = () => {
           animationType: animationTypes[Math.floor(Math.random() * animationTypes.length)],
           blur: Math.random() * 40 + 40,
           opacity: Math.random() * 0.2 + 0.1,
+          parallaxSpeed: Math.random() * 0.08 + 0.05, // 0.05-0.13
+          parallaxDirection: Math.random() > 0.5 ? 'up' : 'down',
         });
       }
       
-      // Extra large ambient orbs (200-350px) - 3 of them
+      // Extra large ambient orbs (200-350px) - 3 of them - very slow parallax
       for (let i = 15; i < 18; i++) {
         newOrbs.push({
           id: i,
@@ -82,6 +103,8 @@ const FloatingGlassOrbs = () => {
           animationType: 'breathe',
           blur: Math.random() * 60 + 50,
           opacity: Math.random() * 0.15 + 0.08,
+          parallaxSpeed: Math.random() * 0.04 + 0.02, // 0.02-0.06
+          parallaxDirection: Math.random() > 0.5 ? 'up' : 'down',
         });
       }
       
@@ -108,6 +131,12 @@ const FloatingGlassOrbs = () => {
     }
   };
 
+  const getParallaxTransform = (orb: Orb): string => {
+    const direction = orb.parallaxDirection === 'up' ? -1 : 1;
+    const offset = scrollY * orb.parallaxSpeed * direction;
+    return `translateY(${offset}px)`;
+  };
+
   if (!isLiquidGlass) return null;
 
   return (
@@ -115,7 +144,7 @@ const FloatingGlassOrbs = () => {
       {orbs.map((orb) => (
         <div
           key={orb.id}
-          className="glass-orb"
+          className="glass-orb will-change-transform"
           style={{
             width: orb.size,
             height: orb.size,
@@ -125,6 +154,8 @@ const FloatingGlassOrbs = () => {
             animation: getAnimationStyle(orb),
             opacity: orb.opacity,
             filter: `blur(${orb.blur}px)`,
+            transform: getParallaxTransform(orb),
+            transition: 'transform 0.1s linear',
             background: `radial-gradient(
               circle at 30% 30%,
               hsl(var(--primary) / 0.25) 0%,
@@ -140,9 +171,9 @@ const FloatingGlassOrbs = () => {
         />
       ))}
       
-      {/* Corner accent orbs */}
+      {/* Corner accent orbs with parallax */}
       <div 
-        className="absolute rounded-full"
+        className="absolute rounded-full will-change-transform"
         style={{
           width: 400,
           height: 400,
@@ -152,10 +183,12 @@ const FloatingGlassOrbs = () => {
           filter: 'blur(80px)',
           animation: 'breathe-orb 12s ease-in-out infinite',
           opacity: 0.25,
+          transform: `translateY(${scrollY * 0.03}px)`,
+          transition: 'transform 0.1s linear',
         }}
       />
       <div 
-        className="absolute rounded-full"
+        className="absolute rounded-full will-change-transform"
         style={{
           width: 350,
           height: 350,
@@ -165,10 +198,12 @@ const FloatingGlassOrbs = () => {
           filter: 'blur(70px)',
           animation: 'breathe-orb 15s ease-in-out infinite reverse',
           opacity: 0.2,
+          transform: `translateY(${scrollY * -0.05}px)`,
+          transition: 'transform 0.1s linear',
         }}
       />
       <div 
-        className="absolute rounded-full"
+        className="absolute rounded-full will-change-transform"
         style={{
           width: 300,
           height: 300,
@@ -178,10 +213,12 @@ const FloatingGlassOrbs = () => {
           filter: 'blur(60px)',
           animation: 'drift-orb 20s linear infinite',
           opacity: 0.18,
+          transform: `translateY(${scrollY * 0.08}px)`,
+          transition: 'transform 0.1s linear',
         }}
       />
       <div 
-        className="absolute rounded-full"
+        className="absolute rounded-full will-change-transform"
         style={{
           width: 280,
           height: 280,
@@ -191,6 +228,8 @@ const FloatingGlassOrbs = () => {
           filter: 'blur(65px)',
           animation: 'pulse-orb 10s ease-in-out infinite',
           opacity: 0.22,
+          transform: `translateY(${scrollY * -0.04}px)`,
+          transition: 'transform 0.1s linear',
         }}
       />
     </div>
