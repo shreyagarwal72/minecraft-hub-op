@@ -37,6 +37,7 @@ const Navigation = () => {
                 <Button
                   key={item.name}
                   variant="ghost"
+                  data-magnetic
                   className="text-foreground hover:text-primary hover:bg-secondary/50 transition-all duration-200"
                   asChild
                 >
@@ -53,6 +54,7 @@ const Navigation = () => {
           <div className="hidden md:flex">
             <Button 
               variant="default" 
+              data-magnetic
               className="bg-primary hover:bg-primary-hover text-primary-foreground shadow-minecraft"
               asChild
             >
