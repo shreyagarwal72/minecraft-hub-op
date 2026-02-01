@@ -4,11 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
 import LiquidGlassHeader from "@/components/LiquidGlassHeader";
+import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
+import { cn } from "@/lib/utils";
 import modrinthImage from "@/assets/modrinth-launcher.webp";
 import legacyLauncherImage from "@/assets/legacy-launcher.jpg";
 import tlauncherImage from "@/assets/tlauncher.png";
 
 const Downloads = () => {
+  const { isLiquidGlass } = useLiquidGlass();
   const launchers = [
     {
       name: "Modrinth App",
@@ -108,7 +111,10 @@ const Downloads = () => {
         
         <main className="pt-20">
           {/* Hero Section */}
-          <header className="bg-gradient-to-b from-gaming-surface to-gaming-bg py-12 md:py-20">
+          <header className={cn(
+            "py-12 md:py-20 transition-all duration-500",
+            isLiquidGlass ? "bg-transparent" : "bg-gradient-to-b from-gaming-surface to-gaming-bg"
+          )}>
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="text-center max-w-4xl mx-auto">
                 <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 md:mb-6 animate-fade-in">
@@ -137,7 +143,10 @@ const Downloads = () => {
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="grid gap-6 md:gap-8 max-w-6xl mx-auto">
                 {launchers.map((launcher, index) => (
-                  <Card key={index} className="gaming-card hover-scale group overflow-hidden animate-fade-in">
+                  <Card key={index} className={cn(
+                    "hover-scale group overflow-hidden animate-fade-in transition-all duration-300",
+                    isLiquidGlass ? "liquid-glass-card" : "gaming-card"
+                  )}>
                     <div className="grid md:grid-cols-2 gap-0">
                       {/* Image Section */}
                       <div className="relative overflow-hidden">
@@ -200,7 +209,11 @@ const Downloads = () => {
                           
                           {/* Download Button */}
                           <Button
-                            className="w-full btn-gaming text-sm sm:text-base md:text-lg py-2.5 sm:py-3 group-hover:animate-pulse"
+                            className={cn(
+                              "w-full text-sm sm:text-base md:text-lg py-2.5 sm:py-3 group-hover:animate-pulse",
+                              isLiquidGlass ? "liquid-glass-button" : "btn-gaming"
+                            )}
+                            data-magnetic
                             onClick={() => handleDownload(launcher.downloadLink)}
                           >
                             <Download className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
@@ -216,7 +229,10 @@ const Downloads = () => {
           </section>
 
           {/* Installation Guide */}
-          <section className="py-12 md:py-20 bg-gaming-surface">
+          <section className={cn(
+            "py-12 md:py-20 transition-all duration-500",
+            isLiquidGlass ? "bg-transparent" : "bg-gaming-surface"
+          )}>
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 md:mb-8 px-2">How to Install Your Launcher</h2>

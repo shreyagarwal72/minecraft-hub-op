@@ -6,6 +6,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Bot, User, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import LiquidGlassHeader from "@/components/LiquidGlassHeader";
+import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
+import { cn } from "@/lib/utils";
 import SEOHead from "@/components/SEOHead";
 
 type Message = {
@@ -14,6 +16,7 @@ type Message = {
 };
 
 const FAQ = () => {
+  const { isLiquidGlass } = useLiquidGlass();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -161,7 +164,10 @@ const FAQ = () => {
           </div>
 
           {/* Chat Container */}
-          <Card className="border-2 border-border/50 shadow-xl overflow-hidden">
+          <Card className={cn(
+            "border-2 shadow-xl overflow-hidden transition-all duration-300",
+            isLiquidGlass ? "liquid-glass-card border-primary/20" : "border-border/50"
+          )}>
             {/* Messages Area */}
             <ScrollArea className="h-[500px] p-6" ref={scrollRef}>
               {messages.length === 0 ? (
@@ -257,7 +263,10 @@ const FAQ = () => {
                 <Button
                   type="submit"
                   disabled={!input.trim() || isLoading}
-                  className="bg-primary hover:bg-primary-hover"
+                  data-magnetic
+                  className={cn(
+                    isLiquidGlass ? "liquid-glass-button" : "bg-primary hover:bg-primary-hover"
+                  )}
                 >
                   <Send className="w-4 h-4" />
                 </Button>
