@@ -9,13 +9,13 @@ const Header = () => {
   const navigate = useNavigate();
 
   const navigation = [
-    { name: "Home", href: "/", emoji: "🏠" },
-    { name: "Worlds", href: "/worlds", emoji: "🗺️" },
-    { name: "Modpacks", href: "/modpacks", emoji: "📦" },
-    { name: "Shaders", href: "/shaders", emoji: "✨" },
-    { name: "Mrpacktozip Convert", href: "/patch", emoji: "🔧" },
-    { name: "Downloads", href: "/downloads", emoji: "⬇️" },
-    { name: "FAQ", href: "/faq", emoji: "❓" },
+    { name: "Home", href: "/" },
+    { name: "Worlds", href: "/worlds" },
+    { name: "Modpacks", href: "/modpacks" },
+    { name: "Shaders", href: "/shaders" },
+    { name: "Convert", href: "/patch" },
+    { name: "Downloads", href: "/downloads" },
+    { name: "FAQ", href: "/faq" },
   ];
 
   return (
@@ -36,6 +36,7 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
+                  data-magnetic
                   className="text-gaming-text hover:text-primary transition-colors duration-300 px-3 py-2 text-sm font-medium"
                 >
                   {item.name}
@@ -48,6 +49,7 @@ const Header = () => {
           <div className="hidden md:flex items-center gap-4">
             <TorchThemeToggle />
             <Button 
+              data-magnetic
               className="btn-gaming btn-3d"
               onClick={() => navigate('/faq')}
             >
@@ -80,11 +82,10 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-gaming-text hover:text-primary block px-3 py-2 text-base font-medium transition-colors duration-300 flex items-center gap-3"
+                  className="text-gaming-text hover:text-primary block px-3 py-2 text-base font-medium transition-colors duration-300"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <span className="text-xl">{item.emoji}</span>
-                  <span>{item.name}</span>
+                  {item.name}
                 </Link>
               ))}
               <div className="px-3 py-2 flex flex-col items-center gap-4">

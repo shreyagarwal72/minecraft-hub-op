@@ -12,13 +12,13 @@ const LiquidGlassHeader = () => {
   const { isLiquidGlass, toggleLiquidGlass } = useLiquidGlass();
 
   const navigation = [
-    { name: "Home", href: "/", emoji: "🏠" },
-    { name: "Worlds", href: "/worlds", emoji: "🗺️" },
-    { name: "Modpacks", href: "/modpacks", emoji: "📦" },
-    { name: "Shaders", href: "/shaders", emoji: "✨" },
-    { name: "Mrpacktozip Convert", href: "/patch", emoji: "🔧" },
-    { name: "Downloads", href: "/downloads", emoji: "⬇️" },
-    { name: "FAQ", href: "/faq", emoji: "❓" },
+    { name: "Home", href: "/" },
+    { name: "Worlds", href: "/worlds" },
+    { name: "Modpacks", href: "/modpacks" },
+    { name: "Shaders", href: "/shaders" },
+    { name: "Convert", href: "/patch" },
+    { name: "Downloads", href: "/downloads" },
+    { name: "FAQ", href: "/faq" },
   ];
 
   return (
@@ -59,6 +59,7 @@ const LiquidGlassHeader = () => {
                 <Link
                   key={item.name}
                   to={item.href}
+                  data-magnetic
                   className={cn(
                     "transition-colors duration-300 px-3 py-2 text-sm font-medium",
                     isLiquidGlass
@@ -76,6 +77,7 @@ const LiquidGlassHeader = () => {
           <div className="hidden md:flex items-center gap-4">
             <TorchThemeToggle />
             <Button 
+              data-magnetic
               className={cn(
                 "transition-all duration-300",
                 isLiquidGlass 
@@ -123,15 +125,14 @@ const LiquidGlassHeader = () => {
                   key={item.name}
                   to={item.href}
                   className={cn(
-                    "block px-3 py-2 text-base font-medium transition-colors duration-300 flex items-center gap-3 rounded-lg",
+                    "block px-3 py-2 text-base font-medium transition-colors duration-300 rounded-lg",
                     isLiquidGlass
                       ? "text-white/90 hover:text-white hover:bg-white/10"
                       : "text-gaming-text hover:text-primary"
                   )}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <span className="text-xl">{item.emoji}</span>
-                  <span>{item.name}</span>
+                  {item.name}
                 </Link>
               ))}
               <div className="px-3 py-2 flex flex-col items-center gap-4">
