@@ -3,12 +3,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import LiquidGlassHeader from "@/components/LiquidGlassHeader";
+import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
+import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import bulkyStarImage from "@/assets/bulky-star-15k.jpg";
 import infinityCastleImage from "@/assets/infinity-castle.jpg";
 
 const BulkyStarWorlds = () => {
   const navigate = useNavigate();
+  const { isLiquidGlass } = useLiquidGlass();
 
   const worlds = [
     {
@@ -60,7 +63,13 @@ const BulkyStarWorlds = () => {
           <Button
             onClick={handleBackToWorlds}
             variant="outline"
-            className="mb-6 border-gaming-accent/30 text-gaming-accent hover:bg-gaming-accent/10"
+            data-magnetic
+            className={cn(
+              "mb-6",
+              isLiquidGlass 
+                ? "border-primary/30 text-primary hover:bg-primary/10" 
+                : "border-gaming-accent/30 text-gaming-accent hover:bg-gaming-accent/10"
+            )}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to World Collections
@@ -94,7 +103,10 @@ const BulkyStarWorlds = () => {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
           <div className="grid md:grid-cols-2 gap-8">
             {worlds.map((world, index) => (
-              <Card key={index} className="bg-card border-border hover:border-gaming-accent/50 transition-colors group">
+              <Card key={index} className={cn(
+                "transition-colors group rounded-xl",
+                isLiquidGlass ? "liquid-glass-card" : "bg-card border-border hover:border-gaming-accent/50"
+              )}>
                 <div className="aspect-video overflow-hidden rounded-t-lg">
                   <img
                     src={world.image}
@@ -147,7 +159,11 @@ const BulkyStarWorlds = () => {
 
                   <Button
                     onClick={() => handleDownload(world.downloadLink, world.name)}
-                    className="w-full bg-gaming-accent hover:bg-gaming-accent/90 text-gaming-bg font-medium"
+                    data-magnetic
+                    className={cn(
+                      "w-full font-medium",
+                      isLiquidGlass ? "liquid-glass-button" : "bg-gaming-accent hover:bg-gaming-accent/90 text-gaming-bg"
+                    )}
                   >
                     <Download className="h-4 w-4 mr-2" />
                     Download World
@@ -160,7 +176,10 @@ const BulkyStarWorlds = () => {
 
         {/* Installation Guide */}
         <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Card className="bg-card border-border">
+          <Card className={cn(
+            "transition-all duration-300",
+            isLiquidGlass ? "liquid-glass-card" : "bg-card border-border"
+          )}>
             <CardHeader>
               <CardTitle className="text-2xl text-gaming-text">Installation Guide</CardTitle>
               <CardDescription className="text-gaming-text/70">

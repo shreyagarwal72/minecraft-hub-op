@@ -3,11 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import LiquidGlassHeader from "@/components/LiquidGlassHeader";
+import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
+import { cn } from "@/lib/utils";
 import bslShaderImage from "@/assets/bsl-shader.jpg";
 import complementaryShaderImage from "@/assets/complementary-shader.jpg";
 import photonShaderImage from "@/assets/photon-shader.jpg";
 
 const Shaders = () => {
+  const { isLiquidGlass } = useLiquidGlass();
   const shaders = [
     {
       id: 1,
@@ -75,7 +78,10 @@ const Shaders = () => {
         
         <main className="pt-20">
           {/* Hero Section */}
-          <header className="bg-gradient-to-b from-gaming-surface to-gaming-bg py-20">
+          <header className={cn(
+            "py-20 transition-all duration-500",
+            isLiquidGlass ? "bg-transparent" : "bg-gradient-to-b from-gaming-surface to-gaming-bg"
+          )}>
             <div className="container mx-auto px-4">
               <div className="text-center max-w-4xl mx-auto">
                 <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
@@ -104,7 +110,10 @@ const Shaders = () => {
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {shaders.map((shader, index) => (
-                  <article key={shader.id} className="gaming-card hover-scale group overflow-hidden animate-fade-in" style={{ animationDelay: `${index * 0.2}s` }}>
+                  <article key={shader.id} className={cn(
+                    "hover-scale group overflow-hidden animate-fade-in rounded-xl border transition-all duration-300",
+                    isLiquidGlass ? "liquid-glass-card" : "gaming-card"
+                  )} style={{ animationDelay: `${index * 0.2}s` }}>
                     <div className="relative overflow-hidden">
                       <img
                         src={shader.image}
@@ -136,7 +145,11 @@ const Shaders = () => {
                       </div>
                       
                       <Button
-                        className="w-full btn-gaming"
+                        className={cn(
+                          "w-full",
+                          isLiquidGlass ? "liquid-glass-button" : "btn-gaming"
+                        )}
+                        data-magnetic
                         onClick={() => handleDownload(shader.downloadLink, shader.name)}
                       >
                         <Download className="w-4 h-4 mr-2" />
@@ -150,7 +163,10 @@ const Shaders = () => {
           </section>
 
           {/* Installation Guide */}
-          <section className="py-20 bg-gaming-surface">
+          <section className={cn(
+            "py-20 transition-all duration-500",
+            isLiquidGlass ? "bg-transparent" : "bg-gaming-surface"
+          )}>
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-3xl font-bold text-white mb-8">How to Install Shaders</h2>

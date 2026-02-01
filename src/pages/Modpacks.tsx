@@ -3,10 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import LiquidGlassHeader from "@/components/LiquidGlassHeader";
+import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
+import { cn } from "@/lib/utils";
 import spunkyBoostImage from "@/assets/spunky-boost.jpg";
 import spunkyOptimisedImage from "@/assets/spunky-optimised.jpg";
 
 const Modpacks = () => {
+  const { isLiquidGlass } = useLiquidGlass();
   const modpacks = [
     {
       id: 1,
@@ -67,7 +70,10 @@ const Modpacks = () => {
         
         <main className="pt-20">
           {/* Hero Section */}
-          <header className="bg-gradient-to-b from-gaming-surface to-gaming-bg py-20">
+          <header className={cn(
+            "py-20 transition-all duration-500",
+            isLiquidGlass ? "bg-transparent" : "bg-gradient-to-b from-gaming-surface to-gaming-bg"
+          )}>
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="text-center max-w-4xl mx-auto">
                 <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
@@ -96,7 +102,10 @@ const Modpacks = () => {
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {modpacks.map((modpack, index) => (
-                  <article key={modpack.id} className="gaming-card hover-scale group overflow-hidden animate-fade-in" style={{ animationDelay: `${index * 0.2}s` }}>
+                  <article key={modpack.id} className={cn(
+                    "hover-scale group overflow-hidden animate-fade-in rounded-xl border transition-all duration-300",
+                    isLiquidGlass ? "liquid-glass-card" : "gaming-card"
+                  )} style={{ animationDelay: `${index * 0.2}s` }}>
                     <div className="relative overflow-hidden">
                       <img
                         src={modpack.image}
@@ -136,7 +145,11 @@ const Modpacks = () => {
                       </div>
                       
                       <Button
-                        className="w-full btn-gaming"
+                        className={cn(
+                          "w-full",
+                          isLiquidGlass ? "liquid-glass-button" : "btn-gaming"
+                        )}
+                        data-magnetic
                         onClick={() => handleDownload(modpack.downloadLink, modpack.name)}
                       >
                         <Download className="w-4 h-4 mr-2" />
@@ -150,7 +163,10 @@ const Modpacks = () => {
           </section>
 
           {/* Installation Guide */}
-          <section className="py-20 bg-gaming-surface">
+          <section className={cn(
+            "py-20 transition-all duration-500",
+            isLiquidGlass ? "bg-transparent" : "bg-gaming-surface"
+          )}>
             <div className="container mx-auto px-4 max-w-7xl">
               <div className="max-w-4xl mx-auto text-center">
                 <h2 className="text-3xl font-bold text-white mb-8">How to Install Modpacks</h2>

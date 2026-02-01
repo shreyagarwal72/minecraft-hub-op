@@ -298,6 +298,7 @@ All colors MUST be HSL.
 
   /* ============================================
      iOS LIQUID GLASS EFFECT SYSTEM
+     Keeps solid backgrounds, adds glass UI elements
      ============================================ */
   
   /* Glass Transition Animation */
@@ -309,35 +310,34 @@ All colors MUST be HSL.
       all 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
   }
 
-  /* Liquid Glass Surface */
+  /* Liquid Glass Surface - Header/Navigation only */
   .liquid-glass-surface {
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0.05) 50%,
-      rgba(255, 255, 255, 0.1) 100%
+      hsl(var(--card) / 0.95) 0%,
+      hsl(var(--card) / 0.9) 50%,
+      hsl(var(--card) / 0.95) 100%
     );
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid hsl(var(--border) / 0.5);
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+      0 8px 32px hsl(var(--primary) / 0.1),
+      inset 0 1px 0 hsl(var(--primary) / 0.1);
   }
 
-  /* Liquid Glass Text */
+  /* Liquid Glass Text - Shimmer effect with readable colors */
   .liquid-glass-text {
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.7) 50%,
-      rgba(255, 255, 255, 0.95) 100%
+      hsl(var(--primary)) 0%,
+      hsl(var(--primary-glow)) 50%,
+      hsl(var(--primary)) 100%
     );
+    background-size: 200% 200%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
     animation: liquid-shimmer 3s ease-in-out infinite;
   }
 
@@ -350,159 +350,125 @@ All colors MUST be HSL.
     }
   }
 
-  /* Liquid Glass Button */
+  /* Liquid Glass Button - Solid with glass border effect */
   .liquid-glass-button {
     @apply px-6 py-3 rounded-2xl text-sm font-semibold;
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.2) 0%,
-      rgba(255, 255, 255, 0.1) 100%
+      hsl(var(--primary)) 0%,
+      hsl(var(--primary-glow)) 100%
     );
-    backdrop-filter: blur(10px) saturate(150%);
-    -webkit-backdrop-filter: blur(10px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
+    border: 1px solid hsl(var(--primary-glow) / 0.5);
+    color: hsl(var(--primary-foreground));
     box-shadow: 
-      0 4px 16px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      0 4px 16px hsl(var(--primary) / 0.3),
+      inset 0 1px 0 hsl(var(--primary-glow) / 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .liquid-glass-button:hover {
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.15) 100%
+      hsl(var(--primary-glow)) 0%,
+      hsl(var(--primary)) 100%
     );
     transform: translateY(-2px) scale(1.02);
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      0 8px 32px hsl(var(--primary) / 0.4),
+      inset 0 1px 0 hsl(var(--primary-glow) / 0.4);
   }
 
   .liquid-glass-button:active {
     transform: translateY(0) scale(0.98);
   }
 
-  /* Liquid Glass Card */
+  /* Liquid Glass Card - Solid with enhanced borders */
   .liquid-glass-card {
     @apply p-6 rounded-3xl;
     background: linear-gradient(
       145deg,
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(255, 255, 255, 0.05) 50%,
-      rgba(255, 255, 255, 0.08) 100%
+      hsl(var(--card)) 0%,
+      hsl(var(--card) / 0.95) 100%
     );
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--primary) / 0.2);
     box-shadow: 
-      0 16px 48px rgba(0, 0, 0, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.25),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+      0 16px 48px hsl(var(--primary) / 0.1),
+      inset 0 1px 0 hsl(var(--primary) / 0.1);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .liquid-glass-card:hover {
     transform: translateY(-4px) scale(1.01);
+    border-color: hsl(var(--primary) / 0.4);
     box-shadow: 
-      0 24px 64px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+      0 24px 64px hsl(var(--primary) / 0.15),
+      inset 0 1px 0 hsl(var(--primary) / 0.2);
   }
 
   /* Liquid Glass Badge */
   .liquid-glass-badge {
     @apply px-3 py-1 rounded-full text-xs font-medium;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.9);
+    background: hsl(var(--primary) / 0.15);
+    border: 1px solid hsl(var(--primary) / 0.3);
+    color: hsl(var(--primary));
   }
 
   /* Global Liquid Glass Mode Styles */
   html.liquid-glass {
     --glass-blur: 20px;
-    --glass-opacity: 0.1;
   }
 
+  /* Subtle animated background for glass mode - keeps existing colors */
   html.liquid-glass body {
-    background: linear-gradient(
-      135deg,
-      hsl(210 25% 8%) 0%,
-      hsl(260 20% 12%) 25%,
-      hsl(200 30% 10%) 50%,
-      hsl(280 25% 15%) 75%,
-      hsl(210 25% 8%) 100%
-    );
-    background-size: 400% 400%;
-    animation: liquid-bg-shift 15s ease infinite;
+    background: var(--gradient-hero);
+    background-size: 200% 200%;
+    animation: liquid-bg-shift 20s ease infinite;
   }
 
   @keyframes liquid-bg-shift {
     0%, 100% {
       background-position: 0% 50%;
     }
-    25% {
-      background-position: 50% 25%;
-    }
     50% {
       background-position: 100% 50%;
     }
-    75% {
-      background-position: 50% 75%;
-    }
   }
 
-  /* Liquid glass mode card override */
+  /* Liquid glass mode card override - solid with enhanced effects */
   html.liquid-glass .card-gaming,
   html.liquid-glass .gaming-card {
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.03) 100%
-    );
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--gradient-card);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid hsl(var(--primary) / 0.2);
     box-shadow: 
-      0 12px 40px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      0 12px 40px hsl(var(--primary) / 0.1),
+      inset 0 1px 0 hsl(var(--primary) / 0.1);
   }
 
   html.liquid-glass .card-gaming:hover,
   html.liquid-glass .gaming-card:hover {
-    border-color: rgba(255, 255, 255, 0.25);
+    border-color: hsl(var(--primary) / 0.4);
     box-shadow: 
-      0 20px 60px rgba(0, 0, 0, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      0 20px 60px hsl(var(--primary) / 0.15),
+      inset 0 1px 0 hsl(var(--primary) / 0.15);
   }
 
-  /* Liquid glass mode button override */
+  /* Liquid glass mode button override - keeps primary colors */
   html.liquid-glass .btn-gaming {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.15) 0%,
-      rgba(255, 255, 255, 0.08) 100%
-    );
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--gradient-button);
+    border: 1px solid hsl(var(--primary-glow) / 0.5);
     box-shadow: 
-      0 4px 16px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      0 4px 16px hsl(var(--primary) / 0.3),
+      inset 0 1px 0 hsl(var(--primary-glow) / 0.2);
   }
 
   html.liquid-glass .btn-gaming:hover {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.25) 0%,
-      rgba(255, 255, 255, 0.12) 100%
-    );
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      0 8px 32px hsl(var(--primary) / 0.4),
+      inset 0 1px 0 hsl(var(--primary-glow) / 0.3);
   }
 
   /* Liquid glass ripple effect */
@@ -609,32 +575,23 @@ All colors MUST be HSL.
     cursor: none !important;
   }
 
-  /* Light theme liquid glass adjustments */
+  /* Light theme liquid glass - uses existing light theme colors */
   html.liquid-glass:not(.dark) body {
-    background: linear-gradient(
-      135deg,
-      hsl(0 0% 96%) 0%,
-      hsl(0 20% 95%) 25%,
-      hsl(210 15% 94%) 50%,
-      hsl(0 15% 96%) 75%,
-      hsl(0 0% 96%) 100%
-    );
-    background-size: 400% 400%;
-    animation: liquid-bg-shift 15s ease infinite;
+    background: var(--gradient-hero);
+    background-size: 200% 200%;
+    animation: liquid-bg-shift 20s ease infinite;
   }
 
   html.liquid-glass:not(.dark) .liquid-glass-surface {
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.7) 0%,
-      rgba(255, 255, 255, 0.5) 50%,
-      rgba(255, 255, 255, 0.7) 100%
+      hsl(var(--card)) 0%,
+      hsl(var(--card) / 0.95) 100%
     );
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid hsl(var(--border));
     box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.5);
+      0 8px 32px hsl(var(--primary) / 0.1),
+      inset 0 1px 0 hsl(var(--primary) / 0.05);
   }
 
   html.liquid-glass:not(.dark) .liquid-glass-text {
@@ -644,67 +601,33 @@ All colors MUST be HSL.
       hsl(var(--primary-glow)) 50%,
       hsl(var(--primary)) 100%
     );
+    background-size: 200% 200%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: none;
   }
 
-  html.liquid-glass:not(.dark) .liquid-glass-button {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0.6) 100%
-    );
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: hsl(var(--foreground));
-    box-shadow: 
-      0 4px 16px rgba(0, 0, 0, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  }
-
-  html.liquid-glass:not(.dark) .liquid-glass-button:hover {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.8) 100%
-    );
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.1),
-      inset 0 1px 0 rgba(255, 255, 255, 1);
-  }
-
-  html.liquid-glass:not(.dark) .liquid-glass-card {
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0.6) 50%,
-      rgba(255, 255, 255, 0.75) 100%
-    );
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 
-      0 16px 48px rgba(0, 0, 0, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.95),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.5);
-  }
-
-  html.liquid-glass:not(.dark) .liquid-glass-badge {
-    background: rgba(255, 255, 255, 0.7);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    color: hsl(var(--foreground));
-  }
-
-  /* Enhanced dark mode liquid glass with red tint */
+  /* Dark theme liquid glass - subtle red-tinted gradient */
   html.liquid-glass.dark body {
     background: linear-gradient(
       135deg,
-      hsl(210 25% 6%) 0%,
-      hsl(0 20% 10%) 25%,
-      hsl(210 30% 8%) 50%,
-      hsl(0 25% 12%) 75%,
-      hsl(210 25% 6%) 100%
+      hsl(210 15% 6%) 0%,
+      hsl(0 15% 8%) 50%,
+      hsl(210 15% 6%) 100%
     );
-    background-size: 400% 400%;
-    animation: liquid-bg-shift 15s ease infinite;
+    background-size: 200% 200%;
+    animation: liquid-bg-shift 20s ease infinite;
+  }
+
+  html.liquid-glass.dark .liquid-glass-surface {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--card)) 0%,
+      hsl(var(--card) / 0.95) 100%
+    );
+    border: 1px solid hsl(var(--primary) / 0.2);
+    box-shadow: 
+      0 8px 32px hsl(var(--primary) / 0.15),
+      inset 0 1px 0 hsl(var(--primary) / 0.1);
   }
 }

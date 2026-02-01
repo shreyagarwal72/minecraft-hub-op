@@ -3,11 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import LiquidGlassHeader from "@/components/LiquidGlassHeader";
+import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
+import { cn } from "@/lib/utils";
 import { useNavigate } from "react-router-dom";
 import bulkyStarPreview from "@/assets/bulky-star-preview.jpg";
 
 const Worlds = () => {
   const navigate = useNavigate();
+  const { isLiquidGlass } = useLiquidGlass();
 
   const worldFolders = [
     {
@@ -78,7 +81,10 @@ const Worlds = () => {
             <h2 className="text-2xl font-bold text-gaming-text mb-8">World Collections</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {worldFolders.map((folder, index) => (
-                <article key={index} className="bg-card border-border hover:border-gaming-accent/50 transition-colors group cursor-pointer">
+                <article key={index} className={cn(
+                  "transition-colors group cursor-pointer rounded-xl border",
+                  isLiquidGlass ? "liquid-glass-card" : "bg-card border-border hover:border-gaming-accent/50"
+                )}>
                   <div className="aspect-video overflow-hidden rounded-t-lg relative">
                     <img
                       src={folder.image}
@@ -124,7 +130,11 @@ const Worlds = () => {
 
                     <Button
                       onClick={() => handleFolderClick(folder.route)}
-                      className="w-full bg-gaming-accent hover:bg-gaming-accent/90 text-gaming-bg font-medium"
+                      data-magnetic
+                      className={cn(
+                        "w-full font-medium",
+                        isLiquidGlass ? "liquid-glass-button" : "bg-gaming-accent hover:bg-gaming-accent/90 text-gaming-bg"
+                      )}
                     >
                       <FolderOpen className="h-4 w-4 mr-2" />
                       Browse Worlds
@@ -137,7 +147,10 @@ const Worlds = () => {
 
           {/* Info Section */}
           <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Card className="bg-card border-border">
+            <Card className={cn(
+              "transition-all duration-300",
+              isLiquidGlass ? "liquid-glass-card" : "bg-card border-border"
+            )}>
               <CardHeader>
                 <CardTitle className="text-2xl text-gaming-text">How to Use</CardTitle>
                 <CardDescription className="text-gaming-text/70">
