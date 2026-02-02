@@ -1,5 +1,5 @@
 import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 
 type AnimationType = 'float' | 'pulse' | 'drift' | 'orbit' | 'breathe';
 
@@ -9,16 +9,16 @@ interface Orb {
   left: string;
   top: string;
   animationDelay: string;
-  animationDuration: string;
+  baseDuration: number; // Base duration in seconds
   animationType: AnimationType;
   blur: number;
   opacity: number;
-  parallaxSpeed: number; // Multiplier for scroll effect
-  parallaxDirection: 'up' | 'down'; // Direction of parallax movement
+  parallaxSpeed: number;
+  parallaxDirection: 'up' | 'down';
 }
 
 const FloatingGlassOrbs = () => {
-  const { isLiquidGlass } = useLiquidGlass();
+  const { isLiquidGlass, animationSpeed, glassIntensity } = useLiquidGlass();
   const [orbs, setOrbs] = useState<Orb[]>([]);
   const [scrollY, setScrollY] = useState(0);
 
@@ -48,11 +48,11 @@ const FloatingGlassOrbs = () => {
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
           animationDelay: `${Math.random() * 5}s`,
-          animationDuration: `${Math.random() * 6 + 4}s`,
+          baseDuration: Math.random() * 6 + 4,
           animationType: animationTypes[Math.floor(Math.random() * animationTypes.length)],
           blur: Math.random() * 20 + 20,
           opacity: Math.random() * 0.3 + 0.2,
-          parallaxSpeed: Math.random() * 0.3 + 0.2, // 0.2-0.5
+          parallaxSpeed: Math.random() * 0.3 + 0.2,
           parallaxDirection: Math.random() > 0.5 ? 'up' : 'down',
         });
       }
@@ -65,11 +65,11 @@ const FloatingGlassOrbs = () => {
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
           animationDelay: `${Math.random() * 8}s`,
-          animationDuration: `${Math.random() * 8 + 6}s`,
+          baseDuration: Math.random() * 8 + 6,
           animationType: animationTypes[Math.floor(Math.random() * animationTypes.length)],
           blur: Math.random() * 30 + 30,
           opacity: Math.random() * 0.25 + 0.15,
-          parallaxSpeed: Math.random() * 0.15 + 0.1, // 0.1-0.25
+          parallaxSpeed: Math.random() * 0.15 + 0.1,
           parallaxDirection: Math.random() > 0.5 ? 'up' : 'down',
         });
       }
@@ -82,11 +82,11 @@ const FloatingGlassOrbs = () => {
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
           animationDelay: `${Math.random() * 10}s`,
-          animationDuration: `${Math.random() * 12 + 10}s`,
+          baseDuration: Math.random() * 12 + 10,
           animationType: animationTypes[Math.floor(Math.random() * animationTypes.length)],
           blur: Math.random() * 40 + 40,
           opacity: Math.random() * 0.2 + 0.1,
-          parallaxSpeed: Math.random() * 0.08 + 0.05, // 0.05-0.13
+          parallaxSpeed: Math.random() * 0.08 + 0.05,
           parallaxDirection: Math.random() > 0.5 ? 'up' : 'down',
         });
       }
@@ -99,11 +99,11 @@ const FloatingGlassOrbs = () => {
           left: `${Math.random() * 100}%`,
           top: `${Math.random() * 100}%`,
           animationDelay: `${Math.random() * 12}s`,
-          animationDuration: `${Math.random() * 15 + 12}s`,
+          baseDuration: Math.random() * 15 + 12,
           animationType: 'breathe',
           blur: Math.random() * 60 + 50,
           opacity: Math.random() * 0.15 + 0.08,
-          parallaxSpeed: Math.random() * 0.04 + 0.02, // 0.02-0.06
+          parallaxSpeed: Math.random() * 0.04 + 0.02,
           parallaxDirection: Math.random() > 0.5 ? 'up' : 'down',
         });
       }
@@ -114,22 +114,33 @@ const FloatingGlassOrbs = () => {
     generateOrbs();
   }, []);
 
-  const getAnimationStyle = (orb: Orb): string => {
+  // Calculate adjusted duration based on animation speed
+  const getAnimationDuration = useCallback((baseDuration: number): string => {
+    return `${baseDuration / animationSpeed}s`;
+  }, [animationSpeed]);
+
+  const getAnimationStyle = useCallback((orb: Orb): string => {
+    const duration = getAnimationDuration(orb.baseDuration);
     switch (orb.animationType) {
       case 'float':
-        return `float-orb ${orb.animationDuration} ease-in-out infinite`;
+        return `float-orb ${duration} ease-in-out infinite`;
       case 'pulse':
-        return `pulse-orb ${orb.animationDuration} ease-in-out infinite`;
+        return `pulse-orb ${duration} ease-in-out infinite`;
       case 'drift':
-        return `drift-orb ${orb.animationDuration} linear infinite`;
+        return `drift-orb ${duration} linear infinite`;
       case 'orbit':
-        return `orbit-orb ${orb.animationDuration} ease-in-out infinite`;
+        return `orbit-orb ${duration} ease-in-out infinite`;
       case 'breathe':
-        return `breathe-orb ${orb.animationDuration} ease-in-out infinite`;
+        return `breathe-orb ${duration} ease-in-out infinite`;
       default:
-        return `float-orb ${orb.animationDuration} ease-in-out infinite`;
+        return `float-orb ${duration} ease-in-out infinite`;
     }
-  };
+  }, [getAnimationDuration]);
+
+  // Calculate opacity based on glass intensity
+  const getAdjustedOpacity = useCallback((baseOpacity: number): number => {
+    return baseOpacity * (glassIntensity / 100);
+  }, [glassIntensity]);
 
   const getParallaxTransform = (orb: Orb): string => {
     const direction = orb.parallaxDirection === 'up' ? -1 : 1;
@@ -152,26 +163,26 @@ const FloatingGlassOrbs = () => {
             top: orb.top,
             animationDelay: orb.animationDelay,
             animation: getAnimationStyle(orb),
-            opacity: orb.opacity,
+            opacity: getAdjustedOpacity(orb.opacity),
             filter: `blur(${orb.blur}px)`,
             transform: getParallaxTransform(orb),
-            transition: 'transform 0.1s linear',
+            transition: 'transform 0.1s linear, opacity 0.3s ease',
             background: `radial-gradient(
               circle at 30% 30%,
-              hsl(var(--primary) / 0.25) 0%,
-              hsl(var(--primary) / 0.12) 40%,
-              rgba(255, 255, 255, 0.08) 70%,
+              hsl(var(--primary) / ${0.25 * (glassIntensity / 100)}) 0%,
+              hsl(var(--primary) / ${0.12 * (glassIntensity / 100)}) 40%,
+              rgba(255, 255, 255, ${0.08 * (glassIntensity / 100)}) 70%,
               transparent 100%
             )`,
             boxShadow: `
-              inset 0 0 ${orb.size * 0.3}px hsl(var(--primary) / 0.15),
-              0 0 ${orb.size * 0.5}px hsl(var(--primary) / 0.08)
+              inset 0 0 ${orb.size * 0.3}px hsl(var(--primary) / ${0.15 * (glassIntensity / 100)}),
+              0 0 ${orb.size * 0.5}px hsl(var(--primary) / ${0.08 * (glassIntensity / 100)})
             `,
           }}
         />
       ))}
       
-      {/* Corner accent orbs with parallax */}
+      {/* Corner accent orbs with parallax and intensity */}
       <div 
         className="absolute rounded-full will-change-transform"
         style={{
@@ -179,12 +190,12 @@ const FloatingGlassOrbs = () => {
           height: 400,
           left: '-15%',
           top: '10%',
-          background: `radial-gradient(circle, hsl(var(--primary) / 0.2) 0%, transparent 70%)`,
+          background: `radial-gradient(circle, hsl(var(--primary) / ${0.2 * (glassIntensity / 100)}) 0%, transparent 70%)`,
           filter: 'blur(80px)',
-          animation: 'breathe-orb 12s ease-in-out infinite',
-          opacity: 0.25,
+          animation: `breathe-orb ${12 / animationSpeed}s ease-in-out infinite`,
+          opacity: getAdjustedOpacity(0.25),
           transform: `translateY(${scrollY * 0.03}px)`,
-          transition: 'transform 0.1s linear',
+          transition: 'transform 0.1s linear, opacity 0.3s ease',
         }}
       />
       <div 
@@ -194,12 +205,12 @@ const FloatingGlassOrbs = () => {
           height: 350,
           right: '-10%',
           bottom: '5%',
-          background: `radial-gradient(circle, hsl(var(--primary) / 0.25) 0%, transparent 70%)`,
+          background: `radial-gradient(circle, hsl(var(--primary) / ${0.25 * (glassIntensity / 100)}) 0%, transparent 70%)`,
           filter: 'blur(70px)',
-          animation: 'breathe-orb 15s ease-in-out infinite reverse',
-          opacity: 0.2,
+          animation: `breathe-orb ${15 / animationSpeed}s ease-in-out infinite reverse`,
+          opacity: getAdjustedOpacity(0.2),
           transform: `translateY(${scrollY * -0.05}px)`,
-          transition: 'transform 0.1s linear',
+          transition: 'transform 0.1s linear, opacity 0.3s ease',
         }}
       />
       <div 
@@ -209,12 +220,12 @@ const FloatingGlassOrbs = () => {
           height: 300,
           right: '20%',
           top: '-5%',
-          background: `radial-gradient(circle, hsl(var(--primary) / 0.18) 0%, transparent 70%)`,
+          background: `radial-gradient(circle, hsl(var(--primary) / ${0.18 * (glassIntensity / 100)}) 0%, transparent 70%)`,
           filter: 'blur(60px)',
-          animation: 'drift-orb 20s linear infinite',
-          opacity: 0.18,
+          animation: `drift-orb ${20 / animationSpeed}s linear infinite`,
+          opacity: getAdjustedOpacity(0.18),
           transform: `translateY(${scrollY * 0.08}px)`,
-          transition: 'transform 0.1s linear',
+          transition: 'transform 0.1s linear, opacity 0.3s ease',
         }}
       />
       <div 
@@ -224,12 +235,12 @@ const FloatingGlassOrbs = () => {
           height: 280,
           left: '30%',
           bottom: '-8%',
-          background: `radial-gradient(circle, hsl(var(--primary) / 0.22) 0%, transparent 70%)`,
+          background: `radial-gradient(circle, hsl(var(--primary) / ${0.22 * (glassIntensity / 100)}) 0%, transparent 70%)`,
           filter: 'blur(65px)',
-          animation: 'pulse-orb 10s ease-in-out infinite',
-          opacity: 0.22,
+          animation: `pulse-orb ${10 / animationSpeed}s ease-in-out infinite`,
+          opacity: getAdjustedOpacity(0.22),
           transform: `translateY(${scrollY * -0.04}px)`,
-          transition: 'transform 0.1s linear',
+          transition: 'transform 0.1s linear, opacity 0.3s ease',
         }}
       />
     </div>
