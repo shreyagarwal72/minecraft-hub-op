@@ -10,6 +10,7 @@ import { LiquidGlassProvider } from "./contexts/LiquidGlassContext";
 import LoadingSpinner from "./components/LoadingSpinner";
 import FloatingGlassOrbs from "./components/FloatingGlassOrbs";
 import MagneticCursor from "./components/MagneticCursor";
+import LiquidGlassSettings from "./components/LiquidGlassSettings";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -34,6 +35,7 @@ const App = () => (
             <Sonner />
             <MagneticCursor />
             <FloatingGlassOrbs />
+            <LiquidGlassSettings />
             <BrowserRouter>
               <Suspense fallback={<div className="min-h-screen bg-background flex items-center justify-center"><LoadingSpinner /></div>}>
                 <Routes>
