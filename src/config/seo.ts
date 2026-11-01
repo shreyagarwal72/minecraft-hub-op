@@ -36,8 +36,8 @@ export const ROUTE_SEO: Record<string, { title: string; description: string; key
     "keywords": "minecraft latest version, minecraft snapshot, minecraft java patch, mrpack to zip"
   },
   "/faq": {
-    "title": "FAQ - Minecraft Java Hub Help & Chat",
-    "description": "Answers about Minecraft Java shaders, launchers, modpacks, versions and what the source badges mean. Chat with the Nextup AI assistant.",
+    "title": "FAQ - Minecraft Java Hub Frequently Asked Questions",
+    "description": "Answers about Minecraft Java shaders, launchers, modpacks, versions, and installation guides. Browse frequently asked questions on Minecraft Java Hub.",
     "keywords": "minecraft java faq, minecraft shader install, minecraft launcher help, pojav modpack, minecraft java hub"
   }
 };

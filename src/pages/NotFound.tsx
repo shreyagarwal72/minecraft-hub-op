@@ -26,7 +26,7 @@ const NotFound = () => {
           <div className="mc-death__actions">
             <McButton to="/" variant="green" block>Respawn (Home)</McButton>
             <McButton to="/downloads" block>Browse Downloads</McButton>
-            <McButton to="/faq" block variant="dark">Ask the FAQ</McButton>
+            <McButton to="/faq" block variant="dark">Browse FAQ</McButton>
           </div>
         </div>
       </div>

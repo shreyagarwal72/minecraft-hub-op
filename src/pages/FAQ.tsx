@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useMemo, useState, type ReactNode } from "react";
 import Layout from "@/components/Layout";
 import PageHead from "@/components/PageHead";
 import McButton from "@/components/McButton";
@@ -6,38 +6,158 @@ import SEOHead from "@/components/SEOHead";
 import { ROUTE_SEO } from "@/config/seo";
 import { SOCIAL } from "@/data/site";
 
-interface Message {
-  role: "user" | "assistant";
-  content: string;
+interface FAQItem {
+  id: string;
+  category: "shaders" | "launchers" | "modpacks" | "safety" | "general";
+  question: string;
+  answer: string;
+  tags: string[];
 }
 
-/** Pre-written answers: used offline, and rendered on the page (and as FAQ structured data) for search engines. */
-const FAQ_ANSWERS: Record<string, string> = {
-  "How do I install a shader?": "Install Iris (or OptiFine), put the shader .zip in the shaderpacks folder, then pick it in Video Settings > Shader Packs.",
-  "Which launcher should I use?": "Start with the official Minecraft Launcher. Modrinth App and Prism Launcher are good for mods and modpacks.",
-  "What is the latest Minecraft version?": "The Downloads and Patch pages show the latest release and snapshot, read live from Mojang's version manifest.",
-  "What does the 'unverified' badge mean?": "It marks a mirror on Google Drive, MediaFire or a direct link. We cannot check those files automatically, so scan them and keep backups.",
-  "How do I use a Pojav modpack?": "Download the pack, import it in Pojav Launcher, and pick a matching Minecraft version. The Mrpack to Zip converter on the Patch page helps with .mrpack files.",
-  "Is this an official Minecraft site?": "No. It is not an official Minecraft product and is not approved by or associated with Mojang or Microsoft.",
-  "How do I contact you?": `Email ${SOCIAL.email}, or find Nextup Studio on YouTube (@nextupstudioyt) and Instagram (@vanshu_ag_72).`,
-};
+const FAQ_ITEMS: FAQItem[] = [
+  // Shaders
+  {
+    id: "install-shader",
+    category: "shaders",
+    question: "How do I install shaders in Minecraft Java Edition?",
+    answer:
+      "Installing shaders takes only a few quick steps:\n" +
+      "1. Install a shader loader: **Iris** (recommended, best performance with Sodium) or **OptiFine**.\n" +
+      "2. Download your desired shader pack .zip from our Shaders page (e.g. BSL, Complementary, or Photon).\n" +
+      "3. Open your Minecraft folder and put the downloaded .zip directly into the **shaderpacks** folder (do not unzip it).\n" +
+      "4. Launch Minecraft, go to **Options > Video Settings > Shader Packs**, select your shader, and click Apply!",
+    tags: ["shaders", "iris", "optifine", "install", "graphics"],
+  },
+  {
+    id: "shader-performance",
+    category: "shaders",
+    question: "Which shader pack has the best performance for low-end PCs?",
+    answer:
+      "**Complementary Reimagined** and **BSL Shaders** both include dedicated 'Potato' and 'Low' profiles designed specifically for low-end hardware and integrated GPUs.\n\n" +
+      "For best FPS, combine **Iris + Sodium** on Fabric rather than OptiFine. Sodium provides massive engine performance improvements.",
+    tags: ["shaders", "performance", "fps", "low-end", "potato"],
+  },
+  {
+    id: "shader-pojav",
+    category: "shaders",
+    question: "Can I run shaders on PojavLauncher (Android)?",
+    answer:
+      "Yes! PojavLauncher supports shaders on mobile if your device supports the **Holy GL4ES** or **Zink** renderer. We recommend lightweight shaders with potato/low presets like **BSL (Low profile)** for smooth mobile gameplay.",
+    tags: ["shaders", "pojav", "android", "mobile"],
+  },
 
-const SUGGESTED = Object.keys(FAQ_ANSWERS);
+  // Launchers
+  {
+    id: "recommended-launcher",
+    category: "launchers",
+    question: "Which Minecraft launcher should I use?",
+    answer:
+      "We recommend three trustworthy launchers depending on your needs:\n" +
+      "• **Official Minecraft Launcher**: Best for pure vanilla gameplay and beginners.\n" +
+      "• **Modrinth App**: Clean, open-source, and extremely fast. Directly searches and auto-updates mods and modpacks from Modrinth.\n" +
+      "• **Prism Launcher**: Lightweight and open-source. Perfect for managing multiple Minecraft instances, accounts, and mods from both Modrinth and CurseForge.",
+    tags: ["launchers", "modrinth", "prism", "official", "recommendation"],
+  },
+  {
+    id: "tlauncher-safety",
+    category: "launchers",
+    question: "Why do you not list unofficial launchers like TLauncher?",
+    answer:
+      "We strictly prioritize user security. Unofficial cracked launchers often bundle questionable telemetry, unverified third-party libraries, or risk account compromise.\n\n" +
+      "We only list official or transparent open-source launchers (like the official Mojang launcher, Modrinth App, and Prism Launcher) that authenticate directly through Microsoft.",
+    tags: ["launchers", "tlauncher", "safety", "security"],
+  },
+  {
+    id: "pojav-launcher",
+    category: "launchers",
+    question: "What is PojavLauncher and how does it work?",
+    answer:
+      "PojavLauncher is an open-source launcher that allows you to play authentic Minecraft Java Edition on Android and iOS devices. It runs Java in a sandboxed environment and maps touchscreen controls to keyboard and mouse inputs.",
+    tags: ["launchers", "pojav", "android", "ios", "mobile"],
+  },
 
-const offlineAnswer = (question: string): string | null => {
-  const q = question.trim().toLowerCase();
-  for (const [key, value] of Object.entries(FAQ_ANSWERS)) if (key.toLowerCase() === q) return value;
-  if (q.includes("shader")) return FAQ_ANSWERS["How do I install a shader?"];
-  if (q.includes("launcher")) return FAQ_ANSWERS["Which launcher should I use?"];
-  if (q.includes("version") || q.includes("latest") || q.includes("snapshot")) return FAQ_ANSWERS["What is the latest Minecraft version?"];
-  if (q.includes("unverified") || q.includes("safe") || q.includes("virus")) return FAQ_ANSWERS["What does the 'unverified' badge mean?"];
-  if (q.includes("pojav") || q.includes("modpack")) return FAQ_ANSWERS["How do I use a Pojav modpack?"];
-  if (q.includes("official")) return FAQ_ANSWERS["Is this an official Minecraft site?"];
-  if (q.includes("contact") || q.includes("support")) return FAQ_ANSWERS["How do I contact you?"];
-  return null;
-};
+  // Modpacks
+  {
+    id: "pojav-modpack",
+    category: "modpacks",
+    question: "How do I install a modpack in PojavLauncher?",
+    answer:
+      "To install a modpack on PojavLauncher:\n" +
+      "1. Download the modpack archive (such as Spunky Boost) from our Modpacks page.\n" +
+      "2. In PojavLauncher, create a new profile matching the Minecraft version and loader (Fabric/Forge) specified by the pack.\n" +
+      "3. Extract or copy the pack contents into your `.minecraft/` folder inside Pojav's game directory.\n" +
+      "4. Launch the profile and enjoy optimized mobile performance!",
+    tags: ["modpacks", "pojav", "spunky boost", "android"],
+  },
+  {
+    id: "mrpack-converter",
+    category: "modpacks",
+    question: "What is the Mrpack to Zip converter on the Patch page?",
+    answer:
+      "Modrinth modpacks are distributed in `.mrpack` format, which is an archive containing configuration and an index of mods to download. Our built-in **Mrpack to Zip converter** runs right in your browser to inspect or convert `.mrpack` files into standard zip archives with override folders for manual installation.",
+    tags: ["modpacks", "mrpack", "converter", "patch", "zip"],
+  },
 
-/** Safe renderer for **bold** and newlines (no innerHTML). */
+  // Downloads, Versions & Safety
+  {
+    id: "source-badges",
+    category: "safety",
+    question: "What does the 'unverified' source badge mean?",
+    answer:
+      "Every download on Minecraft Java Hub displays a source status badge:\n" +
+      "• **Verified (Green)**: Queried live against official developer APIs (Mojang, Modrinth, or GitHub Releases) where hashes, file sizes, and versions are validated.\n" +
+      "• **Unverified (Red)**: A third-party community mirror (Google Drive, MediaFire, direct link) for community maps and custom worlds. While reviewed, we cannot verify automated checksums, so we recommend scanning files and keeping backups.",
+    tags: ["safety", "badges", "verified", "unverified", "mirrors"],
+  },
+  {
+    id: "latest-version-source",
+    category: "safety",
+    question: "Where do version numbers on the site come from?",
+    answer:
+      "Version numbers on the Downloads and Patch pages are fetched in real-time straight from Mojang's official version manifest API (`launchermeta.mojang.com`). We never hardcode version numbers, so you always see the true current release and snapshot.",
+    tags: ["versions", "manifest", "mojang", "snapshot"],
+  },
+  {
+    id: "file-safety",
+    category: "safety",
+    question: "Are files on Minecraft Java Hub safe from malware?",
+    answer:
+      "Yes. We do not host or distribute infected files. We route downloads directly to trusted developer repositories (Modrinth, Mojang, GitHub) or scanned personal mirrors of creator worlds. All links are vetted before being added to the catalog.",
+    tags: ["safety", "virus", "malware", "security"],
+  },
+
+  // General
+  {
+    id: "official-site",
+    category: "general",
+    question: "Is Minecraft Java Hub an official Minecraft website?",
+    answer:
+      "No. Minecraft Java Hub is an independent community hub developed by **Nextup Studio**. It is not an official Minecraft product and is not approved by, endorsed by, or associated with Mojang Studios or Microsoft.",
+    tags: ["general", "official", "mojang", "microsoft", "about"],
+  },
+  {
+    id: "contact-support",
+    category: "general",
+    question: "How can I contact the creators or submit a world/modpack?",
+    answer:
+      `You can reach us directly via email at **${SOCIAL.email}** or connect with Nextup Studio on **YouTube (@nextupstudioyt)** and **Instagram (@vanshu_ag_72)**.\n\n` +
+      "You can also open issues or suggest content additions directly on our **GitHub repository**.",
+    tags: ["general", "contact", "support", "email", "social"],
+  },
+];
+
+const CATEGORIES = [
+  { id: "all", label: "All Questions" },
+  { id: "shaders", label: "Shaders" },
+  { id: "launchers", label: "Launchers" },
+  { id: "modpacks", label: "Modpacks" },
+  { id: "safety", label: "Safety & Sources" },
+  { id: "general", label: "General" },
+] as const;
+
+type CategoryId = (typeof CATEGORIES)[number]["id"];
+
+/** Safe renderer for **bold** and newlines */
 const Rich = ({ text }: { text: string }) => (
   <>
     {text.split("\n").map((line, li) => {
@@ -55,87 +175,39 @@ const Rich = ({ text }: { text: string }) => (
 );
 
 const FAQ = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Hi! Ask me about worlds, shaders, modpacks or launchers on Minecraft Java Hub." },
-  ]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [aiAvailable, setAiAvailable] = useState(true);
-  const logRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState<CategoryId>("all");
+  const [openedIds, setOpenedIds] = useState<Record<string, boolean>>({
+    "install-shader": true,
+    "recommended-launcher": true,
+  });
 
-  useEffect(() => {
-    const el = logRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [messages, loading]);
+  const filteredItems = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return FAQ_ITEMS.filter((item) => {
+      const matchesCategory = activeCategory === "all" || item.category === activeCategory;
+      if (!matchesCategory) return false;
+      if (!q) return true;
+      return (
+        item.question.toLowerCase().includes(q) ||
+        item.answer.toLowerCase().includes(q) ||
+        item.tags.some((t) => t.toLowerCase().includes(q))
+      );
+    });
+  }, [search, activeCategory]);
 
-  const streamChat = async (history: Message[]): Promise<boolean> => {
-    try {
-      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/faq-chat`;
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}` },
-        body: JSON.stringify({ messages: history }),
-      });
-      if (!res.ok || !res.body) return false;
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let acc = "";
-      setMessages((p) => [...p, { role: "assistant", content: "" }]);
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
-        let nl: number;
-        while ((nl = buffer.indexOf("\n")) !== -1) {
-          let line = buffer.slice(0, nl);
-          buffer = buffer.slice(nl + 1);
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (!line.startsWith("data: ")) continue;
-          const json = line.slice(6).trim();
-          if (json === "[DONE]") continue;
-          try {
-            const delta = JSON.parse(json).choices?.[0]?.delta?.content;
-            if (delta) {
-              acc += delta;
-              setMessages((p) => {
-                const n = [...p];
-                n[n.length - 1] = { role: "assistant", content: acc };
-                return n;
-              });
-            }
-          } catch {
-            buffer = line + "\n" + buffer;
-            break;
-          }
-        }
-      }
-      return acc.length > 0;
-    } catch {
-      return false;
-    }
+  const toggleOpen = (id: string) => {
+    setOpenedIds((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const send = async (text?: string) => {
-    const q = (text ?? input).trim();
-    if (!q || loading) return;
-    const user: Message = { role: "user", content: q };
-    const history = [...messages, user].filter((m) => m.content);
-    setMessages((p) => [...p, user]);
-    setInput("");
-    setLoading(true);
-    const fallback = offlineAnswer(q);
-    let ok = false;
-    if (aiAvailable) ok = await streamChat(history);
-    if (!ok) {
-      setAiAvailable(false);
-      setMessages((p) => {
-        const base = p[p.length - 1]?.role === "assistant" && p[p.length - 1].content === "" ? p.slice(0, -1) : p;
-        return [...base, { role: "assistant", content: fallback ?? "I couldn't reach the server. Try one of the questions below!" }];
-      });
-    }
-    setLoading(false);
+  const expandAll = () => {
+    const next: Record<string, boolean> = {};
+    for (const item of filteredItems) next[item.id] = true;
+    setOpenedIds(next);
+  };
+
+  const collapseAll = () => {
+    setOpenedIds({});
   };
 
   return (
@@ -145,61 +217,120 @@ const FAQ = () => {
         structuredData={{
           "@context": "https://schema.org",
           "@type": "FAQPage",
-          mainEntity: Object.entries(FAQ_ANSWERS).map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+          mainEntity: FAQ_ITEMS.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer.replace(/\*\*/g, ""),
+            },
+          })),
         }}
       />
-      <div className="mc-container mc-container--narrow">
-        <PageHead icon="lapis" title="Chat" subtitle="Ask about worlds, shaders, modpacks and launchers." />
-        {!aiAvailable && <p className="mc-center t-gold" style={{ marginBottom: 12 }}>Offline mode: showing pre-written answers.</p>}
 
-        <section className="mc-chat" aria-label="Chat with the Nextup AI assistant">
-          <div className="mc-chat__log" ref={logRef} role="log" aria-live="polite">
-            {messages.map((m, i) => (
-              <div key={i} className="mc-chat__line">
-                <span className={m.role === "assistant" ? "mc-chat__name mc-chat__name--ai" : "mc-chat__name"}>
-                  {"<"}{m.role === "assistant" ? "Nextup AI" : "You"}{">"}
-                </span>{" "}
-                <Rich text={m.content} />
-              </div>
-            ))}
-            {loading && messages[messages.length - 1]?.role === "user" && (
-              <div className="mc-chat__line">
-                <span className="mc-chat__name mc-chat__name--ai">{"<Nextup AI>"}</span> <span className="mc-chat__typing">thinking</span>
-              </div>
-            )}
-          </div>
-          <form className="mc-chat__form" onSubmit={(e) => { e.preventDefault(); void send(); }}>
-            <label className="mc-sr" htmlFor="chat-input">Your message</label>
-            <textarea
-              id="chat-input"
-              ref={inputRef}
-              className="mc-chat__input"
-              rows={1}
-              value={input}
-              disabled={loading}
-              placeholder="Ask about shaders, launchers, modpacks..."
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  void send();
-                }
-              }}
+      <div className="mc-container mc-container--narrow">
+        <PageHead
+          icon="lapis"
+          title="Frequently Asked Questions"
+          subtitle="Everything you need to know about shaders, launchers, modpacks, and downloads."
+        />
+
+        {/* Filter & Search Panel */}
+        <section className="mc-panel mc-panel--dark" aria-label="Search and filter FAQ" style={{ marginBottom: 24 }}>
+          <div className="mc-field">
+            <span>Search Questions</span>
+            <input
+              type="search"
+              className="mc-input"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by keywords (e.g. shader, pojav, launcher, virus)..."
+              aria-label="Search FAQ"
             />
-            <McButton type="submit" variant="green" disabled={!input.trim() || loading}>Send</McButton>
-          </form>
+          </div>
+
+          <div className="mc-chips" role="group" aria-label="FAQ Categories" style={{ marginTop: 14 }}>
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                className="mc-tag mc-tag--btn"
+                aria-pressed={activeCategory === cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="mc-row mc-row--between" style={{ marginTop: 14, alignItems: "center" }}>
+            <span className="mc-muted">
+              Showing {filteredItems.length} question{filteredItems.length === 1 ? "" : "s"}
+            </span>
+            <div className="mc-row" style={{ gap: 8 }}>
+              <McButton size="sm" variant="dark" onClick={expandAll}>Expand All</McButton>
+              <McButton size="sm" variant="dark" onClick={collapseAll}>Collapse All</McButton>
+            </div>
+          </div>
         </section>
 
-        <section style={{ marginTop: 28 }} aria-labelledby="common-q">
-          <h2 id="common-q" className="mc-h2 mc-h2--light">COMMON QUESTIONS</h2>
-          <div className="mc-book">
-            {SUGGESTED.map((q) => (
-              <details key={q}>
-                <summary>{q}</summary>
-                <p style={{ fontSize: 22, padding: "4px 4px 8px 22px" }}>{FAQ_ANSWERS[q]}</p>
-                <McButton size="sm" variant="dark" onClick={() => { setInput(q); inputRef.current?.focus(); }}>Ask the chat</McButton>
-              </details>
-            ))}
+        {/* FAQ Accordion in Written Book Style */}
+        <section aria-labelledby="faq-list-heading">
+          <h2 id="faq-list-heading" className="mc-h2 mc-h2--light" style={{ marginBottom: 14 }}>
+            KNOWLEDGE BASE
+          </h2>
+
+          {filteredItems.length === 0 ? (
+            <div className="mc-panel mc-panel--dark mc-center" style={{ padding: "32px 16px" }}>
+              <p style={{ fontSize: 24, marginBottom: 12 }}>No questions match your search.</p>
+              <McButton
+                size="sm"
+                variant="green"
+                onClick={() => {
+                  setSearch("");
+                  setActiveCategory("all");
+                }}
+              >
+                Reset Search Filters
+              </McButton>
+            </div>
+          ) : (
+            <div className="mc-book" style={{ display: "grid", gap: 12 }}>
+              {filteredItems.map((item) => {
+                const isOpen = !!openedIds[item.id];
+                return (
+                  <details
+                    key={item.id}
+                    open={isOpen}
+                    onToggle={(e) => {
+                      const open = (e.currentTarget as HTMLDetailsElement).open;
+                      setOpenedIds((prev) => ({ ...prev, [item.id]: open }));
+                    }}
+                  >
+                    <summary style={{ cursor: "pointer" }}>
+                      <span style={{ flex: 1 }}>{item.question}</span>
+                    </summary>
+                    <div style={{ fontSize: 22, padding: "8px 6px 12px 24px", lineHeight: 1.35 }}>
+                      <Rich text={item.answer} />
+                    </div>
+                  </details>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        {/* Support & Community Section */}
+        <section className="mc-panel mc-panel--dark" style={{ marginTop: 28, padding: 20 }}>
+          <h3 className="mc-h3 mc-yellow" style={{ marginBottom: 8 }}>STILL NEED HELP?</h3>
+          <p style={{ fontSize: 22, color: "#ccc", marginBottom: 16 }}>
+            Have a question that is not answered here, or want to suggest a new shader or world? Reach out directly:
+          </p>
+          <div className="mc-row" style={{ flexWrap: "wrap", gap: 10 }}>
+            <McButton href={`mailto:${SOCIAL.email}`} variant="green">Email Us</McButton>
+            <McButton href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer" variant="dark">YouTube</McButton>
+            <McButton href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" variant="dark">Instagram</McButton>
+            <McButton href={SOCIAL.github} target="_blank" rel="noopener noreferrer" variant="dark">GitHub</McButton>
           </div>
         </section>
       </div>
