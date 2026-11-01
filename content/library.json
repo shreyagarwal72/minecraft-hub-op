@@ -296,21 +296,22 @@
       "mcVersions": [
         "1.21.8"
       ],
-      "loaders": [],
+      "loaders": [
+        "fabric"
+      ],
       "license": "Unknown",
-      "author": "Unknown (third-party)",
+      "author": "Spunky",
       "updated": "2026-11-01",
       "sources": [
         {
-          "provider": "mediafire",
-          "url": "https://www.mediafire.com/file/nwhbvcfwmoocxxh/Spunky+Boost+1.21.8+(1).zip/file",
-          "label": "MediaFire (expired)",
-          "checked": false,
-          "lastChecked": null
+          "provider": "modrinth",
+          "url": "https://modrinth.com/modpack/spunky-boost",
+          "label": "Modrinth (Official)",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:41:04.456Z",
+          "ref": "spunky-boost"
         }
-      ],
-      "unavailable": true,
-      "note": "The previous MediaFire mirror has expired. Please provide the new download link."
+      ]
     },
     {
       "id": "spunky-optimised",
@@ -326,21 +327,22 @@
       "mcVersions": [
         "1.21.8"
       ],
-      "loaders": [],
+      "loaders": [
+        "fabric"
+      ],
       "license": "Unknown",
-      "author": "Unknown (third-party)",
+      "author": "Spunky",
       "updated": "2026-11-01",
       "sources": [
         {
-          "provider": "mediafire",
-          "url": "https://www.mediafire.com/file/kahadb1v4snxbo7/Spunky+Optimized+1.21.8.zip/file",
-          "label": "MediaFire (expired)",
-          "checked": false,
-          "lastChecked": null
+          "provider": "modrinth",
+          "url": "https://modrinth.com/modpack/spunky-optimized",
+          "label": "Modrinth (Official)",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:41:04.457Z",
+          "ref": "spunky-optimized"
         }
-      ],
-      "unavailable": true,
-      "note": "The previous MediaFire mirror has expired. Please provide the new download link."
+      ]
     },
     {
       "id": "bulky-star-15k-days",
