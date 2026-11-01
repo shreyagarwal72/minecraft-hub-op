@@ -140,7 +140,7 @@ const FAQ_ITEMS: FAQItem[] = [
     category: "general",
     question: "How can I contact the creators or submit a world/modpack?",
     answer:
-      `You can reach us directly via email at **${SOCIAL.email}** or connect with Nextup Studio on **YouTube (@nextupstudioyt)** and **Instagram (@vanshu_ag_72)**.\n\n` +
+      `You can reach us directly via email at **${SOCIAL.email}** or connect with Nextup Studio on **YouTube (@nextupstudioyt)** and **Instagram (@hereyourchampion)**.\n\n` +
       "You can also open issues or suggest content additions directly on our **GitHub repository**.",
     tags: ["general", "contact", "support", "email", "social"],
   },
