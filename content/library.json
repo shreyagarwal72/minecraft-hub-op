@@ -304,11 +304,13 @@
         {
           "provider": "mediafire",
           "url": "https://www.mediafire.com/file/nwhbvcfwmoocxxh/Spunky+Boost+1.21.8+(1).zip/file",
-          "label": "MediaFire mirror (unverified)",
+          "label": "MediaFire (expired)",
           "checked": false,
           "lastChecked": null
         }
-      ]
+      ],
+      "unavailable": true,
+      "note": "The previous MediaFire mirror has expired. Please provide the new download link."
     },
     {
       "id": "spunky-optimised",
@@ -332,11 +334,13 @@
         {
           "provider": "mediafire",
           "url": "https://www.mediafire.com/file/kahadb1v4snxbo7/Spunky+Optimized+1.21.8.zip/file",
-          "label": "MediaFire mirror (unverified)",
+          "label": "MediaFire (expired)",
           "checked": false,
           "lastChecked": null
         }
-      ]
+      ],
+      "unavailable": true,
+      "note": "The previous MediaFire mirror has expired. Please provide the new download link."
     },
     {
       "id": "bulky-star-15k-days",
