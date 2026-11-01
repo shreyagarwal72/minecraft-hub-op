@@ -44,7 +44,7 @@ npm run library:check  # check every source URL, exit 1 on dead links
 | `CURSEFORGE_API_KEY` | edge function and `library:sync` | CurseForge Core API (server side only) |
 | `GITHUB_TOKEN` | edge function and `library:sync`, optional | avoids GitHub rate limits |
 | `SUPABASE_SERVICE_ROLE_KEY` | edge function, optional | reads the `library_entries` table |
-| `LOVABLE_API_KEY` | `faq-chat` function | AI gateway for the FAQ chat |
+| `AI_API_KEY` | `faq-chat` function | AI API key for the FAQ chat |
 
 ## Content library
 
@@ -77,7 +77,7 @@ See [docs/ADDING_CONTENT.md](docs/ADDING_CONTENT.md). In short: add one object t
 ```bash
 supabase functions deploy library-resolve --no-verify-jwt
 supabase functions deploy faq-chat
-supabase secrets set CURSEFORGE_API_KEY=... GITHUB_TOKEN=... LOVABLE_API_KEY=...
+supabase secrets set CURSEFORGE_API_KEY=... GITHUB_TOKEN=... AI_API_KEY=...
 ```
 
 `npm run library:sync` copies `content/library.json` next to the function. Re-deploy `library-resolve` after you change the library.
