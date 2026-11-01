@@ -400,6 +400,695 @@
           "lastChecked": null
         }
       ]
+    },
+    {
+      "id": "complementary-unbound",
+      "type": "shader",
+      "title": "Complementary Shaders - Unbound",
+      "description": "The fantasy counterpart to Reimagined. Features custom auroras, godrays, glowing minerals, and atmospheric realism.",
+      "image": "/library/complementary-unbound.jpg",
+      "tags": [
+        "shader",
+        "fantasy",
+        "lighting",
+        "unbound",
+        "popular"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "iris",
+        "optifine"
+      ],
+      "license": "Custom (EminGT)",
+      "author": "EminGT",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/shader/complementary-unbound",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "complementary-unbound"
+        }
+      ]
+    },
+    {
+      "id": "sildurs-vibrant-shaders",
+      "type": "shader",
+      "title": "Sildur's Vibrant Shaders",
+      "description": "One of Minecraft's most renowned shaderpacks. Vibrant saturated lighting, waving foliage, volumetric clouds, and presets from Lite to Extreme.",
+      "image": "/library/sildurs-vibrant.jpg",
+      "tags": [
+        "shader",
+        "vibrant",
+        "classic",
+        "performance"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "iris",
+        "optifine"
+      ],
+      "license": "Custom",
+      "author": "Sildur",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/shader/sildurs-vibrant-shaders",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "sildurs-vibrant-shaders"
+        }
+      ]
+    },
+    {
+      "id": "makeup-ultra-fast",
+      "type": "shader",
+      "title": "MakeUp - Ultra Fast",
+      "description": "Optimized for maximum FPS on low-end hardware, laptops, and integrated graphics with fully modular visual toggles.",
+      "image": "/library/makeup-ultra-fast.jpg",
+      "tags": [
+        "shader",
+        "fast",
+        "potato",
+        "low-end",
+        "fps"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "iris",
+        "optifine"
+      ],
+      "license": "CC0",
+      "author": "XavierFbx",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/shader/makeup-ultra-fast-shaders",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "makeup-ultra-fast-shaders"
+        }
+      ]
+    },
+    {
+      "id": "astralex-shader",
+      "type": "shader",
+      "title": "AstraLex Shaders",
+      "description": "BSL-based shader featuring breathtaking cosmic skies, shooting stars, constellations, auroras, and comic-style shading options.",
+      "image": "/library/astralex.jpg",
+      "tags": [
+        "shader",
+        "cosmic",
+        "aurora",
+        "night"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "iris",
+        "optifine"
+      ],
+      "license": "Custom",
+      "author": "Motschen",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/shader/astralex",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "astralex"
+        }
+      ]
+    },
+    {
+      "id": "rethinking-voxels",
+      "type": "shader",
+      "title": "Rethinking Voxels",
+      "description": "Pioneering voxel-based path tracing in Minecraft. Creates real colored block-lighting and sharp shadows without dedicated RTX.",
+      "image": "/library/rethinking-voxels.jpg",
+      "tags": [
+        "shader",
+        "voxels",
+        "raytracing",
+        "colored-lights"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "iris"
+      ],
+      "license": "Custom",
+      "author": "Gri5_Bsp",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/shader/rethinking-voxels",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "rethinking-voxels"
+        }
+      ]
+    },
+    {
+      "id": "fabulously-optimized",
+      "type": "modpack",
+      "title": "Fabulously Optimized",
+      "description": "The #1 Fabric performance pack. Matches and exceeds OptiFine features while dramatically increasing FPS and reducing stutter.",
+      "image": "/library/fabulously-optimized.jpg",
+      "tags": [
+        "modpack",
+        "performance",
+        "fabric",
+        "optifine-parity",
+        "fps"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "fabric"
+      ],
+      "license": "MIT",
+      "author": "RobotKoer",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/modpack/fabulously-optimized",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "fabulously-optimized"
+        }
+      ]
+    },
+    {
+      "id": "cobblemon-official",
+      "type": "modpack",
+      "title": "Cobblemon Official Modpack",
+      "description": "Catch, train, and battle Pokémon directly inside Minecraft with smooth animations, custom sound effects, and full multiplayer.",
+      "image": "/library/cobblemon.jpg",
+      "tags": [
+        "modpack",
+        "pokemon",
+        "cobblemon",
+        "adventure",
+        "creatures"
+      ],
+      "mcVersions": [
+        "1.21.1"
+      ],
+      "loaders": [
+        "fabric"
+      ],
+      "license": "Proprietary",
+      "author": "Cobblemon Team",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/modpack/cobblemon-fabric",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "cobblemon-fabric"
+        }
+      ]
+    },
+    {
+      "id": "better-mc-fabric",
+      "type": "modpack",
+      "title": "Better MC [FABRIC] - BMC2",
+      "description": "The ultimate Minecraft 2.0 experience: vast new dimensions, dungeon crawl adventures, bosses, quest book, and hundreds of features.",
+      "image": "/library/better-mc.jpg",
+      "tags": [
+        "modpack",
+        "adventure",
+        "rpg",
+        "dungeons",
+        "bosses"
+      ],
+      "mcVersions": [
+        "1.21.1"
+      ],
+      "loaders": [
+        "fabric"
+      ],
+      "license": "All Rights Reserved",
+      "author": "SHXRKIE",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/modpack/better-mc-fabric-bmc2",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "better-mc-fabric-bmc2"
+        }
+      ]
+    },
+    {
+      "id": "medieval-mc-fabric",
+      "type": "modpack",
+      "title": "Medieval MC [FABRIC]",
+      "description": "High fantasy medieval RPG with custom stamina and thirst systems, class origins, boss progression, and dangerous dungeons.",
+      "image": "/library/medieval-mc.jpg",
+      "tags": [
+        "modpack",
+        "medieval",
+        "rpg",
+        "magic",
+        "origins"
+      ],
+      "mcVersions": [
+        "1.21.1"
+      ],
+      "loaders": [
+        "fabric"
+      ],
+      "license": "All Rights Reserved",
+      "author": "SHXRKIE",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/modpack/medieval-mc-fabric-mmc2",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "medieval-mc-fabric-mmc2"
+        }
+      ]
+    },
+    {
+      "id": "sodium-plus",
+      "type": "modpack",
+      "title": "Sodium Plus",
+      "description": "Compact performance package containing Sodium, Iris, FerriteCore, Lithium, and key optimization mods in one click.",
+      "image": "/library/sodium-plus.jpg",
+      "tags": [
+        "modpack",
+        "performance",
+        "sodium",
+        "minimal"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "fabric"
+      ],
+      "license": "MIT",
+      "author": "FlashyReese",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/modpack/sodiumplus",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "sodiumplus"
+        }
+      ]
+    },
+    {
+      "id": "pojav-launcher",
+      "type": "launcher",
+      "title": "PojavLauncher (Android & iOS)",
+      "description": "Open-source launcher running genuine Minecraft Java Edition on mobile devices and Chromebooks with complete touch controls.",
+      "image": "/library/pojav-launcher.jpg",
+      "tags": [
+        "launcher",
+        "android",
+        "mobile",
+        "ios",
+        "open-source"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "fabric",
+        "forge",
+        "vanilla"
+      ],
+      "license": "GPL-3.0",
+      "author": "PojavLauncher Team",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "github",
+          "url": "https://github.com/PojavLauncherTeam/PojavLauncher/releases",
+          "label": "GitHub Releases",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "PojavLauncherTeam/PojavLauncher"
+        }
+      ]
+    },
+    {
+      "id": "atlauncher",
+      "type": "launcher",
+      "title": "ATLauncher",
+      "description": "Lightweight and powerful desktop launcher with integrated instance backups, account management, and one-click pack downloads.",
+      "image": "/library/atlauncher.jpg",
+      "tags": [
+        "launcher",
+        "modpacks",
+        "multi-instance",
+        "open-source"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "fabric",
+        "forge",
+        "neoforge",
+        "quilt",
+        "vanilla"
+      ],
+      "license": "GPL-3.0",
+      "author": "RyanTheAllmighty",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "github",
+          "url": "https://github.com/ATLauncher/ATLauncher/releases",
+          "label": "GitHub Releases",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "ATLauncher/ATLauncher"
+        }
+      ]
+    },
+    {
+      "id": "skyblock-classic",
+      "type": "world",
+      "title": "Classic Skyblock 2.1",
+      "description": "The original void survival map. Survive on a tiny floating island with only a lava bucket, ice block, and your wits.",
+      "image": "/library/skyblock.jpg",
+      "tags": [
+        "world",
+        "skyblock",
+        "survival",
+        "challenge"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Public Domain",
+      "author": "Noobcrew",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "direct",
+          "url": "https://www.planetminecraft.com/project/skyblock-21/",
+          "label": "Planet Minecraft Mirror",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "greenfield-city",
+      "type": "world",
+      "title": "Greenfield City (1:1 Scale Metropolis)",
+      "description": "The largest modern city project ever built in Minecraft Java. Features fully furnished skyscrapers, highways, subways, and suburbs.",
+      "image": "/library/greenfield.jpg",
+      "tags": [
+        "world",
+        "city",
+        "modern",
+        "megabuild",
+        "creative"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Custom",
+      "author": "Greenfield Build Team",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "direct",
+          "url": "https://www.planetminecraft.com/project/greenfield---new-save-file-depth-and-detail/",
+          "label": "Planet Minecraft Download",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "diversity-3",
+      "type": "world",
+      "title": "Diversity 3 Multi-Genre Map",
+      "description": "Epic Complete-The-Monument map packed with 10 diverse branches: Trivia, Survival, Escape, Bosses, Labyrinth, and Parkour.",
+      "image": "/library/diversity-3.jpg",
+      "tags": [
+        "world",
+        "adventure",
+        "puzzle",
+        "parkour",
+        "ctm"
+      ],
+      "mcVersions": [
+        "1.14.4",
+        "1.20+"
+      ],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Custom",
+      "author": "Diversity Team",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "direct",
+          "url": "https://www.curseforge.com/minecraft/worlds/diversity-3",
+          "label": "CurseForge Page",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "herobrines-mansion",
+      "type": "world",
+      "title": "Herobrine's Mansion (Remastered)",
+      "description": "Hypixel's iconic co-op adventure map remastered for modern Minecraft Java. Features boss encounters, customized gear, and classic lore.",
+      "image": "/library/herobrines-mansion.jpg",
+      "tags": [
+        "world",
+        "adventure",
+        "hypixel",
+        "herobrine",
+        "bosses"
+      ],
+      "mcVersions": [
+        "1.20+",
+        "1.21+"
+      ],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Custom",
+      "author": "Hypixel Team",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "direct",
+          "url": "https://www.curseforge.com/minecraft/worlds/herobrines-mansion-remastered",
+          "label": "CurseForge Download",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z"
+        }
+      ]
+    },
+    {
+      "id": "sodium",
+      "type": "mod",
+      "title": "Sodium",
+      "description": "Modern rendering engine replacement that drastically improves frame rates, reduces stuttering, and optimizes chunk generation.",
+      "image": "/library/sodium.jpg",
+      "tags": [
+        "mod",
+        "performance",
+        "fabric",
+        "fps"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "fabric",
+        "neoforge"
+      ],
+      "license": "LGPL-3.0",
+      "author": "jellysquid3_ / CaffeineMC",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/mod/sodium",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "sodium"
+        }
+      ]
+    },
+    {
+      "id": "iris-shaders-mod",
+      "type": "mod",
+      "title": "Iris Shaders",
+      "description": "Ultra-fast modern shader mod designed to work seamlessly with Sodium for maximum visual quality and compatibility.",
+      "image": "/library/iris.jpg",
+      "tags": [
+        "mod",
+        "shaders",
+        "fabric",
+        "graphics"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "fabric",
+        "neoforge"
+      ],
+      "license": "LGPL-3.0",
+      "author": "Iris Team",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/mod/iris",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "iris"
+        }
+      ]
+    },
+    {
+      "id": "faithful-32x",
+      "type": "resourcepack",
+      "title": "Faithful 32x",
+      "description": "The classic Minecraft textures doubled in resolution. Sharp, faithful to vanilla, and compatible with all modern versions.",
+      "image": "/library/faithful.jpg",
+      "tags": [
+        "resourcepack",
+        "textures",
+        "vanilla-style",
+        "hd"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "vanilla",
+        "fabric",
+        "forge"
+      ],
+      "license": "Custom",
+      "author": "Faithful Team",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/resourcepack/faithful-32x",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "faithful-32x"
+        }
+      ]
+    },
+    {
+      "id": "bare-bones",
+      "type": "resourcepack",
+      "title": "Bare Bones",
+      "description": "Transforms the game to match the sleek, vibrant, cartoonish look of official Minecraft promotional trailers.",
+      "image": "/library/bare-bones.jpg",
+      "tags": [
+        "resourcepack",
+        "trailer",
+        "minimalist",
+        "clean"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "vanilla",
+        "fabric",
+        "forge"
+      ],
+      "license": "Custom",
+      "author": "RobotPantaloons",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/resourcepack/bare-bones",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "bare-bones"
+        }
+      ]
+    },
+    {
+      "id": "fresh-animations",
+      "type": "resourcepack",
+      "title": "Fresh Animations",
+      "description": "Replaces default static creature models with lively, expressive facial animations, body bends, and dynamic walking cycles.",
+      "image": "/library/fresh-animations.jpg",
+      "tags": [
+        "resourcepack",
+        "animations",
+        "expressive",
+        "mobs"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [
+        "vanilla",
+        "fabric"
+      ],
+      "license": "Custom",
+      "author": "FreshLX",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/resourcepack/fresh-animations",
+          "label": "On Modrinth",
+          "checked": true,
+          "lastChecked": "2026-11-01T08:00:00Z",
+          "ref": "fresh-animations"
+        }
+      ]
     }
   ]
 }

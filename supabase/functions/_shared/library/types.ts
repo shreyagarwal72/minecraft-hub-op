@@ -54,6 +54,8 @@ export interface Resolved {
   /** false for plain links we cannot verify (Drive, MediaFire, direct) */
   verified: boolean;
   fetchedAt: string;
+  iconUrl?: string | null;
+  galleryUrl?: string | null;
 }
 
 export interface ResolvedEntry extends LibraryEntry {

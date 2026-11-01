@@ -18,11 +18,12 @@ const LibraryCard = ({ entry, row = false, extra }: Props) => {
   const dead = !!entry.unavailable;
   const pageOnly = !entry.resolved?.verified && (source.provider === "mojang" || source.provider === "modrinth") && url === source.url;
   const label = entry.type === "launcher" || entry.type === "version" ? (pageOnly ? "Open official page" : "Get it") : "Download";
+  const thumb = entry.resolved?.galleryUrl || entry.resolved?.iconUrl || entry.image;
 
   return (
     <article className={`mc-panel mc-card mc-lib ${row ? "mc-lib--row" : ""} ${dead ? "mc-lib--dead" : ""}`} id={entry.id}>
       <div className="mc-lib__thumb mc-slot">
-        <img src={entry.image} alt="" loading="lazy" />
+        <img src={thumb} alt={entry.title} loading="lazy" />
       </div>
       <div className="mc-lib__body">
         <h3 className="mc-card__title">{entry.title}</h3>
