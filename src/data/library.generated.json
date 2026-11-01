@@ -1,0 +1,420 @@
+{
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "mojang": null,
+  "entries": [
+    {
+      "id": "mc-java-release",
+      "type": "version",
+      "title": "Minecraft Java Edition: latest release",
+      "description": "The newest stable Java Edition version, read live from Mojang's version manifest.",
+      "image": "/library/minecraft-hero.jpg",
+      "tags": [
+        "official",
+        "stable"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Proprietary (Mojang)",
+      "author": "Mojang Studios",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "mojang",
+          "url": "https://www.minecraft.net/en-us/download",
+          "label": "Official Minecraft download page",
+          "checked": false,
+          "lastChecked": null,
+          "ref": "release"
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "mc-java-snapshot",
+      "type": "version",
+      "title": "Minecraft Java Edition: latest snapshot",
+      "description": "The newest snapshot (test build), read live from Mojang's version manifest. Snapshots can break worlds, so back up first.",
+      "image": "/library/minecraft-hero.jpg",
+      "tags": [
+        "official",
+        "snapshot"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Proprietary (Mojang)",
+      "author": "Mojang Studios",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "mojang",
+          "url": "https://www.minecraft.net/en-us/download",
+          "label": "Official Minecraft download page",
+          "checked": false,
+          "lastChecked": null,
+          "ref": "snapshot"
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "minecraft-launcher",
+      "type": "launcher",
+      "title": "Minecraft Launcher (official)",
+      "description": "The official launcher from Mojang. Use it to buy, install and update Java Edition.",
+      "image": "/icons/grass.png",
+      "tags": [
+        "official",
+        "launcher"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Proprietary (Mojang)",
+      "author": "Mojang Studios",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "mojang",
+          "url": "https://www.minecraft.net/en-us/download",
+          "label": "Official Minecraft download page",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "modrinth-app",
+      "type": "launcher",
+      "title": "Modrinth App",
+      "description": "Launcher with one-click mod and modpack installs, automatic updates and a clean interface.",
+      "image": "/library/modrinth-launcher.jpg",
+      "tags": [
+        "launcher",
+        "mods",
+        "modpacks"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "fabric",
+        "forge",
+        "neoforge",
+        "quilt"
+      ],
+      "license": "See Modrinth",
+      "author": "Modrinth",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/app",
+          "label": "Official Modrinth App page",
+          "checked": false,
+          "lastChecked": null
+        },
+        {
+          "provider": "direct",
+          "url": "https://launcher-files.modrinth.com/versions/0.10.7/windows/Modrinth%20App_0.10.7_x64-setup.exe",
+          "label": "Windows installer v0.10.7 (copied from the old site, may be outdated)",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "prism-launcher",
+      "type": "launcher",
+      "title": "Prism Launcher",
+      "description": "Free, open-source launcher that keeps many separate game setups (instances). Good for heavy modding.",
+      "image": "/icons/diamond.png",
+      "tags": [
+        "launcher",
+        "open-source",
+        "mods"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "fabric",
+        "forge",
+        "neoforge",
+        "quilt"
+      ],
+      "license": "GPL-3.0",
+      "author": "Prism Launcher contributors",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "github",
+          "url": "https://github.com/PrismLauncher/PrismLauncher/releases",
+          "label": "Prism Launcher releases on GitHub",
+          "checked": false,
+          "lastChecked": null,
+          "ref": "PrismLauncher/PrismLauncher"
+        },
+        {
+          "provider": "direct",
+          "url": "https://prismlauncher.org/download/",
+          "label": "Official download page",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "mrpack-to-zip",
+      "type": "launcher",
+      "title": "Mrpack to Zip converter",
+      "description": "Small web tool that turns a Modrinth .mrpack modpack into a normal .zip that launchers like Pojav can import.",
+      "image": "/icons/planks.png",
+      "tags": [
+        "tool",
+        "modpacks",
+        "pojav"
+      ],
+      "mcVersions": [],
+      "loaders": [],
+      "license": "Unknown",
+      "author": "Nextup Studio",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "direct",
+          "url": "https://mrpacktozip.vercel.app/",
+          "label": "Open the converter",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "bsl-shaders",
+      "type": "shader",
+      "title": "BSL Shaders",
+      "description": "One of the most popular shader packs: realistic lighting, soft shadows, volumetric light and water.",
+      "image": "/library/bsl-shader.jpg",
+      "tags": [
+        "shader",
+        "realistic",
+        "lighting"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "iris",
+        "optifine"
+      ],
+      "license": "See author page",
+      "author": "capttatsu",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/shader/bsl-shaders",
+          "label": "BSL on Modrinth",
+          "checked": false,
+          "lastChecked": null,
+          "ref": "bsl-shaders"
+        },
+        {
+          "provider": "direct",
+          "url": "https://bslshaders.com/",
+          "label": "Author website",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "complementary-reimagined",
+      "type": "shader",
+      "title": "Complementary Reimagined",
+      "description": "Good looks with strong performance. A rework of the original Complementary shaders with better colours and effects.",
+      "image": "/library/complementary-shader.jpg",
+      "tags": [
+        "shader",
+        "performance",
+        "lighting"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "iris",
+        "optifine"
+      ],
+      "license": "See author page",
+      "author": "EminGT",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/shader/complementary-reimagined",
+          "label": "Complementary Reimagined on Modrinth",
+          "checked": false,
+          "lastChecked": null,
+          "ref": "complementary-reimagined"
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "photon-shader",
+      "type": "shader",
+      "title": "Photon Shader",
+      "description": "Modern shader with advanced lighting and a clean, cinematic look.",
+      "image": "/library/photon-shader.jpg",
+      "tags": [
+        "shader",
+        "lighting"
+      ],
+      "mcVersions": [],
+      "loaders": [
+        "iris"
+      ],
+      "license": "See author page",
+      "author": "sixthsurge",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "modrinth",
+          "url": "https://modrinth.com/shader/photon-shader",
+          "label": "Photon on Modrinth",
+          "checked": false,
+          "lastChecked": null,
+          "ref": "photon-shader"
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "spunky-boost",
+      "type": "modpack",
+      "title": "Spunky Boost (for Pojav)",
+      "description": "Performance modpack tuned for Pojav Launcher on phones. Smooth gameplay on weaker devices.",
+      "image": "/library/spunky-boost.jpg",
+      "tags": [
+        "modpack",
+        "pojav",
+        "performance",
+        "mobile"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [],
+      "license": "Unknown",
+      "author": "Unknown (third-party)",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "mediafire",
+          "url": "https://www.mediafire.com/file/nwhbvcfwmoocxxh/Spunky+Boost+1.21.8+(1).zip/file",
+          "label": "MediaFire mirror (unverified)",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "spunky-optimised",
+      "type": "modpack",
+      "title": "Spunky Optimised",
+      "description": "Optimisation modpack for higher FPS and lower memory use without losing the vanilla look.",
+      "image": "/library/spunky-optimised.jpg",
+      "tags": [
+        "modpack",
+        "performance",
+        "fps"
+      ],
+      "mcVersions": [
+        "1.21.8"
+      ],
+      "loaders": [],
+      "license": "Unknown",
+      "author": "Unknown (third-party)",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "mediafire",
+          "url": "https://www.mediafire.com/file/kahadb1v4snxbo7/Spunky+Optimized+1.21.8.zip/file",
+          "label": "MediaFire mirror (unverified)",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "bulky-star-15k-days",
+      "type": "world",
+      "title": "Bulky Star 15k Days World",
+      "description": "A world built over 15,000 in-game days: big cities, redstone machines and custom terrain.",
+      "image": "/library/bulky-star-15k.jpg",
+      "tags": [
+        "world",
+        "redstone",
+        "survival",
+        "bulky-star"
+      ],
+      "mcVersions": [
+        "1.20+"
+      ],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Unknown",
+      "author": "Bulky Star",
+      "updated": "2026-11-01",
+      "sources": [
+        {
+          "provider": "gdrive",
+          "url": "https://drive.google.com/file/d/1nzGHCk5729sRiLHCUzOn63cn484Z-959/view?usp=sharing",
+          "label": "Google Drive (unverified), about 2.1 GB",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    },
+    {
+      "id": "infinity-castle",
+      "type": "world",
+      "title": "Minecraft Infinity Castle",
+      "description": "A Japanese-inspired multi-level castle with cherry blossom gardens.",
+      "image": "/library/infinity-castle.jpg",
+      "tags": [
+        "world",
+        "castle",
+        "bulky-star"
+      ],
+      "mcVersions": [
+        "1.19+"
+      ],
+      "loaders": [
+        "vanilla"
+      ],
+      "license": "Unknown",
+      "author": "Bulky Star",
+      "updated": "2026-11-01",
+      "unavailable": true,
+      "note": "The old link was a Discord CDN link with an expiring signed token (ex/is/hm). It is dead. Re-upload the file to a stable host and replace the source below.",
+      "sources": [
+        {
+          "provider": "direct",
+          "url": "https://cdn.discordapp.com/attachments/1320008925864525894/1416832281322065940/INFINITY_CASTLE.rar?ex=68c84763&is=68c6f5e3&hm=3e698108eb87be14d1c6587bcb418496cd6d0f1254d57e587312c83ef0faf288&",
+          "label": "Discord CDN (expired token)",
+          "checked": false,
+          "lastChecked": null
+        }
+      ],
+      "resolved": null
+    }
+  ]
+}

@@ -1,304 +1,209 @@
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Bot, User, Sparkles } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import LiquidGlassHeader from "@/components/LiquidGlassHeader";
-import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
-import { cn } from "@/lib/utils";
+import { Fragment, useEffect, useRef, useState, type ReactNode } from "react";
+import Layout from "@/components/Layout";
+import PageHead from "@/components/PageHead";
+import McButton from "@/components/McButton";
 import SEOHead from "@/components/SEOHead";
+import { ROUTE_SEO } from "@/config/seo";
+import { SOCIAL } from "@/data/site";
 
-type Message = {
+interface Message {
   role: "user" | "assistant";
   content: string;
+}
+
+/** Pre-written answers: used offline, and rendered on the page (and as FAQ structured data) for search engines. */
+const FAQ_ANSWERS: Record<string, string> = {
+  "How do I install a shader?": "Install Iris (or OptiFine), put the shader .zip in the shaderpacks folder, then pick it in Video Settings > Shader Packs.",
+  "Which launcher should I use?": "Start with the official Minecraft Launcher. Modrinth App and Prism Launcher are good for mods and modpacks.",
+  "What is the latest Minecraft version?": "The Downloads and Patch pages show the latest release and snapshot, read live from Mojang's version manifest.",
+  "What does the 'unverified' badge mean?": "It marks a mirror on Google Drive, MediaFire or a direct link. We cannot check those files automatically, so scan them and keep backups.",
+  "How do I use a Pojav modpack?": "Download the pack, import it in Pojav Launcher, and pick a matching Minecraft version. The Mrpack to Zip converter on the Patch page helps with .mrpack files.",
+  "Is this an official Minecraft site?": "No. It is not an official Minecraft product and is not approved by or associated with Mojang or Microsoft.",
+  "How do I contact you?": `Email ${SOCIAL.email}, or find Nextup Studio on YouTube (@nextupstudioyt) and Instagram (@vanshu_ag_72).`,
 };
 
-const FAQ = () => {
-  const { isLiquidGlass } = useLiquidGlass();
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
+const SUGGESTED = Object.keys(FAQ_ANSWERS);
 
-  const recommendedQuestions = [
-    "What features does Minecraft Java Hub offer?",
-    "How do I download a Minecraft launcher?",
-    "What are the best shaders available?",
-    "Tell me about the custom worlds",
-    "How do I join the community?",
-  ];
+const offlineAnswer = (question: string): string | null => {
+  const q = question.trim().toLowerCase();
+  for (const [key, value] of Object.entries(FAQ_ANSWERS)) if (key.toLowerCase() === q) return value;
+  if (q.includes("shader")) return FAQ_ANSWERS["How do I install a shader?"];
+  if (q.includes("launcher")) return FAQ_ANSWERS["Which launcher should I use?"];
+  if (q.includes("version") || q.includes("latest") || q.includes("snapshot")) return FAQ_ANSWERS["What is the latest Minecraft version?"];
+  if (q.includes("unverified") || q.includes("safe") || q.includes("virus")) return FAQ_ANSWERS["What does the 'unverified' badge mean?"];
+  if (q.includes("pojav") || q.includes("modpack")) return FAQ_ANSWERS["How do I use a Pojav modpack?"];
+  if (q.includes("official")) return FAQ_ANSWERS["Is this an official Minecraft site?"];
+  if (q.includes("contact") || q.includes("support")) return FAQ_ANSWERS["How do I contact you?"];
+  return null;
+};
+
+/** Safe renderer for **bold** and newlines (no innerHTML). */
+const Rich = ({ text }: { text: string }) => (
+  <>
+    {text.split("\n").map((line, li) => {
+      const parts: ReactNode[] = line.split(/(\*\*[^*]+\*\*)/g).map((part, pi) =>
+        part.startsWith("**") && part.endsWith("**") ? <b key={pi}>{part.slice(2, -2)}</b> : <Fragment key={pi}>{part}</Fragment>,
+      );
+      return (
+        <Fragment key={li}>
+          {li > 0 && <br />}
+          {parts}
+        </Fragment>
+      );
+    })}
+  </>
+);
+
+const FAQ = () => {
+  const [messages, setMessages] = useState<Message[]>([
+    { role: "assistant", content: "Hi! Ask me about worlds, shaders, modpacks or launchers on Minecraft Java Hub." },
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [aiAvailable, setAiAvailable] = useState(true);
+  const logRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
+    const el = logRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [messages, loading]);
 
-  const streamChat = async (userMessage: Message) => {
-    const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/faq-chat`;
-    
+  const streamChat = async (history: Message[]): Promise<boolean> => {
     try {
-      const resp = await fetch(CHAT_URL, {
+      const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/faq-chat`;
+      const res = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-        },
-        body: JSON.stringify({ messages: [...messages, userMessage] }),
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}` },
+        body: JSON.stringify({ messages: history }),
       });
-
-      if (!resp.ok || !resp.body) {
-        if (resp.status === 429 || resp.status === 402) {
-          const errorData = await resp.json();
-          throw new Error(errorData.error || "Service temporarily unavailable");
-        }
-        throw new Error("Failed to get response");
-      }
-
-      const reader = resp.body.getReader();
+      if (!res.ok || !res.body) return false;
+      const reader = res.body.getReader();
       const decoder = new TextDecoder();
-      let textBuffer = "";
-      let streamDone = false;
-      let assistantContent = "";
-
-      // Add empty assistant message that we'll update
-      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
-
-      while (!streamDone) {
+      let buffer = "";
+      let acc = "";
+      setMessages((p) => [...p, { role: "assistant", content: "" }]);
+      for (;;) {
         const { done, value } = await reader.read();
         if (done) break;
-        textBuffer += decoder.decode(value, { stream: true });
-
-        let newlineIndex: number;
-        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
-          let line = textBuffer.slice(0, newlineIndex);
-          textBuffer = textBuffer.slice(newlineIndex + 1);
-
+        buffer += decoder.decode(value, { stream: true });
+        let nl: number;
+        while ((nl = buffer.indexOf("\n")) !== -1) {
+          let line = buffer.slice(0, nl);
+          buffer = buffer.slice(nl + 1);
           if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (line.startsWith(":") || line.trim() === "") continue;
           if (!line.startsWith("data: ")) continue;
-
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") {
-            streamDone = true;
-            break;
-          }
-
+          const json = line.slice(6).trim();
+          if (json === "[DONE]") continue;
           try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-            if (content) {
-              assistantContent += content;
-              // Update the last message with accumulated content
-              setMessages((prev) => {
-                const newMessages = [...prev];
-                newMessages[newMessages.length - 1] = {
-                  role: "assistant",
-                  content: assistantContent,
-                };
-                return newMessages;
+            const delta = JSON.parse(json).choices?.[0]?.delta?.content;
+            if (delta) {
+              acc += delta;
+              setMessages((p) => {
+                const n = [...p];
+                n[n.length - 1] = { role: "assistant", content: acc };
+                return n;
               });
             }
           } catch {
-            textBuffer = line + "\n" + textBuffer;
+            buffer = line + "\n" + buffer;
             break;
           }
         }
       }
-
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Chat error:", error);
-      setIsLoading(false);
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to send message",
-        variant: "destructive",
-      });
-      // Remove the empty assistant message on error
-      setMessages((prev) => prev.slice(0, -1));
+      return acc.length > 0;
+    } catch {
+      return false;
     }
   };
 
-  const handleSend = async (text?: string) => {
-    const messageText = text || input.trim();
-    if (!messageText || isLoading) return;
-
-    const userMessage: Message = { role: "user", content: messageText };
-    setMessages((prev) => [...prev, userMessage]);
+  const send = async (text?: string) => {
+    const q = (text ?? input).trim();
+    if (!q || loading) return;
+    const user: Message = { role: "user", content: q };
+    const history = [...messages, user].filter((m) => m.content);
+    setMessages((p) => [...p, user]);
     setInput("");
-    setIsLoading(true);
-
-    await streamChat(userMessage);
-  };
-
-  const handleRecommendedClick = (question: string) => {
-    handleSend(question);
+    setLoading(true);
+    const fallback = offlineAnswer(q);
+    let ok = false;
+    if (aiAvailable) ok = await streamChat(history);
+    if (!ok) {
+      setAiAvailable(false);
+      setMessages((p) => {
+        const base = p[p.length - 1]?.role === "assistant" && p[p.length - 1].content === "" ? p.slice(0, -1) : p;
+        return [...base, { role: "assistant", content: fallback ?? "I couldn't reach the server. Try one of the questions below!" }];
+      });
+    }
+    setLoading(false);
   };
 
   return (
-    <>
+    <Layout background="deep">
       <SEOHead
-        title="FAQ - AI Help Center | Minecraft Java Hub"
-        description="Get instant answers about Minecraft Java Hub features, downloads, worlds, shaders, and modpacks with our AI-powered help center."
-        keywords="minecraft faq, minecraft help, ai chatbot, minecraft support, launcher help, shader help"
+        {...ROUTE_SEO["/faq"]}
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: Object.entries(FAQ_ANSWERS).map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+        }}
       />
-      <div className="min-h-screen bg-background flex flex-col">
-        <LiquidGlassHeader />
-        
-        <main className="flex-1 container mx-auto px-4 py-8 max-w-5xl">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-              <Bot className="w-8 h-8 text-primary" />
-            </div>
-            <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
-              AI-Powered FAQ
-            </h1>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Ask me anything about Minecraft Java Hub and I'll help you find what you need!
-            </p>
-          </div>
+      <div className="mc-container mc-container--narrow">
+        <PageHead icon="lapis" title="Chat" subtitle="Ask about worlds, shaders, modpacks and launchers." />
+        {!aiAvailable && <p className="mc-center t-gold" style={{ marginBottom: 12 }}>Offline mode: showing pre-written answers.</p>}
 
-          {/* Chat Container */}
-          <Card className={cn(
-            "border-2 shadow-xl overflow-hidden transition-all duration-300",
-            isLiquidGlass ? "liquid-glass-card border-primary/20" : "border-border/50"
-          )}>
-            {/* Messages Area */}
-            <ScrollArea className="h-[500px] p-6" ref={scrollRef}>
-              {messages.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center space-y-6">
-                  <Sparkles className="w-12 h-12 text-primary/50" />
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      Welcome to the FAQ Assistant!
-                    </h3>
-                    <p className="text-muted-foreground mb-6">
-                      Try asking one of these questions to get started:
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl">
-                    {recommendedQuestions.map((question, index) => (
-                      <Button
-                        key={index}
-                        variant="outline"
-                        className="text-left h-auto py-3 px-4 hover:bg-primary/5 hover:border-primary/50 transition-all"
-                        onClick={() => handleRecommendedClick(question)}
-                      >
-                        <span className="text-sm">{question}</span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex gap-3 ${
-                        message.role === "user" ? "justify-end" : "justify-start"
-                      }`}
-                    >
-                      {message.role === "assistant" && (
-                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                          <Bot className="w-5 h-5 text-primary" />
-                        </div>
-                      )}
-                      <div
-                        className={`rounded-lg px-4 py-3 max-w-[80%] ${
-                          message.role === "user"
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-secondary text-secondary-foreground"
-                        }`}
-                      >
-                        <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                          {message.content}
-                        </p>
-                      </div>
-                      {message.role === "user" && (
-                        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                          <User className="w-5 h-5 text-primary-foreground" />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                  {isLoading && (
-                    <div className="flex gap-3 justify-start">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <Bot className="w-5 h-5 text-primary animate-pulse" />
-                      </div>
-                      <div className="bg-secondary rounded-lg px-4 py-3">
-                        <div className="flex space-x-2">
-                          <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce" />
-                          <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce delay-100" />
-                          <div className="w-2 h-2 bg-primary/50 rounded-full animate-bounce delay-200" />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </ScrollArea>
-
-            {/* Input Area */}
-            <div className="border-t border-border p-4 bg-card/50">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSend();
-                }}
-                className="flex gap-2"
-              >
-                <Input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask me anything about Minecraft Java Hub..."
-                  disabled={isLoading}
-                  className="flex-1"
-                />
-                <Button
-                  type="submit"
-                  disabled={!input.trim() || isLoading}
-                  data-magnetic
-                  className={cn(
-                    isLiquidGlass ? "liquid-glass-button" : "bg-primary hover:bg-primary-hover"
-                  )}
-                >
-                  <Send className="w-4 h-4" />
-                </Button>
-              </form>
-            </div>
-          </Card>
-
-          {/* Recommended Questions (shown when chat has messages) */}
-          {messages.length > 0 && (
-            <div className="mt-6">
-              <p className="text-sm text-muted-foreground mb-3 text-center">
-                Quick questions:
-              </p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                {recommendedQuestions.slice(0, 3).map((question, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleRecommendedClick(question)}
-                    disabled={isLoading}
-                    className="hover:bg-primary/5 hover:border-primary/50"
-                  >
-                    {question}
-                  </Button>
-                ))}
+        <section className="mc-chat" aria-label="Chat with the Nextup AI assistant">
+          <div className="mc-chat__log" ref={logRef} role="log" aria-live="polite">
+            {messages.map((m, i) => (
+              <div key={i} className="mc-chat__line">
+                <span className={m.role === "assistant" ? "mc-chat__name mc-chat__name--ai" : "mc-chat__name"}>
+                  {"<"}{m.role === "assistant" ? "Nextup AI" : "You"}{">"}
+                </span>{" "}
+                <Rich text={m.content} />
               </div>
-            </div>
-          )}
-        </main>
+            ))}
+            {loading && messages[messages.length - 1]?.role === "user" && (
+              <div className="mc-chat__line">
+                <span className="mc-chat__name mc-chat__name--ai">{"<Nextup AI>"}</span> <span className="mc-chat__typing">thinking</span>
+              </div>
+            )}
+          </div>
+          <form className="mc-chat__form" onSubmit={(e) => { e.preventDefault(); void send(); }}>
+            <label className="mc-sr" htmlFor="chat-input">Your message</label>
+            <textarea
+              id="chat-input"
+              ref={inputRef}
+              className="mc-chat__input"
+              rows={1}
+              value={input}
+              disabled={loading}
+              placeholder="Ask about shaders, launchers, modpacks..."
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  void send();
+                }
+              }}
+            />
+            <McButton type="submit" variant="green" disabled={!input.trim() || loading}>Send</McButton>
+          </form>
+        </section>
+
+        <section style={{ marginTop: 28 }} aria-labelledby="common-q">
+          <h2 id="common-q" className="mc-h2 mc-h2--light">COMMON QUESTIONS</h2>
+          <div className="mc-book">
+            {SUGGESTED.map((q) => (
+              <details key={q}>
+                <summary>{q}</summary>
+                <p style={{ fontSize: 22, padding: "4px 4px 8px 22px" }}>{FAQ_ANSWERS[q]}</p>
+                <McButton size="sm" variant="dark" onClick={() => { setInput(q); inputRef.current?.focus(); }}>Ask the chat</McButton>
+              </details>
+            ))}
+          </div>
+        </section>
       </div>
-    </>
+    </Layout>
   );
 };
 

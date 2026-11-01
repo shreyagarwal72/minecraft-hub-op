@@ -1,0 +1,9 @@
+{
+  "name": "Minecraft Java Hub",
+  "short_name": "Java Hub",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f1a",
+  "theme_color": "#8b5cf6",
+  "icons": [{ "src": "/favicon.png", "sizes": "any", "type": "image/png" }]
+}

@@ -1,64 +1,79 @@
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import heroImage from "@/assets/minecraft-hero.jpg";
+import { useMemo } from "react";
+import McButton from "@/components/McButton";
+import { SPLASHES } from "@/data/site";
+import { useLibrary } from "@/hooks/useLibrary";
+import { DISCLAIMER } from "@/config/site";
 
+const STARS = Array.from({ length: 46 }, (_, i) => {
+  const s = Math.sin(i * 91.7) * 10000;
+  const r = s - Math.floor(s);
+  const s2 = Math.sin(i * 17.3 + 4) * 10000;
+  const r2 = s2 - Math.floor(s2);
+  return { left: `${(r * 100).toFixed(2)}%`, top: `${(r2 * 100).toFixed(2)}%`, delay: `${((r + r2) * 2.6).toFixed(2)}s` };
+});
+
+/** Java-style main menu: 60 s day/night sky, stone-brick ground, wide buttons and a yellow splash. */
 const Hero = () => {
-  const navigate = useNavigate();
+  const splash = useMemo(() => SPLASHES[Math.floor(Math.random() * SPLASHES.length)], []);
+  const { library } = useLibrary();
+  const release = library.mojang?.latestRelease.id;
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={heroImage}
-          alt="Gaming Hero Background"
-          className="w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-gaming-bg/50 via-gaming-bg/70 to-gaming-bg"></div>
+    <section id="home" className="mc-hero" aria-label="Title screen">
+      <div className="mc-sky" aria-hidden="true">
+        <div className="mc-sky__dusk" />
+        <div className="mc-sky__night" />
       </div>
+      <div className="mc-stars" aria-hidden="true">
+        {STARS.map((s, i) => (
+          <span key={i} className="mc-star" style={{ left: s.left, top: s.top, animationDelay: s.delay }} />
+        ))}
+      </div>
+      <div className="mc-orbit" aria-hidden="true">
+        <img className="sun" src="/textures/sun.png" alt="" />
+        <img className="moon" src="/textures/moon.png" alt="" />
+      </div>
+      <div className="mc-cloud mc-cloud--a" aria-hidden="true" />
+      <div className="mc-cloud mc-cloud--b" aria-hidden="true" />
+      <div className="mc-cloud mc-cloud--c" aria-hidden="true" />
+      <div className="mc-night-dim" aria-hidden="true" />
 
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-10 w-16 h-16 bg-primary/20 rounded-full animate-float"></div>
-      <div className="absolute top-40 right-20 w-8 h-8 bg-primary/30 rounded-full animate-float" style={{ animationDelay: "1s" }}></div>
-      <div className="absolute bottom-40 left-20 w-12 h-12 bg-primary/25 rounded-full animate-float" style={{ animationDelay: "2s" }}></div>
+      <div className="mc-ground mc-ground--stone" aria-hidden="true">
+        <div className="mc-ground__bricks" />
+      </div>
+      <div className="mc-hero-night-tint" aria-hidden="true" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="animate-fade-in">
-          <h1 className="gaming-title mb-6">
-            Welcome to Minecraft Java Hub!
+      <div className="mc-title-wrap">
+        <div className="mc-logo-block">
+          <p className="mc-logo-block__kicker">MINECRAFT</p>
+          <h1 className="mc-logo">
+            <span className="mc-logo__main">JAVA HUB</span>
+            <span className="mc-logo__sub">WORLDS · SHADERS · MODPACKS · LAUNCHERS</span>
+            <span className="mc-splash" aria-hidden="true">{splash}</span>
           </h1>
-
-          <p className="text-xl md:text-2xl text-gaming-text-muted mb-4 max-w-3xl mx-auto leading-relaxed">
-            Your hub for Minecraft Java Edition worlds, professional addons,
-            feature-rich content, and stunning shaders.
-          </p>
-
-          <p className="text-lg text-gaming-text-muted mb-8 max-w-2xl mx-auto">
-            Designed for players seeking adventure, survival, and epic new visuals.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-scale-in">
-            <Button 
-              className="btn-gaming btn-3d text-lg px-8 py-4 animate-glow-pulse"
-              onClick={() => navigate('/worlds')}
-            >
-              Explore Worlds
-            </Button>
-            <Button 
-              className="btn-gaming-outline btn-3d text-lg px-8 py-4"
-              onClick={() => navigate('/modpacks')}
-            >
-              Discover Modpacks
-            </Button>
-          </div>
         </div>
+
+        <nav className="mc-menu mc-menu--java" aria-label="Main menu">
+          <McButton to="/downloads" variant="green" size="lg" block pulse sub={release ? `Latest release · ${release}` : "Latest release"}>
+            Download Minecraft
+          </McButton>
+          <McButton to="/worlds" block>Worlds</McButton>
+          <McButton to="/modpacks" block>Modpacks</McButton>
+          <McButton to="/shaders" block>Shaders</McButton>
+          <div className="mc-menu__row">
+            <McButton to="/patch">Patch</McButton>
+            <McButton to="/faq">FAQ</McButton>
+          </div>
+        </nav>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
-        </div>
+      <a href="#showcase" className="mc-scroll-cue" aria-label="Scroll to the showcase" style={{ textDecoration: "none" }}>
+        ▼ SCROLL ▼
+      </a>
+
+      <div className="mc-hero__foot" aria-hidden="true">
+        <span>Minecraft Java Hub</span>
+        <span>{DISCLAIMER}</span>
       </div>
     </section>
   );

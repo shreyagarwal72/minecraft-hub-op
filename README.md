@@ -1,97 +1,98 @@
-# Minecraft Java Hub - Professional Gaming Platform
+# Minecraft Java Hub
 
-## Project Overview
+A hub for **Minecraft Java Edition**: downloadable worlds, shaders, modpacks and launchers, designed like the Java game menus. Live site: https://java-minecraft.vercel.app
 
-**URL**: https://lovable.dev/projects/30b4e328-6b06-4810-a219-fb0bb310feb3
+> Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
 
-A professional Minecraft Java Edition content platform featuring worlds, addons, shaders, and downloads. Built with modern web technologies, stunning 3D visual effects, and AI-powered FAQ support.
-
-## Features
-
-- **Custom Worlds**: High-quality Minecraft worlds including Bulky Star (15K blocks), Infinity Castle, and more
-- **Shaders**: Visual enhancement packs (BSL Shaders, Photon Shader, Complementary Shaders)
-- **Modpacks**: Curated modpacks for enhanced gameplay
-- **Downloads**: Best Minecraft launchers (Modrinth, Legacy Launcher, TLauncher)
-- **AI FAQ**: Intelligent chatbot powered by Lovable AI for instant help
-- **Community**: Connect with fellow Minecraft enthusiasts
+![Home screen](docs/screenshot.png)
 
 ## Sitemap
 
-```
-/                  - Home page with featured content
-/worlds            - Browse custom Minecraft worlds
-/worlds/bulky-star - Detailed view of Bulky Star world
-/modpacks          - Discover modpacks
-/shaders           - Visual enhancement shaders
-/downloads         - Minecraft launcher downloads
-/faq               - AI-powered FAQ and help center
-/community         - Community page
-```
+| Route | What it is |
+| --- | --- |
+| `/` | Title screen with a 60 second day/night cycle and the main menu |
+| `/worlds` | "Select World" list |
+| `/worlds/bulky-star` | Bulky Star world folder |
+| `/modpacks` | "Resource Packs" screen: Available and Selected columns |
+| `/shaders` | Shader browser with filters |
+| `/downloads` | Launcher screen (version dropdown and PLAY), plus the full content library |
+| `/patch` | Latest release and snapshot from Mojang, plus the Mrpack to Zip tool |
+| `/faq` | Java-chat style FAQ with an AI assistant and an offline fallback |
+| `*` | "You died!" 404 |
 
-## How can I edit this code?
+## Tech stack
 
-There are several ways of editing your application.
+Vite, React 18, TypeScript, Tailwind (base only), plain CSS in `src/styles/minecraft.css` (`mc-*` classes), `react-helmet-async` for SEO, Supabase edge functions, Vercel hosting. Fonts: Press Start 2P and VT323.
 
-**Use Lovable**
+## Local setup
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/30b4e328-6b06-4810-a219-fb0bb310feb3) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+```bash
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm run dev            # http://localhost:8080
+npm run build          # vite build + per-route head prerender (scripts/prerender.ts)
+npm run library:sync   # resolve all sources, write src/data/library.generated.json
+npm run library:check  # check every source URL, exit 1 on dead links
 ```
 
-**Edit a file directly in GitHub**
+## Environment variables (names only)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+| Name | Where | Purpose |
+| --- | --- | --- |
+| `VITE_SUPABASE_URL` | site | edge function base URL |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | site | anon key sent to the edge functions |
+| `VITE_SITE_URL` | site, optional | overrides `https://java-minecraft.vercel.app` for canonicals and the sitemap |
+| `CURSEFORGE_API_KEY` | edge function and `library:sync` | CurseForge Core API (server side only) |
+| `GITHUB_TOKEN` | edge function and `library:sync`, optional | avoids GitHub rate limits |
+| `SUPABASE_SERVICE_ROLE_KEY` | edge function, optional | reads the `library_entries` table |
+| `LOVABLE_API_KEY` | `faq-chat` function | AI gateway for the FAQ chat |
 
-**Use GitHub Codespaces**
+## Content library
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+content/library.json  --(npm run library:sync)-->  src/data/library.generated.json  (bundled, works offline)
+        |                                                    ^
+        v                                                    | accepted only if valid and not older
+supabase/functions/library-resolve  (1 hour cache) ----------+
+```
 
-## What technologies are used for this project?
+| Provider | Used for | Verified? |
+| --- | --- | --- |
+| Mojang version manifest | latest release and snapshot, old releases list | yes |
+| Modrinth v2 API | shaders, modpacks, mods (version, size, SHA-512) | yes |
+| GitHub Releases | launchers and tools | yes |
+| CurseForge Core API | secondary source, needs a key | yes |
+| Direct, Google Drive, MediaFire | the owner's own worlds and packs | **no, shown as unverified mirrors** |
 
-This project is built with:
+- The first source that resolves is primary. The rest are "Mirrors".
+- The site reads the bundled file first, then refreshes from the edge function. Remote data is ignored if it has the wrong shape or is older than the bundled file.
+- No version number is hard-coded anywhere. If the manifest is missing, the UI says so.
+- Shared adapter code lives in `supabase/functions/_shared/library/` and is used by the sync script and the edge function.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Adding or updating content
 
-## How can I deploy this project?
+See [docs/ADDING_CONTENT.md](docs/ADDING_CONTENT.md). In short: add one object to `content/library.json`, or one row to the optional `library_entries` table.
 
-Simply open [Lovable](https://lovable.dev/projects/30b4e328-6b06-4810-a219-fb0bb310feb3) and click on Share -> Publish.
+## Supabase functions
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+supabase functions deploy library-resolve --no-verify-jwt
+supabase functions deploy faq-chat
+supabase secrets set CURSEFORGE_API_KEY=... GITHUB_TOKEN=... LOVABLE_API_KEY=...
+```
 
-Yes, you can!
+`npm run library:sync` copies `content/library.json` next to the function. Re-deploy `library-resolve` after you change the library.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Source and trust policy
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- **Official:** Mojang (minecraft.net and the version manifest), Modrinth, Prism Launcher on GitHub, and the shader authors' own pages.
+- **Unverified mirrors:** Google Drive, MediaFire and direct links. We cannot check these files automatically. They are labelled in red on every card. Scan what you download.
+- TLauncher and Legacy Launcher are **not listed** because they are unofficial. They return only if the site owner confirms.
+- Expiring links (for example Discord CDN tokens) are not allowed. `library:check` fails on them.
+
+## Deploy
+
+Deploy on Vercel. `vercel.json` holds the single page app rewrite and cache headers. Suggested build command: `npm run library:sync; npm run build` (sync keeps the old file and the build continues if a provider is down). `npm run build` writes `dist/<route>/index.html` for each page so link previews and crawlers see the right title, description and canonical. Submit `https://java-minecraft.vercel.app/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+
+## Licence and credits
+
+Code by Nextup Studio (Vanshu Agarwal). A licence file has not been chosen yet, so all rights are reserved until one is added. Pixel textures and icons are original or generic. Shaders, launchers and worlds belong to their authors and keep their own licences. Minecraft is a trademark of Mojang Studios.

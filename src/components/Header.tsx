@@ -1,110 +1,122 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
-import TorchThemeToggle from "./TorchThemeToggle";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import McButton from "@/components/McButton";
+import WelcomeIntro from "@/components/WelcomeIntro";
+
+export const NAVIGATION = [
+  { name: "Home", href: "/" },
+  { name: "Worlds", href: "/worlds" },
+  { name: "Modpacks", href: "/modpacks" },
+  { name: "Shaders", href: "/shaders" },
+  { name: "Downloads", href: "/downloads" },
+  { name: "Patch", href: "/patch" },
+  { name: "FAQ", href: "/faq" },
+];
+
+const safeGet = (key: string) => {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [solid, setSolid] = useState(false);
+  const [showIntro, setShowIntro] = useState(false);
+  const [manualIntro, setManualIntro] = useState(false);
+  const { pathname } = useLocation();
 
-  const navigation = [
-    { name: "Home", href: "/" },
-    { name: "Worlds", href: "/worlds" },
-    { name: "Modpacks", href: "/modpacks" },
-    { name: "Shaders", href: "/shaders" },
-    { name: "Convert", href: "/patch" },
-    { name: "Downloads", href: "/downloads" },
-    { name: "FAQ", href: "/faq" },
-  ];
+  useEffect(() => {
+    if (!safeGet("hasSeenJavaIntro")) {
+      setManualIntro(false);
+      setShowIntro(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setSolid(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => setMenuOpen(false), [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-gaming-surface/90 backdrop-blur-xl border-b border-border">
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-primary">
-              Minecraft Java Hub
-            </h1>
-          </div>
+    <>
+      <header className={`mc-header ${solid || menuOpen ? "mc-header--solid" : ""}`}>
+        <div className="mc-header__inner">
+          <button
+            className="mc-logo-link"
+            onClick={() => {
+              setManualIntro(true);
+              setShowIntro(true);
+            }}
+            aria-label="Open the Minecraft Java Hub tour"
+          >
+            <img src="/icons/grass.png" alt="" />
+            <span>JAVA HUB</span>
+          </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="flex items-baseline space-x-8">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  data-magnetic
-                  className="text-gaming-text hover:text-primary transition-colors duration-300 px-3 py-2 text-sm font-medium"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </div>
-          </div>
+          <nav className="mc-nav" aria-label="Main">
+            {NAVIGATION.map((item) => (
+              <Link key={item.href} to={item.href} className="mc-tab" aria-current={pathname === item.href ? "page" : undefined}>
+                {item.name}
+              </Link>
+            ))}
+          </nav>
 
-          {/* Theme Toggle and CTA Button */}
-          <div className="hidden md:flex items-center gap-4">
-            <TorchThemeToggle />
-            <Button 
-              data-magnetic
-              className="btn-gaming btn-3d"
-              onClick={() => navigate('/faq')}
+          <div className="mc-row" style={{ gap: 10, flexWrap: "nowrap" }}>
+            <McButton to="/downloads" variant="green" size="sm" className="mc-nav">
+              Play Now
+            </McButton>
+            <button
+              className="mc-btn mc-btn--dark mc-menu-btn"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-expanded={menuOpen}
+              aria-controls="mc-drawer"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
             >
-              Get Started
-            </Button>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gaming-text hover:text-primary"
-            >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </Button>
+              {menuOpen ? "X" : "≡"}
+            </button>
           </div>
         </div>
+      </header>
 
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden animate-fade-in">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-gaming-surface rounded-lg mt-2 border border-border">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="text-gaming-text hover:text-primary block px-3 py-2 text-base font-medium transition-colors duration-300"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="px-3 py-2 flex flex-col items-center gap-4">
-                <TorchThemeToggle />
-                <Button 
-                  className="btn-gaming w-full"
-                  onClick={() => {
-                    navigate('/faq');
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  Get Started
-                </Button>
-              </div>
-            </div>
+      {menuOpen && (
+        <div className="mc-drawer" id="mc-drawer" onClick={(e) => e.target === e.currentTarget && setMenuOpen(false)}>
+          <div className="mc-drawer__panel mc-panel mc-panel--dark">
+            <div className="mc-drawer__title">GAME MENU</div>
+            {NAVIGATION.map((item) => (
+              <McButton key={item.href} to={item.href} block variant={pathname === item.href ? "green" : "gray"}>
+                {item.name}
+              </McButton>
+            ))}
+            <McButton block variant="dark" onClick={() => setMenuOpen(false)}>
+              Back to Game
+            </McButton>
           </div>
-        )}
-      </nav>
-    </header>
+        </div>
+      )}
+
+      <WelcomeIntro
+        isOpen={showIntro}
+        isManualOpen={manualIntro}
+        onClose={() => {
+          setShowIntro(false);
+          setManualIntro(false);
+        }}
+      />
+    </>
   );
 };
 

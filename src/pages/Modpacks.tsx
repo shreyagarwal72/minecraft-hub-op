@@ -1,204 +1,80 @@
-import { Download, Gamepad2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import LiquidGlassHeader from "@/components/LiquidGlassHeader";
-import { useLiquidGlass } from "@/contexts/LiquidGlassContext";
-import { cn } from "@/lib/utils";
-import spunkyBoostImage from "@/assets/spunky-boost.jpg";
-import spunkyOptimisedImage from "@/assets/spunky-optimised.jpg";
+import { useState } from "react";
+import Layout from "@/components/Layout";
+import PageHead from "@/components/PageHead";
+import SEOHead from "@/components/SEOHead";
+import { ROUTE_SEO } from "@/config/seo";
+import McButton from "@/components/McButton";
+import FilterBar from "@/components/FilterBar";
+import SourceBadge from "@/components/SourceBadge";
+import UpdateBar from "@/components/UpdateBar";
+import { useLibrary } from "@/hooks/useLibrary";
+import { useEntryFilters } from "@/hooks/useEntryFilters";
+import { primarySource, type ResolvedEntry } from "@/lib/library";
+import { toast } from "@/lib/toast";
 
+const Pack = ({ e, selected, onToggle }: { e: ResolvedEntry; selected: boolean; onToggle: () => void }) => {
+  const { source, url } = primarySource(e);
+  return (
+    <li className="mc-pack">
+      <span className="mc-slot mc-pack__icon"><img src={e.image} alt="" loading="lazy" /></span>
+      <span>
+        <span className="mc-pack__name">{e.title}</span>
+        <span className="mc-pack__desc" style={{ display: "block" }}>{e.description}</span>
+        <span style={{ display: "block", marginTop: 4 }}><SourceBadge source={source} /> {e.mcVersions.length > 0 && <span className="mc-muted">MC {e.mcVersions.join(", ")}</span>}</span>
+      </span>
+      <span className="mc-pack__actions">
+        {selected && !e.unavailable && (
+          <McButton size="sm" variant="green" href={url} onClick={() => toast({ title: "Opening download", text: e.title, icon: "/icons/diamond.png" })}>Download</McButton>
+        )}
+        <McButton size="sm" variant={selected ? "dark" : "gray"} onClick={onToggle} ariaLabel={`${selected ? "Remove" : "Select"} ${e.title}`}>
+          {selected ? "Remove" : "Select"}
+        </McButton>
+      </span>
+    </li>
+  );
+};
+
+/** Java "Resource Packs" screen: Available on the left, Selected on the right. */
 const Modpacks = () => {
-  const { isLiquidGlass } = useLiquidGlass();
-  const modpacks = [
-    {
-      id: 1,
-      name: "Spunky Boost (for Pojav)",
-      version: "v1.21.8",
-      description: "Optimized modpack specifically designed for Pojav Launcher users. Enhanced performance, smooth gameplay, and mobile-friendly optimization for the best Java Edition experience on mobile devices.",
-      image: spunkyBoostImage,
-      downloadLink: "https://www.mediafire.com/file/nwhbvcfwmoocxxh/Spunky+Boost+1.21.8+(1).zip/file",
-      features: ["Pojav Optimized", "Mobile Friendly", "Performance Boost", "Java Edition"],
-      compatibility: "Pojav Launcher"
-    },
-    {
-      id: 2,
-      name: "Spunky Optimised",
-      version: "v1.21.8",
-      description: "High-performance modpack with advanced optimizations and enhanced features. Perfect for players who want the best performance without sacrificing visual quality and gameplay experience.",
-      image: spunkyOptimisedImage,
-      downloadLink: "https://www.mediafire.com/file/kahadb1v4snxbo7/Spunky+Optimized+1.21.8.zip/file",
-      features: ["High Performance", "Enhanced Graphics", "Memory Optimized", "FPS Boost"],
-      compatibility: "All Launchers"
-    }
-  ];
-
-  const handleDownload = (downloadLink: string, modpackName: string) => {
-    window.open(downloadLink, '_blank');
-  };
+  const { byType } = useLibrary();
+  const packs = byType("modpack", "resourcepack", "mod");
+  const f = useEntryFilters(packs);
+  const [picked, setPicked] = useState<string[]>([]);
+  const toggle = (id: string) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+  const available = f.filtered.filter((e) => !picked.includes(e.id));
+  const selected = packs.filter((e) => picked.includes(e.id));
 
   return (
-    <>
-      <head>
-        <title>Minecraft Modpacks - Performance Optimized | Minecraft Java Hub</title>
-        <meta name="description" content="Download optimized Minecraft modpacks including Spunky Boost for Pojav and Spunky Optimised. Enhanced performance and mobile-friendly gameplay." />
-        <meta name="keywords" content="minecraft modpacks, pojav launcher, spunky boost, minecraft optimization, java edition modpacks" />
-        <link rel="canonical" href="https://yoursite.com/modpacks" />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "name": "Minecraft Modpacks",
-            "description": "Collection of performance-optimized modpacks for Minecraft Java Edition",
-            "url": "https://yoursite.com/modpacks",
-            "mainEntity": {
-              "@type": "ItemList",
-              "itemListElement": modpacks.map((modpack, index) => ({
-                "@type": "SoftwareApplication",
-                "position": index + 1,
-                "name": modpack.name,
-                "description": modpack.description,
-                "applicationCategory": "Game Enhancement",
-                "operatingSystem": "Minecraft Java Edition"
-              }))
-            }
-          })}
-        </script>
-      </head>
-      <div className="min-h-screen bg-gaming-bg">
-        <LiquidGlassHeader />
-        
-        <main className="pt-20">
-          {/* Hero Section */}
-          <header className={cn(
-            "py-20 transition-all duration-500",
-            isLiquidGlass ? "bg-transparent" : "bg-gradient-to-b from-gaming-surface to-gaming-bg"
-          )}>
-            <div className="container mx-auto px-4 max-w-7xl">
-              <div className="text-center max-w-4xl mx-auto">
-                <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-                  Minecraft <span className="text-primary">Modpacks</span>
-                </h1>
-                <p className="text-xl text-gaming-text mb-8 animate-fade-in">
-                  Enhanced modpacks for optimized performance and incredible gameplay experience
-                </p>
-                <div className="flex flex-wrap justify-center gap-4 text-sm text-gaming-text">
-                  <Badge variant="outline" className="border-primary text-primary">
-                    Performance Optimized
-                  </Badge>
-                  <Badge variant="outline" className="border-primary text-primary">
-                    Mobile Compatible
-                  </Badge>
-                  <Badge variant="outline" className="border-primary text-primary">
-                    Java Edition
-                  </Badge>
-                </div>
-              </div>
-            </div>
-          </header>
-
-          {/* Modpacks Grid */}
-          <section className="py-20">
-            <div className="container mx-auto px-4 max-w-7xl">
-              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {modpacks.map((modpack, index) => (
-                  <article key={modpack.id} className={cn(
-                    "hover-scale group overflow-hidden animate-fade-in rounded-xl border transition-all duration-300",
-                    isLiquidGlass ? "liquid-glass-card" : "gaming-card"
-                  )} style={{ animationDelay: `${index * 0.2}s` }}>
-                    <div className="relative overflow-hidden">
-                      <img
-                        src={modpack.image}
-                        alt={`${modpack.name} modpack preview with optimized performance features`}
-                        className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      <Badge className="absolute top-4 right-4 bg-primary/90 text-white">
-                        {modpack.version}
-                      </Badge>
-                      <Badge className="absolute top-4 left-4 bg-secondary/90 text-white">
-                        <Gamepad2 className="w-3 h-3 mr-1" />
-                        {modpack.compatibility}
-                      </Badge>
-                    </div>
-                    
-                    <CardHeader>
-                      <CardTitle className="text-xl text-white group-hover:text-primary transition-colors">
-                        {modpack.name}
-                      </CardTitle>
-                      <CardDescription className="text-gaming-text">
-                        {modpack.description}
-                      </CardDescription>
-                    </CardHeader>
-                    
-                    <CardContent className="space-y-4">
-                      <div className="flex flex-wrap gap-2">
-                        {modpack.features.map((feature) => (
-                          <Badge key={feature} variant="secondary" className="text-xs">
-                            {feature}
-                          </Badge>
-                        ))}
-                      </div>
-                      
-                      <div className="text-primary font-medium text-center py-2">
-                        Compatible with {modpack.compatibility}
-                      </div>
-                      
-                      <Button
-                        className={cn(
-                          "w-full",
-                          isLiquidGlass ? "liquid-glass-button" : "btn-gaming"
-                        )}
-                        data-magnetic
-                        onClick={() => handleDownload(modpack.downloadLink, modpack.name)}
-                      >
-                        <Download className="w-4 h-4 mr-2" />
-                        Download {modpack.name}
-                      </Button>
-                    </CardContent>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* Installation Guide */}
-          <section className={cn(
-            "py-20 transition-all duration-500",
-            isLiquidGlass ? "bg-transparent" : "bg-gaming-surface"
-          )}>
-            <div className="container mx-auto px-4 max-w-7xl">
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl font-bold text-white mb-8">How to Install Modpacks</h2>
-                <div className="grid md:grid-cols-3 gap-8">
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
-                      <span className="text-white font-bold">1</span>
-                    </div>
-                    <h3 className="text-xl font-semibold text-white">Download Modpack</h3>
-                    <p className="text-gaming-text">Choose and download your preferred modpack from our collection above.</p>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
-                      <span className="text-white font-bold">2</span>
-                    </div>
-                    <h3 className="text-xl font-semibold text-white">Extract Files</h3>
-                    <p className="text-gaming-text">Extract the modpack files to your Minecraft mods folder or launcher directory.</p>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto">
-                      <span className="text-white font-bold">3</span>
-                    </div>
-                    <h3 className="text-xl font-semibold text-white">Launch & Play</h3>
-                    <p className="text-gaming-text">Start your launcher, select the modpack profile, and enjoy enhanced gameplay!</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </main>
+    <Layout background="dirt">
+      <SEOHead
+        {...ROUTE_SEO["/modpacks"]}
+        structuredData={{
+          "@context": "https://schema.org", "@type": "CollectionPage", name: "Minecraft Java Modpacks",
+          mainEntity: { "@type": "ItemList", itemListElement: packs.map((p, i) => ({ "@type": "ListItem", position: i + 1, name: p.title })) },
+        }}
+      />
+      <div className="mc-container">
+        <PageHead icon="planks" title="Resource Packs" subtitle="Select the packs you want. Chosen packs move to the right, where you can download them." />
+        <div className="mc-stack">
+          <UpdateBar />
+          <FilterBar f={f} showType={false} idPrefix="packs" />
+          <div className="mc-packs">
+            <section className="mc-packcol" aria-label="Available packs">
+              <h2 className="mc-packcol__head">Available</h2>
+              {available.length === 0 ? <p className="mc-packcol__empty">No packs left to select.</p> : (
+                <ul className="mc-packcol__list">{available.map((e) => <Pack key={e.id} e={e} selected={false} onToggle={() => toggle(e.id)} />)}</ul>
+              )}
+            </section>
+            <section className="mc-packcol" aria-label="Selected packs">
+              <h2 className="mc-packcol__head">Selected</h2>
+              {selected.length === 0 ? <p className="mc-packcol__empty">Nothing selected yet.</p> : (
+                <ul className="mc-packcol__list">{selected.map((e) => <Pack key={e.id} e={e} selected onToggle={() => toggle(e.id)} />)}</ul>
+              )}
+            </section>
+          </div>
+        </div>
       </div>
-    </>
+    </Layout>
   );
 };
 
